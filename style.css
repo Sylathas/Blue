@@ -1,7 +1,71 @@
-body {
-  margin: 0;
+.button{
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  cursor: pointer;
+  padding: 10px;
 }
 
-canvas {
-  display: block;
+.dialogue{
+  font-size: 20px;
+}
+
+#selfDialogue{
+  position: absolute;
+  bottom: 10%;
+  left: 10%;
+}
+
+#characterDialogue{
+  position: absolute;
+  bottom: 10%;
+  right: 10%;
+}
+
+#finalDialogue{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+
+#progressDialogue{
+  position: absolute;
+  top: 10%;
+  left: 10%;
+}
+
+#continueButton{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+
+#introductionButton{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+
+#choiceOne{
+  position: absolute;
+  left: 25%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+
+#choiceTwo{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+
+#choiceThree{
+  position: absolute;
+  left: 75%;
+  top: 50%;
+  transform: translate(-50%,-50%);
 }

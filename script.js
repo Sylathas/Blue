@@ -1,134 +1,148 @@
-/*
-  Johan Karlsson (DonKarlssonSan) 2018
-  Referencing:
-   * three.js
-   * Noise lib
-   * OrbitControls
-*/
+//Arrays with dialogues
+var selfDialogue = [
+  { m: "I have made my first good decision" },
+  { m: "I have made my second good decision" },
+  { m: "I have made my third good decision" },
+  { m: "This is my final self dialogue" }
+];
 
-let scene;
-let camera;
-let renderer;
-let simplex;
-let plane;
-let geometry;
-let xZoom;
-let yZoom;
-let noiseStrength;
+var characterDialogue = [
+  { m: "You have made your first good decision" },
+  { m: "You have made your second good decision" },
+  { m: "You have made your third good decision" },
+  { m: "This is the final character dialogue" }
+];
 
-function setup() {
-  setupNoise();
-  setupScene();
-  setupCamera();
-  setupRenderer();
-  setupPlane();
-  setupLights();
-  setupEventListeners();
+var wrongSelfDialogue = [
+  { m: "Wrong self dialogue 1" },
+  { m: "Wrong self dialogue 2" }
+];
+
+var wrongCharacterDialogue = [
+  { m: "Wrong character dialogue 1" },
+  { m: "Wrong character dialogue 2" }
+];
+
+//FUNCTIONS ABOUT THE PROGRESSION OF THE STORY
+function introduction(){
+
 }
 
-function setupNoise() {
-  // By zooming y more than x, we get the
-  // appearence of flying along a valley
-  xZoom = 6;
-  yZoom = 6;
-  noiseStrength = .3;
-  simplex = new SimplexNoise();
-}
-
-function setupScene() {
-  scene = new THREE.Scene();
-}
-
-function setupCamera() {
-  let res = window.innerWidth / window.innerHeight;
-  camera = new THREE.PerspectiveCamera(75, res, 0.1, 1000);
-  camera.position.x = 0;
-  camera.position.y = -20;
-  camera.position.z = 3;
-
-  let controls = new THREE.OrbitControls(camera);
-}
-
-function setupRenderer() {
-  renderer = new THREE.WebGLRenderer({
-    antialias: true
-  });
-
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement);
-}
-
-function setupPlane() {
-  let side = 120;
-  geometry = new THREE.PlaneGeometry(120, 40, side, side);
-  const albedo = new THREE.TextureLoader().load( 'Assets/Textures/Ground/dry_ground_rocks_albedo_1k.jpg' );
-  const roughness = new THREE.TextureLoader().load( 'Assets/Textures/Ground/dry_ground_rocks_rough_1k.jpg' );
-  const normal = new THREE.TextureLoader().load( 'Assets/Textures/Ground/dry_ground_rocks_nor_1k.jpg' );
-  let material = new THREE.MeshStandardMaterial({
-    map: albedo,
-    normalMap: normal,
-    roughnessMap: roughness
-  });
-
-  plane = new THREE.Mesh(geometry, material);
-  plane.castShadow = true;
-  plane.receiveShadow = true;
-
-  scene.add(plane);
-}
-
-function setupLights() {
-  let ambientLight = new THREE.AmbientLight(0x0c0c0c);
-  scene.add(ambientLight);
-
-  let spotLight = new THREE.SpotLight(0xcccccc);
-  spotLight.position.set(-30, 60, 60);
-  spotLight.castShadow = true;
-  scene.add(spotLight);
-
-  var textureLoader = new THREE.TextureLoader();
-  textureLoader.load('Assets/Textures/Sky.jpg', function(texture) {
-    var material = new THREE.MeshBasicMaterial();
-    material.envMap = texture;
-  });
-}
-
-function setupEventListeners() {
-  window.addEventListener("resize", onWindowResize);
-}
-
-function onWindowResize() {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-}
-
-function draw() {
-  requestAnimationFrame(draw);
-  let offset = Date.now() * 0.0004;
-  adjustVertices(offset);
-  adjustCameraPos(offset);
-  renderer.render(scene, camera);
-}
-
-function adjustVertices(offset) {
-  for (let i = 0; i < plane.geometry.vertices.length; i++) {
-    let vertex = plane.geometry.vertices[i];
-    let x = vertex.x / xZoom;
-    let y = vertex.y / yZoom;
-    let noise = simplex.noise2D(x, y + offset) * noiseStrength;
-    vertex.z = noise;
+function characterChoice(part){
+  //Create the divs containing the sprites and QR's of the characters
+  if(part == 1){
+    createCharacter("Pa");
+    createCharacter("TEDD");
+    createCharacter("Joe");
+  } else if(part == 2){
+    createCharacter("Eo");
+    createCharacter("Neutrum");
+  } else if(part == 3){
+    createCharacter("Maisie");
+    createCharacter("Swarm");
   }
-  geometry.verticesNeedUpdate = true;
-  geometry.computeVertexNormals();
 }
 
-function adjustCameraPos(offset) {
-  let x = camera.position.x / xZoom;
-  let y = camera.position.y / yZoom;
-  let noise = simplex.noise2D(x, y + offset) * noiseStrength + 1.5;
-  camera.position.z = noise;
+function sectionProgress(character, communication, progress) {
+  if(progress < 4){
+    //Dialogue and selection of monuments
+    console.log(`Section progress reached, with progress ${progress}`);
+    selection(character, communication, progress);
+  } else{
+    //End of part
+    ending();
+    /*finalDialogue(character);
+    part++;
+    if(part < 4){
+      //Choose new character
+      characterChoice(part);
+    } else{
+      //End adventure
+      ending();
+    }*/
+  }
 }
 
-setup();
-draw();
+function ending(){
+  //Remove old dialogues and buttons
+  $( ".dialogue, .button" ).remove();
+  //Self Dialogue
+  let selfText = $("<p></p>").text("End of prototype");
+  selfText.attr({"id": "finalDialogue", "class": "dialogue" });
+  $("body").append(selfText);
+}
+
+//FUNCTIONS ABOUT DIALOGUES, CHOICES AND DIV CREATION
+
+function createCharacter(character){
+  //Create parent div
+  //Create Div with as background image the sprite of the character
+  //Create Div with as background the QR of the character
+}
+
+function progressDialogue(character, communication, progress){
+  //Remove old dialogues and buttons
+  $( ".dialogue, .button" ).remove();
+  progress++;
+  //Prototyping help
+  prototyping(progress);
+  //Self Dialogue
+  let selfText = $("<p></p>").text(selfDialogue[progress-1].m);
+  selfText.attr({"id": "selfDialogue", "class": "dialogue" });
+  //Character Dialogue
+  let characterText = $("<p></p>").text(characterDialogue[progress-1].m);
+  characterText.attr({"id": "characterDialogue", "class": "dialogue" });
+  //Continue button
+  let continueButton = $("<button></button>").text("Continue");
+  continueButton.attr({ "id": "continueButton", "class": "button", 'onclick': `sectionProgress("${character}", "${communication}", ${progress})` });
+  //Add them to the body
+  $("body").append(selfText, characterText, continueButton);
+}
+
+function wrongDialogue(character, communication, progress){
+  //Remove old dialogues and buttons
+  $( ".dialogue, .button" ).remove();
+  progress = 0;
+  //Prototyping help
+  prototyping(progress);
+  //Self Dialogue
+  let selfText = $("<p></p>").text(wrongSelfDialogue[Math.floor(Math.random())].m);
+  selfText.attr({"id": "selfDialogue", "class": "dialogue" });
+  //Character Dialogue
+  let characterText = $("<p></p>").text(wrongCharacterDialogue[Math.floor(Math.random())].m);
+  characterText.attr({"id": "characterDialogue", "class": "dialogue" });
+  //Continue button
+  let continueButton = $("<button></button>").text("Continue");
+  continueButton.attr({ "id": "continueButton", "class": "button", 'onclick': `sectionProgress("${character}", "${communication}", ${progress})` });
+  //Add them to the body
+  $("body").append(selfText, characterText, continueButton);
+}
+
+function selection(character, communication, progress){
+  //Remove old dialogues and buttons
+  $( ".dialogue, .button" ).remove();
+  //Prototyping help
+  prototyping(progress);
+  //Self Dialogue
+  let selfText = $("<p></p>").text("Which monument should I choose?");
+  selfText.attr({"id": "selfDialogue", "class": "dialogue" });
+  //Character Dialogue
+  let characterText = $("<p></p>").text("");
+  characterText.attr({"id": "characterDialogue", "class": "dialogue" });
+  //Create the three buttons with the choices
+  let choiceOne = $("<button></button>").text("Wrong");
+  choiceOne.attr({"id": "choiceOne", "class": "button", 'onclick': `wrongDialogue("${character}", "${communication}", ${progress})`});
+  let choiceTwo = $("<button></button>").text("True");
+  choiceTwo.attr({"id": "choiceTwo", "class": "button", 'onclick': `progressDialogue("${character}", "${communication}", ${progress})`});
+  let choiceThree = $("<button></button>").text("Wrong");
+  choiceThree.attr({"id": "choiceThree", "class": "button", 'onclick': `wrongDialogue("${character}", "${communication}", ${progress})`});
+  //Add them to the body
+  $("body").append(selfText, characterText, choiceOne, choiceTwo, choiceThree);
+}
+
+function prototyping(progress){
+  //Add progress to top left
+  let progressText = $("<p></p>").text(`Progress: ${progress}`);
+  progressText.attr({"id": "progressDialogue", "class": "dialogue" });
+  $("body").append(progressText);
+}
