@@ -1,31 +1,7 @@
-//Arrays with dialogues
-var selfDialogue = [
-  { m: "I have made my first good decision" },
-  { m: "I have made my second good decision" },
-  { m: "I have made my third good decision" },
-  { m: "This is my final self dialogue" }
-];
-
-var characterDialogue = [
-  { m: "You have made your first good decision" },
-  { m: "You have made your second good decision" },
-  { m: "You have made your third good decision" },
-  { m: "This is the final character dialogue" }
-];
-
-var wrongSelfDialogue = [
-  { m: "Wrong self dialogue 1" },
-  { m: "Wrong self dialogue 2" }
-];
-
-var wrongCharacterDialogue = [
-  { m: "Wrong character dialogue 1" },
-  { m: "Wrong character dialogue 2" }
-];
+import {selfDialogue, characterDialogue, wrongSelfDialogue, wrongCharacterDialogue} from "./dialogues.js";
 
 //FUNCTIONS ABOUT THE PROGRESSION OF THE STORY
 function introduction(){
-
 }
 
 function characterChoice(part){
