@@ -1,25 +1,123 @@
+@font-face {
+  font-family: Blender;
+  src: url(./Assets/fonts/BlenderPro-Medium.ttf);
+}
+
+@font-face {
+  font-family: Blender;
+  src: url(./Assets/fonts/BlenderPro-Heavy.ttf);
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: Bookshelf;
+  src: url(./Assets/fonts/BSSYM7.TTF);
+}
+
+body{
+  background-image: url("./assets/BG.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+  font-family: Blender;
+  overflow: hidden;
+  margin: 0;
+}
+
 .button{
-  background-color: white;
-  color: black;
-  border: 2px solid black;
+  background-color: Transparent;
+  color: white;
   cursor: pointer;
   padding: 10px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  border: none;
+  opacity: 0.5;
+  transition: 0.3s;
+}
+
+.button:hover{
+  opacity: 1;
 }
 
 .dialogue{
-  font-size: 20px;
+  font-size: 18px;
+}
+
+.visual{
+  font-size: 0;
+  width: 16%;
+  height: 30%;
+  background-position: center;
+  animation: totems_animation 1.5s linear infinite alternate;
+  animation-timing-function: ease-in-out;
+}
+
+.visual:hover{
+  height: 34%;
+  width: 18%;
+}
+
+.bold{
+  font-weight: bold;
+  font-family: Blender;
+}
+
+.Eo{
+  font-family: Bookshelf;
+}
+
+#QR{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  width:auto;
+  height: 80%;
+  opacity: 0;
+  z-index: 1;
+  transition: .5s;
+}
+
+#character{
+  position: absolute;
+  left: 20%;
+  bottom: 10%;
+  width: 20%;
+  height: 25%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  transition: .5s;
+}
+
+#dialogueBox{
+  position: absolute;
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%);
+  width: 30vw;
+  height: 39.5vw;
+  background-image: url("./Assets/dialogue-box.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  overflow-y: auto;
+  box-shadow: 0 0 30px 3px rgba(255, 255, 255, 0.3);
 }
 
 #selfDialogue{
-  position: absolute;
-  bottom: 10%;
-  left: 10%;
+  color: white;
+  width: 80%;
+  margin-left: 40px;
+  text-align: left;
 }
 
 #characterDialogue{
-  position: absolute;
-  bottom: 10%;
-  right: 10%;
+  color: #fdc82d;
+  width: 80%;
+  margin-left: 40px;
+  text-align: right;
 }
 
 #finalDialogue{
@@ -37,35 +135,48 @@
 
 #continueButton{
   position: absolute;
-  left: 50%;
+  left: 31%;
   top: 50%;
   transform: translate(-50%,-50%);
+  border: 1px solid white;
+  border-radius: 5px;
 }
 
 #introductionButton{
   position: absolute;
   left: 50%;
   top: 50%;
+  width: 20%;
+  height: 30%;
   transform: translate(-50%,-50%);
+  background-image: url('./Assets/Logo.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 
 #choiceOne{
   position: absolute;
-  left: 25%;
-  top: 50%;
+  left: 11%;
+  top: 35%;
   transform: translate(-50%,-50%);
 }
 
 #choiceTwo{
   position: absolute;
-  left: 50%;
-  top: 50%;
+  left: 31%;
+  top: 35%;
   transform: translate(-50%,-50%);
 }
 
 #choiceThree{
   position: absolute;
-  left: 75%;
-  top: 50%;
+  left: 50%;
+  top: 35%;
   transform: translate(-50%,-50%);
+}
+
+@keyframes totems_animation {
+  from {top: 30%;}
+  to {top: 35%;}
 }
