@@ -393,21 +393,21 @@ window.selection = function(character, communication, progress) {
     "class": communication + " button",
     'onclick': `wrongDialogue("${character}", "${communication}", ${progress})`
   });
-  choiceOne.css("background-image", "url(./Assets/totem_a.png)");
+  choiceOne.css("background-image", "url(./Assets/Totems/1/" + (Math.floor(Math.random() * 5) + 1) + ".gif");
   let choiceTwo = $("<button></button>");
   choiceTwo.attr({
     "id": buttons[1],
     "class": communication + " button",
     'onclick': `progressDialogue("${character}", "${communication}", ${progress})`
   });
-  choiceTwo.css("background-image", "url(./Assets/totem_b.png)");
+  choiceTwo.css("background-image", "url(./Assets/Totems/2/" + (Math.floor(Math.random() * 5) + 1) + ".gif");
   let choiceThree = $("<button></button>");
   choiceThree.attr({
     "id": buttons[2],
     "class": communication + " button",
     'onclick': `wrongDialogue("${character}", "${communication}", ${progress})`
   });
-  choiceThree.css("background-image", "url(./Assets/totem_c.png)");
+  choiceThree.css("background-image", "url(./Assets/Totems/3/" + (Math.floor(Math.random() * 5) + 1) + ".gif");
   //Add them to the page
   $("body").append(choiceOne, choiceTwo, choiceThree);
 
