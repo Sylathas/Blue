@@ -7,7 +7,15 @@
 
 </head>
 <body>
-  <video loop src="./assets/BG.mp4" style="width:100%; height:auto; z-index:-1; min-height: 100vh;" id="video"></video>
+  <div id="videoContainer">
+    <video loop src="./assets/BG.mp4" id="video"></video>
+  </div>
+  <div id="loading">
+    <div id="loading1" onclick="introduction(0)"></div>
+    <div id="loading2" class="loadAnimation"></div>
+    <p id="pLoading" class="loadAnimation2">Loading</p>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script type="module" src="./dialogues.js"></script>
   <script type="module" src="./script.js"></script>

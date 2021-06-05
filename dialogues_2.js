@@ -10,9 +10,8 @@ export let selfDialogue = {
     ["This place looks familiar...","Either you're going crazy, or the the path is looping on itself","The shifting is uncontrollable now, something is about to happen"],
     ["Looking from here the path is forming a shape, it looks like a perfect circle","the thing it still now, it looks like a perfect sphere","For some reason, it looks peacful now, how soothing"]
   ],
-  Maisie: [
-    ["Wha-"," What is this this sound? it hurts so bad "," The sound is unbearable, the vision is starting to blur.... ","...","..."," what happened? this place is different, someone is watching... "],
-    ["The sound is still there, but it doesn't hurt now", " there's someone"]
+  Maisie: ["Wha-"," What is this this sound? it hurts so bad "," The sound is unbearable, the vision is starting to blur.... ","...","..."," what happened? this place is different, someone is watching... "]
+          ["The sound is still there, but it doesen't hurt now", " there's someone   "
   ],
   Pa: [
   ],
@@ -34,10 +33,10 @@ export let selfDialogue = {
 
 export var characterDialogue = {
   Eo: [
-    ["o xo j o ksa sk k k as a a kd jd sjeu j jsk"],
-    ["ojeijcimdop4j iapscma kosmcirsnk dlcmormcos mricsi"],
-    ["ooo oooooooo ooooooooooooooo oooooooooooooooo oooo"],
-    ["i topi non avevano nipoti"]
+    [" O XO J O KSA SK K K AS A A KD JD SJEU J JSK"],
+    ["OJEIJCIMDOP4JIAPSCMAKOSMCIRSNKDLCMORMCOSMRICSI"],
+    ["OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"],
+    ["I TOPI NON AVEVANO NIPOTI"]
   ],
   Maisie: [
   ],
