@@ -41,7 +41,7 @@
         $('#fullscreen').css({
           'background-image': './Assets/Buttons/FullscreenClose.png'
         });
-        if (elem.requestFullscreen) {
+        if (document.documentElement.requestFullscreen) {
           document.documentElement.requestFullscreen();
         } else if (elem.webkitRequestFullscreen) {
           /* Safari */
