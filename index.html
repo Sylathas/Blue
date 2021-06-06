@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Lesssgoooo</title>
   <link rel="stylesheet" href="./style.css">
 
 </head>
+
 <body>
   <div id="videoContainer">
     <video loop src="./Assets/BG.mp4" id="video"></video>
@@ -21,15 +23,36 @@
   <script type="module" src="./dialogues.js"></script>
   <script type="module" src="./script.js"></script>
   <script>
-    function fullScreen(){
-      if(!window.screenTop && !window.screenY) {
-        $('#fullscreen').css({'background-image':'./Assets/Buttons/FullscreenOpen.png'});
-        document.exitFullscreen();
-      } else{
-        $('#fullscreen').css({'background-image':'./Assets/Buttons/FullscreenClose.png'});
-        document.documentElement.requestFullscreen();
+    function fullScreen() {
+      if (!window.screenTop && !window.screenY) {
+        $('#fullscreen').css({
+          'background-image': './Assets/Buttons/FullscreenOpen.png'
+        });
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+          /* Safari */
+          document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+          /* IE11 */
+          document.msExitFullscreen();
+        }
+      } else {
+        $('#fullscreen').css({
+          'background-image': './Assets/Buttons/FullscreenClose.png'
+        });
+        if (elem.requestFullscreen) {
+          document.documentElement.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) {
+          /* Safari */
+          document.documentElement.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+          /* IE11 */
+          document.documentElement.msRequestFullscreen();
+        }
       }
     }
   </script>
 </body>
+
 </html>

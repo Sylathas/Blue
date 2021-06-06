@@ -262,7 +262,7 @@ window.startDialogue = async function(character, communication, progress, n) {
     }, 1000);
     await new Promise(r => setTimeout(r, 70 * startingSelfDialogue[character][0][i].length));
   }
-  sectionProgress(character, communication, progress);
+  sectionProgress(character, communication, 1);
 }
 
 window.progressDialogue = async function(character, communication, progress) {
@@ -275,6 +275,8 @@ window.progressDialogue = async function(character, communication, progress) {
   //Self Dialogue
 
   for (var i = 0; i < selfDialogue[character][progress - 1].length; i++) {
+    console.log(character + progress + i);
+    console.log(selfDialogue[character][progress - 1]);
     $("#textHolder").animate({
       scrollTop: $('#textHolder').prop("scrollHeight")
     }, 1000);
@@ -310,6 +312,8 @@ window.progressDialogue = async function(character, communication, progress) {
   }
   //Character Dialogue
   for (i = 0; i < characterDialogue[character][progress - 1].length; i++) {
+    console.log(character + progress + i);
+    console.log(selfDialogue[character][progress - 1]);
     $("#textHolder").animate({
       scrollTop: $('#textHolder').prop("scrollHeight")
     }, 1000);

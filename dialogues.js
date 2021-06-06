@@ -27,8 +27,8 @@ export let selfDialogue = {
 
   ],
   Neutrum: [
-    ["It looks like there is a path, I should try to follow it.", "The being has started following me, but it looks to be calm, completely still, it’s difficult to stop looking at it."],
-    ["There is something about this path, it doesn't seem to be leading anywhere.","How strange, I stopped looking at the being for a second and now its shape has changed.","It looks like its crystals rearranged in yet another shape","maybe it has something to do with the path."],
+    ["It looks like there is a path, I should try to follow it.", "The being has started following me, but it looks to be calm, completely still", "It’s difficult to stop looking at it."],
+    ["There is something about this path, it doesn't seem to be leading anywhere.","How strange, I stopped looking at the being for a second and now its shape has changed.","It looks like its crystals rearranged in yet another shape","Maybe it has something to do with the path."],
     ["This place looks familiar…", "Either I'm going crazy, or the path is looping on itself.","There it is, the thing changed shape once again.", "It looks like it’s trying to rearrange according to the path itself."],
     ["This is enough, the path just keeps looping on itself, this is a waste of time.","…","The thing changed shape once again, now it’s a perfect pyramid, how strange… It never looked so simple.", "From up this hill I can see the whole path, I didn’t notice before but it looks like a perfect triangle.","The thing stopped following me, maybe it was travelling all this time just to reach this specific spot", "Somehow, it feels at peace."],
     ["That was strange, this place seems to know what it needs to do better than you do, what happened makes no sense, and yet…", "One could think that shapes are more complex than words, one could think that words express thoughts better than shapes, but they both have no meaning by themselves.", "Complexity is the result of getting a message across in the way that best fits each, when you look at it, complexity is the greatest reasource of all.", "I feel accomplished"]
@@ -79,7 +79,10 @@ export var characterDialogue = {
 
   ],
   Neutrum: [
-
+    ["o xo j o ksa sk k k as a a kd jd sjeu j jsk"],
+    ["ojeijcimdop4j iapscma kosmcirsnk dlcmormcos mricsi"],
+    ["ooo oooooooo ooooooooooooooo oooooooooooooooo oooo"],
+    ["i topi non avevano nipoti"]
   ],
   Swarm: [
 
