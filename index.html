@@ -10,6 +10,7 @@
   <div id="videoContainer">
     <video loop src="./Assets/BG.mp4" id="video"></video>
   </div>
+  <div id="fullscreen" onclick="fullScreen()"></div>
   <div id="loading">
     <div id="loading1" onclick="introduction(0)"></div>
     <div id="loading2" class="loadAnimation"></div>
@@ -19,5 +20,16 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script type="module" src="./dialogues.js"></script>
   <script type="module" src="./script.js"></script>
+  <script>
+    function fullScreen(){
+      if(!window.screenTop && !window.screenY) {
+        $('#fullscreen').css({'background-image':'./Assets/Buttons/FullscreenOpen.png'});
+        document.exitFullscreen();
+      } else{
+        $('#fullscreen').css({'background-image':'./Assets/Buttons/FullscreenClose.png'});
+        document.documentElement.requestFullscreen();
+      }
+    }
+  </script>
 </body>
 </html>

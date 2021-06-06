@@ -18,6 +18,11 @@
   src: url(./Assets/fonts/BSSYM7.TTF);
 }
 
+@font-face {
+  font-family: Braille;
+  src: url(./Assets/fonts/BRAILLE.ttf);
+}
+
 body{
   background-image: url("./Assets/BG.jpg");
   background-size: cover;
@@ -83,6 +88,10 @@ body{
 }
 
 .Eo{
+  font-family: Braille;
+}
+
+.Neutrum{
   font-family: Bookshelf;
 }
 
@@ -301,6 +310,26 @@ body{
   border-radius: 5px;
 }
 
+#fullscreen{
+  position: absolute;
+  top: 1%;
+  right: 5%;
+  width: 10%;
+  height: 10%;
+  background-image: url("./Assets/Buttons/FullscreenOpen.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: .5s;
+}
+
+#fullscreen:hover{
+  width: 10.5%;
+  height: 10.5%;
+}
+
 .button{
   background-color: Transparent;
   color: white;
@@ -328,8 +357,8 @@ body{
 }
 
 .visual:hover{
-  height: 34%;
-  width: 18%;
+  height: 38%;
+  width: 20%;
 }
 
 /*////////////////*/
@@ -359,24 +388,28 @@ body{
 /*//////Videos////*/
 /*////////////////*/
 
-#appearingVideo{
+#appearingVideoDiv{
   position: absolute;
   left: 0%;
   top: 0%;
   width: 100%;
   height: 100%;
   background-color: white;
-  opacity: 1;
   z-index: 2;
+  transition: 3s;
+  opacity: 1;
+}
+
+#appearingVideo{
+  min-width: 100%;
+  min-height: 100%;
+  background-color: white;
   transition: 1s;
 }
 
 #videobackground{
-  position: absolute;
-  left: 0%;
-  top: 0%;
-  width: 100%;
-  height: 100%;
+  min-width: 100%;
+  min-height: 100%;
   background-color: black;
   opacity: 1;
   z-index: 1;
@@ -387,8 +420,8 @@ body{
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
-  width:100%;
-  height:auto;
+  min-width: 100%;
+  min-height: 100%;
   z-index:-1;
   min-height: 100vh;
   opacity: 1;

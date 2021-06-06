@@ -3,8 +3,7 @@ import {
   characterDialogue,
   wrongSelfDialogue,
   wrongCharacterDialogue,
-  startingSelfDialogue,
-  startingCharacterDialogue
+  startingSelfDialogue
 } from "./dialogues.js";
 
 var start = true;
@@ -42,28 +41,27 @@ function loading() {
 
 window.introduction = function(progress) {
   if (progress == 0) {
-    textAppear("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vitae ipsum malesuada, laoreet nisl et, maximus ligula. Proin accumsan arcu sem, eget tempor turpis tristique sit amet. In aliquam bibendum mauris, sit amet congue erat. Aliquam quis turpis convallis, porttitor felis sit amet, hendrerit enim. Etiam massa orci, tristique id arcu et, pulvinar tincidunt urna.", true, "center");
+    textAppear("Every story is unique, this story makes no exception. This is a story made up of many different unique stories from all the corners of the galaxy. This is a story that takes place where diversity can be expressed, at the cost of dealing with complexity. This is a story about the struggle of understanding. Finally, this is also your story.", true, "center");
   } else if (progress == 1) {
     $(".button, p").css({
       "opacity": "0"
     });
     setTimeout(function() {
       $(".button, p").remove();
-      videoAppear("Video.mp4", true);
+      videoAppear("Intrvideo.mp4", true);
       setTimeout(function() {
-        $("#appearingVideo").css({
+        $("#appearingVideoDiv").css({
           "opacity": "0"
         });
         setTimeout(function() {
-          $("#appearingVideo, #videobackground, .button").remove();
-          $("body").css({
-            "background-color": "black",
-            "background-image": "none"
-          });
-
+          $("#appearingVideo, #videobackground, .button, #appearingVideoDiv").remove();
           gameBeginning();
         }, 1000);
-      }, 3000);
+        $("body").css({
+          "background-color": "black",
+          "background-image": "none"
+        });
+      }, 27000);
     }, 1000);
   }
 }
@@ -117,7 +115,18 @@ window.sectionProgress = function(character, communication, progress) {
     //Dialogue and selection of monuments
     console.log(`Section progress reached, with progress ${progress}`);
     selection(character, communication, progress);
-  } else {
+  } else if(progress == 4) {
+    //End of part
+    finalDialogue(character, communication, progress);
+    /*part++;
+    if(part < 4){
+      //Choose new character
+      characterChoice(part);
+    } else{
+      //End adventure
+      ending();
+    }*/
+  } else{
     //End of part
     ending();
     /*finalDialogue(character);
@@ -251,52 +260,9 @@ window.startDialogue = async function(character, communication, progress, n) {
     $("#textHolder").animate({
       scrollTop: $('#textHolder').prop("scrollHeight")
     }, 1000);
-    await new Promise(r => setTimeout(r, 35 * startingSelfDialogue[character][0][i].length));
+    await new Promise(r => setTimeout(r, 70 * startingSelfDialogue[character][0][i].length));
   }
-  //Character Dialogue
-  for (i = 0; i < startingCharacterDialogue[character][0].length; i++) {
-    $("#textHolder").animate({
-      scrollTop: $('#textHolder').prop("scrollHeight")
-    }, 1000);
-    let optionsCharacter = {
-      strings: [startingCharacterDialogue[character][0][i]],
-      typeSpeed: 40,
-      showCursor: false
-    };
-    let characterName = $("<p></p>").html("<span class='bold'>" + character + ": </span>");
-    characterName.attr({
-      "id": "characterDialogue",
-      "class": "dialogue"
-    });
-    characterName.css({
-      "margin-bottom": "0"
-    });
-    let characterText = $("<p></p>");
-    characterText.attr({
-      "id": "characterDialogue",
-      "class": "dialogue scrollableDialogue" + dialoghi.toString()
-    });
-    characterText.addClass(character);
-    characterText.css({
-      "margin-top": "0"
-    });
-    $("#textHolder").append(characterName, characterText);
-    new Typed(".scrollableDialogue" + dialoghi.toString(), optionsCharacter);
-    dialoghi++;
-    $("#textHolder").animate({
-      scrollTop: $('#textHolder').prop("scrollHeight")
-    }, 1000);
-    await new Promise(r => setTimeout(r, 35 * startingCharacterDialogue[character][0].length));
-  }
-  //Continue button
-  let continueButton = $("<button></button>").text("Continue");
-  continueButton.attr({
-    "id": "continueButton",
-    "class": "button",
-    'onclick': `sectionProgress("${character}", "${communication}", ${progress})`
-  });
-  //Add them to the body
-  $("body").append(continueButton);
+  sectionProgress(character, communication, progress);
 }
 
 window.progressDialogue = async function(character, communication, progress) {
@@ -468,6 +434,97 @@ window.wrongDialogue = async function(character, communication, progress) {
   $("body").append(continueButton);
 }
 
+window.finalDialogue = async function(character, communication, progress) {
+  //Remove old dialogues and buttons
+  $(".button").remove();
+  progress++;
+  //Prototyping help
+  //prototyping(progress);
+  //Self Dialogue
+  if(communication == "visual"){
+    $("#video").attr({"src":"BG_" + character + ".mp4"});
+  }
+
+  for (var i = 0; i < selfDialogue[character][4].length; i++) {
+    $("#textHolder").animate({
+      scrollTop: $('#textHolder').prop("scrollHeight")
+    }, 1000);
+    //typed
+    let optionsSelf = {
+      strings: [selfDialogue[character][4][i]],
+      typeSpeed: 20,
+      showCursor: false
+    };
+    let selfName = $("<p></p>").html("<span class='bold'>Me: </span>");
+    selfName.attr({
+      "id": "selfDialogue",
+      "class": "dialogue"
+    });
+    selfName.css({
+      "margin-bottom": "0"
+    });
+    let selfText = $("<p></p>");
+    selfText.attr({
+      "id": "selfDialogue",
+      "class": "dialogue scrollableDialogue" + dialoghi.toString()
+    });
+    selfText.css({
+      "margin-top": "0"
+    });
+    $("#textHolder").append(selfName, selfText);
+    new Typed(".scrollableDialogue" + dialoghi.toString(), optionsSelf);
+    dialoghi++;
+    $("#textHolder").animate({
+      scrollTop: $('#textHolder').prop("scrollHeight")
+    }, 1000);
+    await new Promise(r => setTimeout(r, 35 * selfDialogue[character][4][i].length));
+  }
+  //Character Dialogue
+  for (i = 0; i < characterDialogue[character][4].length; i++) {
+    $("#textHolder").animate({
+      scrollTop: $('#textHolder').prop("scrollHeight")
+    }, 1000);
+    let optionsCharacter = {
+      strings: [characterDialogue[character][4][i]],
+      typeSpeed: 20,
+      showCursor: false
+    };
+    let characterName = $("<p></p>").html("<span class='bold'>" + character + ": </span>");
+    characterName.attr({
+      "id": "characterDialogue",
+      "class": "dialogue"
+    });
+    characterName.css({
+      "margin-bottom": "0"
+    });
+    let characterText = $("<p></p>");
+    characterText.attr({
+      "id": "characterDialogue",
+      "class": "dialogue scrollableDialogue" + dialoghi.toString()
+    });
+    characterText.addClass(character);
+    characterText.css({
+      "margin-top": "0"
+    });
+    $("#textHolder").append(characterName, characterText);
+    new Typed(".scrollableDialogue" + dialoghi.toString(), optionsCharacter);
+    dialoghi++;
+    $("#textHolder").animate({
+      scrollTop: $('#textHolder').prop("scrollHeight")
+    }, 1000);
+    await new Promise(r => setTimeout(r, 35 * characterDialogue[character][4].length));
+  }
+  //Continue button
+  let continueButton = $("<button></button>").text("Continue");
+  continueButton.attr({
+    "id": "continueButton",
+    "class": "button",
+    'onclick': `sectionProgress("${character}", "${communication}", ${progress})`
+  });
+  //Add them to the body
+  $("body").append(continueButton);
+}
+
 window.selection = function(character, communication, progress) {
   stopvideo();
   let buttons = ["choiceOne", "choiceTwo", "choiceThree"];
@@ -494,7 +551,7 @@ window.selection = function(character, communication, progress) {
   }
   //Self Dialogue
   let optionsSelf = {
-    strings: ["Which monument do you want to choose?"],
+    strings: ["<i>It’s strange, but I almost feel like I can see the directions in my head, I feel like I need to choose wisely…</i>"],
     typeSpeed: 20,
     showCursor: false
   };
@@ -632,12 +689,12 @@ window.stopvideo = function() {
 window.textAppear = function(text, intr, buttonPos) {
   if (intr) {
     $("#loading").css({
-      "left": "5%",
-      "top": "5%",
+      "left": "8%",
+      "top": "6%",
       "transform": "translate(-50%,-50%)",
-      "width": "20%",
-      "height": "20%",
-      "z-index": "5a"
+      "width": "25%",
+      "height": "25%",
+      "z-index": "10"
     });
     $("#pLoading").css({
       "opacity": "0",
@@ -673,7 +730,8 @@ window.videoAppear = function(link, intr) {
       });
     }, 500);
   }
-  let appearingvideo = $("<div></div>").text("QUESTO È DOVE SARÀ IL VIDEO, DURA TRE SECONDI");
+  let appearingvideodiv = $("<div id='appearingVideoDiv'></div>")
+  let appearingvideo = $("<video src='./Assets/" + link + "'></div>")
   appearingvideo.attr({
     "id": "appearingVideo"
   });
@@ -681,7 +739,9 @@ window.videoAppear = function(link, intr) {
   videobackground.attr({
     "id": "videobackground"
   });
-  $("body").append(appearingvideo, videobackground);
+  $("body").append(appearingvideodiv);
+  $("#appearingVideoDiv").append(appearingvideo, videobackground);
+  $('#appearingVideo')[0].play();
 }
 
 window.showDialogueText = async function(character, progress) {
@@ -735,10 +795,11 @@ window.showDialogueText = async function(character, progress) {
     startvideo();
     setTimeout(function(){
       showDialogueText("Firstmeeting", 1);
+      document.querySelector('video').playbackRate = 1;
     }, 3500);
     setTimeout(function(){
       characterChoice(2);
-    }, 5000);
+    }, 18000);
   }
 }
 
