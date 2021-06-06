@@ -3,7 +3,8 @@ import {
   characterDialogue,
   wrongSelfDialogue,
   wrongCharacterDialogue,
-  startingSelfDialogue
+  startingSelfDialogue,
+  characterDescription
 } from "./dialogues.js";
 
 var start = true;
@@ -89,7 +90,7 @@ window.gameBeginning = async function() {
       "height": "39.5vw"
     });
     setTimeout(function() {
-      showDialogueText("Introduction", 1)
+      showDialogueText("selfDialogue", "Introduction", 1)
     }, 1000);
   }, 1200);
 }
@@ -102,6 +103,7 @@ window.characterChoice = function(part) {
     createCharacter("TEDD", "two");
     createCharacter("Joe", "three");
   } else if (part == 2) {
+    showDialogueText("selfDialogue", "Firstmeeting", 2);
     createCharacter("Eo", "one");
     createCharacter("Neutrum", "two");
   } else if (part == 3) {
@@ -115,7 +117,7 @@ window.sectionProgress = function(character, communication, progress) {
     //Dialogue and selection of monuments
     console.log(`Section progress reached, with progress ${progress}`);
     selection(character, communication, progress);
-  } else if(progress == 4) {
+  } else if (progress == 4) {
     //End of part
     finalDialogue(character, communication, progress);
     /*part++;
@@ -126,7 +128,7 @@ window.sectionProgress = function(character, communication, progress) {
       //End adventure
       ending();
     }*/
-  } else{
+  } else {
     //End of part
     ending();
     /*finalDialogue(character);
@@ -157,12 +159,16 @@ window.ending = function() {
 
 window.createCharacter = function(character, n) {
   //Create parent div
-  let characterDiv = $("<div></div>");
+  let characterDiv = $("<div></div>").text(character);
   characterDiv.attr({
     "id": "choosecharacter",
-    "class": n,
-    "onclick": `startDialogue("${character}", 'visual', 1, "${n}")`
+    "class": n
   });
+  setTimeout(function() {
+    characterDiv.attr({
+      "onclick": `characterFocus("${character}", "${n}")`
+    });
+  }, 18000);
   //Create Div with as background image the sprite of the character
   let characterPath = `./Assets/Characters/"${character}".gif`.replace(/['"]+/g, '');
   let characterId = `characterAnimation"${n}"`.replace(/['"]+/g, '');
@@ -179,10 +185,12 @@ window.createCharacter = function(character, n) {
   //append everything
   $("body").append(characterDiv, characterTag);
   $("#choosecharacter." + n).append(characterAnimation, characterQR);
-  $("#choosecharacter." + n + ", #characterTag." + n).css({"opacity": "1"});
+  $("#choosecharacter." + n + ", #characterTag." + n).css({
+    "opacity": "1"
+  });
   let tagPath = `./Assets/Buttons/"${character}".png`.replace(/['"]+/g, '');
 
-  $("#choosecharacter." + n + ", .QR" + n).hover(function() {
+  $("#choosecharacter." + n + ", .QR" + n).mouseenter(function() {
     $("#characterAnimation" + n).css({
       "opacity": `.5`
     });
@@ -203,25 +211,31 @@ window.createCharacter = function(character, n) {
 window.startDialogue = async function(character, communication, progress, n) {
   startvideo();
   //Remove old dialogues and buttons
-  $("#characterTag.one").css({"opacity": "0"});
-  $("#characterTag.two").css({"opacity": "0"});
-  if(n == "one"){
+  $("#characterTag.one").css({
+    "opacity": "0"
+  });
+  $("#characterTag.two").css({
+    "opacity": "0"
+  });
+  if (n == "one") {
     $("#choosecharacter.two").remove();
-    if($("#choosecharacter.three")){
+    if ($("#choosecharacter.three")) {
       $("#choosecharacter.three").remove();
     }
-  } else if(n == "two"){
+  } else if (n == "two") {
     $("#choosecharacter.one").remove();
-    if($("#choosecharacter.three")){
+    if ($("#choosecharacter.three")) {
       $("#choosecharacter.three").remove();
     }
-  } else if(n == "three"){
+  } else if (n == "three") {
     $("#choosecharacter.one").remove();
     $("#choosecharacter.two").remove();
   }
 
-  $("." + n).css({"left": "20%"});
-  setTimeout(function(){
+  $("." + n).css({
+    "left": "20%"
+  });
+  setTimeout(function() {
     $("#characterTag.one").remove();
     $("#characterTag.two").remove();
   }, 500);
@@ -269,7 +283,6 @@ window.progressDialogue = async function(character, communication, progress) {
   startvideo();
   //Remove old dialogues and buttons
   $(".button").remove();
-  progress++;
   //Prototyping help
   //prototyping(progress);
   //Self Dialogue
@@ -347,6 +360,7 @@ window.progressDialogue = async function(character, communication, progress) {
     }, 1000);
     await new Promise(r => setTimeout(r, 35 * characterDialogue[character][progress - 1].length));
   }
+  progress++;
   //Continue button
   let continueButton = $("<button></button>").text("Continue");
   continueButton.attr({
@@ -361,8 +375,10 @@ window.progressDialogue = async function(character, communication, progress) {
 window.wrongDialogue = async function(character, communication, progress) {
   startvideo();
   //Remove old dialogues and buttons
-  $(".button").css({"opacity": "0"});
-  setTimeout(function(){
+  $(".button").css({
+    "opacity": "0"
+  });
+  setTimeout(function() {
     $(".button").remove();
   }, 1000);
   progress = 0;
@@ -445,8 +461,10 @@ window.finalDialogue = async function(character, communication, progress) {
   //Prototyping help
   //prototyping(progress);
   //Self Dialogue
-  if(communication == "visual"){
-    $("#video").attr({"src":"BG_" + character + ".mp4"});
+  if (communication == "visual") {
+    $("#video").attr({
+      "src": "BG_" + character + ".mp4"
+    });
   }
 
   for (var i = 0; i < selfDialogue[character][4].length; i++) {
@@ -529,6 +547,86 @@ window.finalDialogue = async function(character, communication, progress) {
   $("body").append(continueButton);
 }
 
+window.characterFocus = function(character, n) {
+  $(".button").remove();
+  showDialogueText("characterDescription", character, 1);
+  $("#choosecharacter." + n).css({
+    "pointer-events": "auto",
+    "opacity": "1",
+    "width": "20%",
+    "height": "25%"
+  });
+  if (n == "one") {
+    $("#choosecharacter.two, .QRtwo, #choosecharacter.three, .QRthree").off('mouseenter, mouseout');
+    $("#choosecharacter.two").css({
+      "pointer-events": "none",
+      "opacity": "0.5",
+      "width": "20%",
+      "height": "15%"
+    });
+    if ($("#choosecharacter.three")) {
+      $("#choosecharacter.three").css({
+        "pointer-events": "none",
+        "opacity": "0.5",
+        "width": "20%",
+        "height": "15%"
+      });
+    }
+  } else if (n == "two") {
+    $("#choosecharacter.one, .QRone, #choosecharacter.three, .QRthree").off('mouseenter, mouseout');
+    $("#choosecharacter.one").css({
+      "pointer-events": "none",
+      "opacity": "0.5",
+      "width": "20%",
+      "height": "15%"
+    });
+    if ($("#choosecharacter.three")) {
+      $("#choosecharacter.three").css({
+        "pointer-events": "none",
+        "opacity": "0.5",
+        "width": "20%",
+        "height": "15%"
+      });
+    }
+  } else if (n == "three") {
+    $("#choosecharacter.one, .QRone, #choosecharacter.two, .QRtwo").off('mouseenter, mouseout');
+    $("#choosecharacter.one, #choosecharacter.two").css({
+      "pointer-events": "none",
+      "opacity": "0.5",
+      "width": "20%",
+      "height": "15%"
+    });
+  }
+  $("#choosecharacter." + n + ", .QR" + n).mouseenter(function() {
+    $("#characterAnimation" + n).css({
+      "opacity": `.5`
+    });
+    $(".QR" + n).css({
+      "opacity": `1`
+    });
+  });
+  $("#choosecharacter." + n + ", .QR" + n).mouseout(function() {
+    $("#characterAnimation" + n).css({
+      "opacity": `1`
+    });
+    $(".QR" + n).css({
+      "opacity": `0`
+    });
+  });
+  setTimeout(function(){
+    $("#choosecharacter.one, #choosecharacter.two, #choosecharacter.three").css({
+      "pointer-events": "auto"
+    }, 10000);
+  })
+  let continueButton = $("<button></button>").text("Choose");
+  continueButton.attr({
+    "id": "continueButton",
+    "class": "button",
+    'onclick': `startDialogue("${character}", "visual", 1, "${n}")`
+  });
+  $("body").append(continueButton);
+}
+
 window.selection = function(character, communication, progress) {
   stopvideo();
   let buttons = ["choiceOne", "choiceTwo", "choiceThree"];
@@ -592,7 +690,7 @@ window.selection = function(character, communication, progress) {
   choiceTwo.css("background-image", "url(./Assets/Totems/2/" + (Math.floor(Math.random() * 5) + 1) + ".gif");
   let choiceThree = $("<button></button>");
   choiceThree.css("background-image", "url(./Assets/Totems/3/" + (Math.floor(Math.random() * 5) + 1) + ".gif");
-  if(character == "Neutrum"){
+  if (character == "Neutrum") {
     choiceOne.attr({
       "id": buttons[0],
       "class": communication + " button",
@@ -608,7 +706,7 @@ window.selection = function(character, communication, progress) {
       "class": communication + " button",
       'onclick': `progressDialogue("${character}", "${communication}", ${progress})`
     });
-  } else if(character == "Eo"){
+  } else if (character == "Eo") {
     choiceOne.attr({
       "id": buttons[0],
       "class": communication + " button",
@@ -630,9 +728,11 @@ window.selection = function(character, communication, progress) {
   }
   //Add them to the page
   $("body").append(choiceOne, choiceTwo, choiceThree);
-  $(".visual, .text, .sound").css({"opacity": ".8"});
+  $(".visual, .text, .sound").css({
+    "opacity": ".8"
+  });
 
-  $("#characterAnimation, #QR").hover(function() {
+  $("#characterAnimation, #QR").mouseenter(function() {
     $("#characterAnimation").css({
       "opacity": `.5`
     });
@@ -703,7 +803,9 @@ window.textAppear = function(text, intr, buttonPos) {
     $("#pLoading").css({
       "opacity": "0",
     });
-    $("#loading1").css({'cursor': 'auto'})
+    $("#loading1").css({
+      'cursor': 'auto'
+    })
   }
   let continueButton = $("<button></button>").text("Continue");
   continueButton.attr({
@@ -748,18 +850,32 @@ window.videoAppear = function(link, intr) {
   $('#appearingVideo')[0].play();
 }
 
-window.showDialogueText = async function(character, progress) {
+window.showDialogueText = async function(part, character, progress) {
   $(".button").remove();
-  for (var i = 0; i < selfDialogue[character][progress - 1].length; i++) {
+  let number;
+  if (part == "selfDialogue") {
+    number = selfDialogue[character][progress - 1].length;
+  } else {
+    number = characterDescription[character][progress - 1].length;
+  }
+  for (var i = 0; i < number; i++) {
     $("#textHolder").animate({
       scrollTop: $('#textHolder').prop("scrollHeight")
     }, 1000);
     //typed
-    let optionsSelf = {
-      strings: [selfDialogue[character][progress - 1][i]],
-      typeSpeed: 40,
-      showCursor: false
-    };
+    if (part == "selfDialogue") {
+      var optionsSelf = {
+        strings: [selfDialogue[character][progress - 1][i]],
+        typeSpeed: 40,
+        showCursor: false
+      };
+    } else {
+      var optionsSelf = {
+        strings: [characterDescription[character][progress - 1][i]],
+        typeSpeed: 40,
+        showCursor: false
+      };
+    }
     let selfName = $("<p></p>").html("<span class='bold'>Me: </span>");
     selfName.attr({
       "id": "selfDialogue",
@@ -782,7 +898,11 @@ window.showDialogueText = async function(character, progress) {
     $("#textHolder").animate({
       scrollTop: $('#textHolder').prop("scrollHeight")
     }, 1000);
-    await new Promise(r => setTimeout(r, 70 * selfDialogue[character][progress - 1][i].length));
+    if (part == "selfDialogue") {
+      await new Promise(r => setTimeout(r, 70 * selfDialogue[character][progress - 1][i].length));
+    } else {
+      await new Promise(r => setTimeout(r, 70 * characterDescription[character][progress - 1][i].length));
+    }
   }
   $("#textHolder").animate({
     scrollTop: $('#textHolder').prop("scrollHeight")
@@ -792,16 +912,16 @@ window.showDialogueText = async function(character, progress) {
     continueButton.attr({
       "id": "continueButton",
       "class": "button",
-      'onclick': `showDialogueText("Introduction", 2)`
+      'onclick': `showDialogueText("selfDialogue", "Introduction", 2)`
     });
     $("body").append(continueButton);
-  } else if(progress == 2 && character == "Introduction"){
+  } else if (progress == 2 && character == "Introduction") {
     startvideo();
-    setTimeout(function(){
-      showDialogueText("Firstmeeting", 1);
+    setTimeout(function() {
+      showDialogueText("selfDialogue", "Firstmeeting", 1);
       document.querySelector('video').playbackRate = 1;
     }, 3500);
-    setTimeout(function(){
+    setTimeout(function() {
       characterChoice(2);
     }, 18000);
   }

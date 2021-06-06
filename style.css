@@ -73,6 +73,7 @@ body{
   bottom: 10%;
   opacity: 0;
   cursor: pointer;
+  font-size: 0;
 }
 
 #characterTag{
