@@ -1,8 +1,11 @@
 //Arrays with dialogues
 export let selfDialogue = {
   Introduction: [
-    ["Your back is killing you","Everything is a little blurry", "like waking up after a long sleep, there was a journey, a long one, the landing was a bit rough though","The suit has taken quite a hit, it's not sure what it's for but it's best to check if the systems are all working properly"],
-    ["The journey was a year long, you probably slept for a bit, that explains the confusion ...","In time perhaps, memories will come back on their own","The sand feels soft under your feet, the effect of gravity on this planet seems weaker","The horizon is barren, only mountains and a sea of sand","It’s difficult to explain, but it feels like something is waiting to be found , whatever it is it is better to start moving"]
+    ["Your back is killing you.","Everything is a little blurry, like waking up after a long sleep.", "There was a journey, a long one, the landing was a bit rough though.","The suit has taken quite a hit, it's not sure what it's for but it's best to check if the systems are all working properly."],
+    ["The journey was a year long, you probably slept for a bit, that explains the confusion ...","In time perhaps, memories will come back on their own","The sand feels soft under your feet, the effect of gravity on this planet seems weaker.","The horizon is barren, only mountains and a sea of sand.","It’s difficult to explain, but it feels like something is waiting to be found.", "Whatever it is, it's better to start moving."]
+  ],
+  Firstmeeting: [
+    ["I see someone!", "bro ma chi cazzo siete"]
   ],
   Eo: [
     ["There seems to be a path...", "Let's try following it","This thing looks unstable, yet charming; it's changing shape slightly"],
@@ -50,6 +53,48 @@ export var characterDialogue = {
   ],
   Neutrum: [
 
+  ],
+  Swarm: [
+
+  ]
+};
+
+export var startingSelfDialogue = {
+  Eo: [
+    ["Ciao fra", "come va"],
+  ],
+  Maisie: [
+  ],
+  Pa: [
+  ],
+  Tedd: [
+  ],
+  Joe: [
+
+  ],
+  Neutrum: [
+    ["Ciao bro", "come spacca"],
+  ],
+  Swarm: [
+
+  ]
+};
+
+export var startingCharacterDialogue = {
+  Eo: [
+    ["Ciao bello", "tutto a posto dai"],
+  ],
+  Maisie: [
+  ],
+  Pa: [
+  ],
+  Tedd: [
+  ],
+  Joe: [
+
+  ],
+  Neutrum: [
+    ["Bella reguz", "la vita è abba chill"],
   ],
   Swarm: [
 

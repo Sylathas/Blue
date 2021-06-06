@@ -2,7 +2,9 @@ import {
   selfDialogue,
   characterDialogue,
   wrongSelfDialogue,
-  wrongCharacterDialogue
+  wrongCharacterDialogue,
+  startingSelfDialogue,
+  startingCharacterDialogue
 } from "./dialogues.js";
 
 var start = true;
@@ -34,24 +36,6 @@ function loading() {
     $("#loading1").css({
       'opacity': "1",
       "cursor": "pointer"
-    });
-    $("#loading1, #pLoading").mouseenter(function() {
-      $("#loading").css({
-        "height": "110%",
-        "width": "110%"
-      });
-      $("#pLoading").css({
-        'text-shadow': "0 0 20px #fff"
-      });
-    });
-    $("#loading1, #pLoading").mouseleave(function() {
-      $("#loading").css({
-        "height": "100%",
-        "width": "100%"
-      });
-      $("#pLoading").css({
-        'text-shadow': "0 0 10px #fff"
-      });
     });
   }, 500);
 }
@@ -114,16 +98,17 @@ window.gameBeginning = async function() {
 
 window.characterChoice = function(part) {
   //Create the divs containing the sprites and QR's of the characters
+  stopvideo();
   if (part == 1) {
-    createCharacter("Pa");
-    createCharacter("TEDD");
-    createCharacter("Joe");
+    createCharacter("Pa", "one");
+    createCharacter("TEDD", "two");
+    createCharacter("Joe", "three");
   } else if (part == 2) {
-    createCharacter("Eo");
-    createCharacter("Neutrum");
+    createCharacter("Eo", "one");
+    createCharacter("Neutrum", "two");
   } else if (part == 3) {
-    createCharacter("Maisie");
-    createCharacter("Swarm");
+    createCharacter("Maisie", "one");
+    createCharacter("Swarm", "two");
   }
 }
 
@@ -161,10 +146,157 @@ window.ending = function() {
 
 //FUNCTIONS ABOUT DIALOGUES, CHOICES AND DIV CREATION
 
-window.createCharacter = function(character) {
+window.createCharacter = function(character, n) {
   //Create parent div
+  let characterDiv = $("<div></div>");
+  characterDiv.attr({
+    "id": "choosecharacter",
+    "class": n,
+    "onclick": `startDialogue("${character}", 'visual', 1, "${n}")`
+  });
   //Create Div with as background image the sprite of the character
+  let characterPath = `./Assets/Characters/"${character}".gif`.replace(/['"]+/g, '');
+  let characterId = `characterAnimation"${n}"`.replace(/['"]+/g, '');
+  let characterAnimation = $(`<img id="${characterId}" src='${characterPath}' style='width:auto; height:100%; position: relative; left: 10%; transition: .5s;'>`);
   //Create Div with as background the QR of the character
+  let qrPath = `./Assets/QR/"${character}".png`.replace(/['"]+/g, '');
+  let characterQR = $("<img id='QR' class='QR" + n + "' src=" + qrPath + "></img>");
+  //Create Character Tag
+  let characterTag = $("<div></div>");
+  characterTag.attr({
+    "id": "characterTag",
+    "class": n + " " + n + character
+  });
+  //append everything
+  $("body").append(characterDiv, characterTag);
+  $("#choosecharacter." + n).append(characterAnimation, characterQR);
+  $("#choosecharacter." + n + ", #characterTag." + n).css({"opacity": "1"});
+  let tagPath = `./Assets/Buttons/"${character}".png`.replace(/['"]+/g, '');
+
+  $("#choosecharacter." + n + ", .QR" + n).hover(function() {
+    $("#characterAnimation" + n).css({
+      "opacity": `.5`
+    });
+    $(".QR" + n).css({
+      "opacity": `1`
+    });
+  });
+  $("#choosecharacter." + n + ", .QR" + n).mouseout(function() {
+    $("#characterAnimation" + n).css({
+      "opacity": `1`
+    });
+    $(".QR" + n).css({
+      "opacity": `0`
+    });
+  });
+}
+
+window.startDialogue = async function(character, communication, progress, n) {
+  startvideo();
+  //Remove old dialogues and buttons
+  $("#characterTag.one").css({"opacity": "0"});
+  $("#characterTag.two").css({"opacity": "0"});
+  if(n == "one"){
+    $("#choosecharacter.two").remove();
+    if($("#choosecharacter.three")){
+      $("#choosecharacter.three").remove();
+    }
+  } else if(n == "two"){
+    $("#choosecharacter.one").remove();
+    if($("#choosecharacter.three")){
+      $("#choosecharacter.three").remove();
+    }
+  } else if(n == "three"){
+    $("#choosecharacter.one").remove();
+    $("#choosecharacter.two").remove();
+  }
+
+  $("." + n).css({"left": "20%"});
+  setTimeout(function(){
+    $("#characterTag.one").remove();
+    $("#characterTag.two").remove();
+  }, 500);
+  //Prototyping help
+  //prototyping(progress);
+  //Self Dialogue
+  for (var i = 0; i < startingSelfDialogue[character][0].length; i++) {
+    $("#textHolder").animate({
+      scrollTop: $('#textHolder').prop("scrollHeight")
+    }, 1000);
+    //typed
+    let optionsSelf = {
+      strings: [startingSelfDialogue[character][0][i]],
+      typeSpeed: 40,
+      showCursor: false
+    };
+    let selfName = $("<p></p>").html("<span class='bold'>Me: </span>");
+    selfName.attr({
+      "id": "selfDialogue",
+      "class": "dialogue"
+    });
+    selfName.css({
+      "margin-bottom": "0"
+    });
+    let selfText = $("<p></p>");
+    selfText.attr({
+      "id": "selfDialogue",
+      "class": "dialogue scrollableDialogue" + dialoghi.toString()
+    });
+    selfText.css({
+      "margin-top": "0"
+    });
+    $("#textHolder").append(selfName, selfText);
+    new Typed(".scrollableDialogue" + dialoghi.toString(), optionsSelf);
+    dialoghi++;
+    $("#textHolder").animate({
+      scrollTop: $('#textHolder').prop("scrollHeight")
+    }, 1000);
+    await new Promise(r => setTimeout(r, 35 * startingSelfDialogue[character][0][i].length));
+  }
+  //Character Dialogue
+  for (i = 0; i < startingCharacterDialogue[character][0].length; i++) {
+    $("#textHolder").animate({
+      scrollTop: $('#textHolder').prop("scrollHeight")
+    }, 1000);
+    let optionsCharacter = {
+      strings: [startingCharacterDialogue[character][0][i]],
+      typeSpeed: 40,
+      showCursor: false
+    };
+    let characterName = $("<p></p>").html("<span class='bold'>" + character + ": </span>");
+    characterName.attr({
+      "id": "characterDialogue",
+      "class": "dialogue"
+    });
+    characterName.css({
+      "margin-bottom": "0"
+    });
+    let characterText = $("<p></p>");
+    characterText.attr({
+      "id": "characterDialogue",
+      "class": "dialogue scrollableDialogue" + dialoghi.toString()
+    });
+    characterText.addClass(character);
+    characterText.css({
+      "margin-top": "0"
+    });
+    $("#textHolder").append(characterName, characterText);
+    new Typed(".scrollableDialogue" + dialoghi.toString(), optionsCharacter);
+    dialoghi++;
+    $("#textHolder").animate({
+      scrollTop: $('#textHolder').prop("scrollHeight")
+    }, 1000);
+    await new Promise(r => setTimeout(r, 35 * startingCharacterDialogue[character][0].length));
+  }
+  //Continue button
+  let continueButton = $("<button></button>").text("Continue");
+  continueButton.attr({
+    "id": "continueButton",
+    "class": "button",
+    'onclick': `sectionProgress("${character}", "${communication}", ${progress})`
+  });
+  //Add them to the body
+  $("body").append(continueButton);
 }
 
 window.progressDialogue = async function(character, communication, progress) {
@@ -259,7 +391,10 @@ window.progressDialogue = async function(character, communication, progress) {
 window.wrongDialogue = async function(character, communication, progress) {
   startvideo();
   //Remove old dialogues and buttons
-  $(".button").remove();
+  $(".button").css({"opacity": "0"});
+  setTimeout(function(){
+    $(".button").remove();
+  }, 1000);
   progress = 0;
   //Prototyping help
   //prototyping(progress);
@@ -343,12 +478,15 @@ window.selection = function(character, communication, progress) {
 
   if (start) {
     //Character
+    $("#choosecharacter").remove();
     let characterDiv = $("<div></div>");
     characterDiv.attr({
       "id": "character"
     });
-    let characterAnimation = $(`<img id="characterAnimation" src='./Assets/Eo.gif' style='width:auto; height:100%; position: relative; left: 10%; transition: .5s;'></video>`);
-    let characterQR = $("<img id='QR' src='./Assets/QR/Eo.png'></img>");
+    let characterPath = `./Assets/Characters/"${character}".gif`.replace(/['"]+/g, '');
+    let characterAnimation = $(`<img id="characterAnimation" src="${characterPath}" style='width:auto; height:100%; position: relative; left: 10%; transition: .5s;'></video>`);
+    let qrPath = `./Assets/QR/"${character}".png`.replace(/['"]+/g, '');
+    let characterQR = $("<img id='QR' src=" + qrPath + "></img>");
 
     $("body").append(characterDiv);
     $("#character").append(characterAnimation, characterQR);
@@ -388,32 +526,54 @@ window.selection = function(character, communication, progress) {
 
   //Create the three buttons with the choices
   let choiceOne = $("<button></button>");
-  choiceOne.attr({
-    "id": buttons[0],
-    "class": communication + " button",
-    'onclick': `wrongDialogue("${character}", "${communication}", ${progress})`
-  });
   choiceOne.css("background-image", "url(./Assets/Totems/1/" + (Math.floor(Math.random() * 5) + 1) + ".gif");
   let choiceTwo = $("<button></button>");
-  choiceTwo.attr({
-    "id": buttons[1],
-    "class": communication + " button",
-    'onclick': `progressDialogue("${character}", "${communication}", ${progress})`
-  });
   choiceTwo.css("background-image", "url(./Assets/Totems/2/" + (Math.floor(Math.random() * 5) + 1) + ".gif");
   let choiceThree = $("<button></button>");
-  choiceThree.attr({
-    "id": buttons[2],
-    "class": communication + " button",
-    'onclick': `wrongDialogue("${character}", "${communication}", ${progress})`
-  });
   choiceThree.css("background-image", "url(./Assets/Totems/3/" + (Math.floor(Math.random() * 5) + 1) + ".gif");
+  if(character == "Neutrum"){
+    choiceOne.attr({
+      "id": buttons[0],
+      "class": communication + " button",
+      'onclick': `wrongDialogue("${character}", "${communication}", ${progress})`
+    });
+    choiceTwo.attr({
+      "id": buttons[1],
+      "class": communication + " button",
+      'onclick': `wrongDialogue("${character}", "${communication}", ${progress})`
+    });
+    choiceThree.attr({
+      "id": buttons[2],
+      "class": communication + " button",
+      'onclick': `progressDialogue("${character}", "${communication}", ${progress})`
+    });
+  } else if(character == "Eo"){
+    choiceOne.attr({
+      "id": buttons[0],
+      "class": communication + " button",
+      'onclick': `wrongDialogue("${character}", "${communication}", ${progress})`
+    });
+    choiceOne.css("background-image", "url(./Assets/Totems/1/" + (Math.floor(Math.random() * 5) + 1) + ".gif");
+    choiceTwo.attr({
+      "id": buttons[1],
+      "class": communication + " button",
+      'onclick': `progressDialogue("${character}", "${communication}", ${progress})`
+    });
+    choiceTwo.css("background-image", "url(./Assets/Totems/2/" + (Math.floor(Math.random() * 5) + 1) + ".gif");
+    choiceThree.attr({
+      "id": buttons[2],
+      "class": communication + " button",
+      'onclick': `wrongDialogue("${character}", "${communication}", ${progress})`
+    });
+    choiceThree.css("background-image", "url(./Assets/Totems/3/" + (Math.floor(Math.random() * 5) + 1) + ".gif");
+  }
   //Add them to the page
   $("body").append(choiceOne, choiceTwo, choiceThree);
+  $(".visual, .text, .sound").css({"opacity": ".8"});
 
   $("#characterAnimation, #QR").hover(function() {
     $("#characterAnimation").css({
-      "opacity": `.8`
+      "opacity": `.5`
     });
     $("#QR").css({
       "opacity": `1`
@@ -450,7 +610,7 @@ window.startvideo = function() {
     document.querySelector('video').playbackRate = i;
     if (i > 1) {
       clearInterval(intervalId);
-      document.querySelector('video').playbackRate = 1;
+      document.querySelector('video').playbackRate = 1.3;
     }
   }, 150);
 }
@@ -472,14 +632,17 @@ window.stopvideo = function() {
 window.textAppear = function(text, intr, buttonPos) {
   if (intr) {
     $("#loading").css({
-      "opacity": "0"
+      "left": "5%",
+      "top": "5%",
+      "transform": "translate(-50%,-50%)",
+      "width": "20%",
+      "height": "20%",
+      "z-index": "5a"
     });
-    setTimeout(function() {
-      $("#loading").css({
-        "display": "none"
-      });
-    }, 500);
-    //Continue button
+    $("#pLoading").css({
+      "opacity": "0",
+    });
+    $("#loading1").css({'cursor': 'auto'})
   }
   let continueButton = $("<button></button>").text("Continue");
   continueButton.attr({
@@ -530,7 +693,7 @@ window.showDialogueText = async function(character, progress) {
     //typed
     let optionsSelf = {
       strings: [selfDialogue[character][progress - 1][i]],
-      typeSpeed: 20,
+      typeSpeed: 40,
       showCursor: false
     };
     let selfName = $("<p></p>").html("<span class='bold'>Me: </span>");
@@ -555,27 +718,28 @@ window.showDialogueText = async function(character, progress) {
     $("#textHolder").animate({
       scrollTop: $('#textHolder').prop("scrollHeight")
     }, 1000);
-    await new Promise(r => setTimeout(r, 50 * selfDialogue[character][progress - 1][i].length));
+    await new Promise(r => setTimeout(r, 70 * selfDialogue[character][progress - 1][i].length));
   }
   $("#textHolder").animate({
     scrollTop: $('#textHolder').prop("scrollHeight")
   }, 1000);
   let continueButton = $("<button></button>").text("Continue");
-  if (progress == 1) {
+  if (progress == 1 && character == "Introduction") {
     continueButton.attr({
       "id": "continueButton",
       "class": "button",
       'onclick': `showDialogueText("Introduction", 2)`
     });
-  } else {
-    continueButton.attr({
-      "id": "continueButton",
-      "class": "button",
-      'onclick': `selection("Eo", "visual", 1)`
-    });
+    $("body").append(continueButton);
+  } else if(progress == 2 && character == "Introduction"){
+    startvideo();
+    setTimeout(function(){
+      showDialogueText("Firstmeeting", 1);
+    }, 3500);
+    setTimeout(function(){
+      characterChoice(2);
+    }, 5000);
   }
-  $("body").append(continueButton);
-  return progress + 1;
 }
 
 window.prototyping = function(progress) {

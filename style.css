@@ -1,3 +1,7 @@
+/*////////////////*/
+/*//////Fonts/////*/
+/*////////////////*/
+
 @font-face {
   font-family: Blender;
   src: url(./Assets/fonts/BlenderPro-Medium.ttf);
@@ -24,48 +28,9 @@ body{
   margin: 0;
 }
 
-.button{
-  background-color: Transparent;
-  color: white;
-  cursor: pointer;
-  padding: 10px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  border: none;
-  opacity: 0.8;
-  transition: 0.3s;
-}
-
-.button:hover{
-  opacity: 1;
-}
-
-.dialogue{
-  font-size: 18px;
-}
-
-.visual{
-  font-size: 0;
-  width: 16%;
-  height: 30%;
-  background-position: center;
-  animation: totems_animation 1.5s linear infinite alternate;
-  animation-timing-function: ease-in-out;
-}
-
-.visual:hover{
-  height: 34%;
-  width: 18%;
-}
-
-.bold{
-  font-weight: bold;
-  font-family: Blender;
-}
-
-.Eo{
-  font-family: Bookshelf;
-}
+/*////////////////*/
+/*///Characters///*/
+/*////////////////*/
 
 #QR{
   position: absolute;
@@ -89,7 +54,57 @@ body{
   background-position: center;
   background-size: contain;
   transition: .5s;
+  cursor: pointer;
 }
+
+#choosecharacter{
+  position: absolute;
+  width: 20%;
+  height: 25%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  transition: 1s;
+  bottom: 10%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+#characterTag{
+  position: absolute;
+  width: 6%;
+  height: 10%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  transition: 1s;
+  bottom: 40%;
+  opacity: 0;
+}
+
+.Eo{
+  font-family: Bookshelf;
+}
+
+.one{
+  left: 15%;
+}
+
+.two{
+  left: 40%;
+}
+
+.oneEo{
+  background-image: url("./Assets/Buttons/Eo.png")
+}
+
+.twoNeutrum{
+  background-image: url("./Assets/Buttons/Neutrum.png")
+}
+
+/*////////////////*/
+/*////Dialogues///*/
+/*////////////////*/
 
 #dialogueBox{
   position: relative;
@@ -170,50 +185,13 @@ body{
   left: 10%;
 }
 
-#continueButton{
-  position: absolute;
-  left: 31%;
-  top: 50%;
-  transform: translate(-50%,-50%);
-  border: 1px solid white;
-  border-radius: 5px;
-  color: black;
-  background-color: rgba(255, 255, 255, 50);
+.dialogue{
+  font-size: 18px;
 }
 
-#introductionButton{
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 20%;
-  height: 30%;
-  transform: translate(-50%,-50%);
-  background-image: url('./Assets/Logo.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-}
-
-#choiceOne{
-  position: absolute;
-  left: 11%;
-  top: 35%;
-  transform: translate(-50%,-50%);
-}
-
-#choiceTwo{
-  position: absolute;
-  left: 31%;
-  top: 35%;
-  transform: translate(-50%,-50%);
-}
-
-#choiceThree{
-  position: absolute;
-  left: 50%;
-  top: 35%;
-  transform: translate(-50%,-50%);
-}
+/*////////////////*/
+/*/////Loading////*/
+/*////////////////*/
 
 #loading{
   position: absolute;
@@ -221,7 +199,7 @@ body{
   top: 50%;
   width: 100%;
   height: 100%;
-  transition: .5s;
+  transition: 1s;
   transform: translate(-50%,-50%);
 }
 
@@ -261,8 +239,57 @@ body{
   left: 50%;
   transform: translateX(-50%);
   font-size: 30px;
-  transition: 1s;
+  transition: .5s;
   text-shadow: 0 0 10px #fff;
+}
+/*////////////////*/
+/*/////Buttons////*/
+/*////////////////*/
+
+#continueButton{
+  position: absolute;
+  left: 31%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  border: 1px solid white;
+  border-radius: 5px;
+  color: black;
+  background-color: rgba(255, 255, 255, 50);
+  transition: .5s;
+}
+
+#introductionButton{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 20%;
+  height: 30%;
+  transform: translate(-50%,-50%);
+  background-image: url('./Assets/Logo.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+#choiceOne{
+  position: absolute;
+  left: 11%;
+  top: 35%;
+  transform: translate(-50%,-50%);
+}
+
+#choiceTwo{
+  position: absolute;
+  left: 31%;
+  top: 35%;
+  transform: translate(-50%,-50%);
+}
+
+#choiceThree{
+  position: absolute;
+  left: 50%;
+  top: 35%;
+  transform: translate(-50%,-50%);
 }
 
 #continueButtonCenter{
@@ -273,6 +300,41 @@ body{
   border: 1px solid white;
   border-radius: 5px;
 }
+
+.button{
+  background-color: Transparent;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  border: none;
+  transition: 0.3s;
+}
+
+.button:hover{
+  opacity: 1;
+}
+
+.visual{
+  font-size: 0;
+  width: 16%;
+  height: 30%;
+  background-position: center;
+  animation: totems_animation 1.5s linear infinite alternate;
+  animation-timing-function: ease-in-out;
+  opacity: 0;
+  transition: 1s;
+}
+
+.visual:hover{
+  height: 34%;
+  width: 18%;
+}
+
+/*////////////////*/
+/*///////Text/////*/
+/*////////////////*/
 
 #appearingText{
   position: absolute;
@@ -287,6 +349,15 @@ body{
   opacity: 0;
   transition: .5s;
 }
+
+.bold{
+  font-weight: bold;
+  font-family: Blender;
+}
+
+/*////////////////*/
+/*//////Videos////*/
+/*////////////////*/
 
 #appearingVideo{
   position: absolute;
@@ -334,6 +405,10 @@ body{
   filter: blur(4px);
   overflow:hidden;
 }
+
+/*////////////////*/
+/*////Animation///*/
+/*////////////////*/
 
 .loadAnimation{
   animation: loading_animation 1s linear infinite;
