@@ -200,6 +200,26 @@ body{
 }
 
 /*////////////////*/
+/*//////Menu//////*/
+/*////////////////*/
+
+#pipboy{
+  position: absolute;
+  top: 150%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-image: url('./Assets/Menu.png');
+  width: 100%;
+  height: 100%;
+  transition: 1s;
+  z-index: 10;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: none;
+}
+
+/*////////////////*/
 /*/////Loading////*/
 /*////////////////*/
 

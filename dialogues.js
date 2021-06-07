@@ -1,7 +1,7 @@
 //Arrays with dialogues
 export let selfDialogue = {
   Introduction: [
-    ["My back is killing me.","Everything feels a little blurry, memories are foggy. It feels like I slept for a long time.", "I remember a long journey, the landing was a bit rough, wouldn’t be surprised if that’s why I woke up.","<i>My suit has taken quite a hit, better to check if the systems are all working properly.</i>"],
+    ["My back is killing me.","Everything feels a little blurry, memories are foggy. It feels like I slept for a long time.", "I remember a long journey, the landing was a bit rough, wouldn’t be surprised if that’s why I woke up.","<i>My suit has taken quite a hit, better to check if the systems are all working properly.</i>", "I have to use the spacebar to open my watch."],
     ["The journey was a year long, I probably slept for a long time. That explains the confusion...","Perhaps in time memories will come back on their own","Now that I notice, the sand feels soft under my feet. Maybe gravity is weaker on this planet.","The horizon is barren, only mountains and a sea of ​​sand.","It’s difficult to explain, but it feels like something is waiting to be found. Whatever it is it must be the reason I’m here.", "It is better to start moving."]
   ],
   Firstmeeting: [
@@ -125,7 +125,8 @@ export var wrongSelfDialogue = {
 
   ],
   Neutrum: [
-
+    ["The thing looks angry, this doesn't feel right"],
+    ["It looks angry, when it's angry the shape look to lose stability"]
   ],
   Swarm: [
 

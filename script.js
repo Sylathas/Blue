@@ -9,6 +9,8 @@ import {
 
 var start = true;
 var dialoghi = 0;
+var tutorial = 0;
+var open = false;
 
 $(document).ready(function() {
   loading();
@@ -62,7 +64,7 @@ window.introduction = function(progress) {
           "background-color": "black",
           "background-image": "none"
         });
-      }, 27000);
+      }, 3000);
     }, 1000);
   }
 }
@@ -209,6 +211,7 @@ window.createCharacter = function(character, n) {
 }
 
 window.startDialogue = async function(character, communication, progress, n) {
+  $(".button").remove();
   startvideo();
   //Remove old dialogues and buttons
   $("#characterTag.one").css({
@@ -381,11 +384,14 @@ window.wrongDialogue = async function(character, communication, progress) {
   setTimeout(function() {
     $(".button").remove();
   }, 1000);
-  progress = 0;
+  progress = 1;
   //Prototyping help
   //prototyping(progress);
   //Self Dialogue
   let randomNumber = Math.floor(Math.random());
+  console.log(randomNumber);
+  console.log(character);
+  console.log(wrongSelfDialogue[character][randomNumber][0]);
   let optionsSelf = {
     strings: [wrongSelfDialogue[character][randomNumber][0]],
     typeSpeed: 20,
@@ -551,7 +557,7 @@ window.characterFocus = function(character, n) {
   $(".button").remove();
   showDialogueText("characterDescription", character, 1);
   $("#choosecharacter." + n).css({
-    "pointer-events": "auto",
+    "pointer-events": "none",
     "opacity": "1",
     "width": "20%",
     "height": "25%"
@@ -616,15 +622,16 @@ window.characterFocus = function(character, n) {
   setTimeout(function(){
     $("#choosecharacter.one, #choosecharacter.two, #choosecharacter.three").css({
       "pointer-events": "auto"
-    }, 10000);
-  })
-  let continueButton = $("<button></button>").text("Choose");
-  continueButton.attr({
-    "id": "continueButton",
-    "class": "button",
-    'onclick': `startDialogue("${character}", "visual", 1, "${n}")`
-  });
-  $("body").append(continueButton);
+    });
+    let continueButton = $("<button></button>").text("Choose");
+    continueButton.attr({
+      "id": "continueButton",
+      "class": "button",
+      'onclick': `startDialogue("${character}", "visual", 1, "${n}")`
+    });
+    $("body").append(continueButton);
+  }, 10000);
+
 }
 
 window.selection = function(character, communication, progress) {
@@ -909,12 +916,7 @@ window.showDialogueText = async function(part, character, progress) {
   }, 1000);
   let continueButton = $("<button></button>").text("Continue");
   if (progress == 1 && character == "Introduction") {
-    continueButton.attr({
-      "id": "continueButton",
-      "class": "button",
-      'onclick': `showDialogueText("selfDialogue", "Introduction", 2)`
-    });
-    $("body").append(continueButton);
+    tutorial = 1;
   } else if (progress == 2 && character == "Introduction") {
     startvideo();
     setTimeout(function() {
@@ -925,6 +927,64 @@ window.showDialogueText = async function(part, character, progress) {
       characterChoice(2);
     }, 18000);
   }
+}
+
+document.body.onkeyup = function(e){
+    if(e.keyCode == 32 && tutorial == 1){
+      tutorial = 2;
+      openPipBoy();
+    } else if(e.keyCode == 32 && tutorial == 2){
+      tutorial = 3;
+      closePipBoy();
+      let continueButton = $("<button></button>").text("Continue");
+      continueButton.attr({
+        "id": "continueButton",
+        "class": "button",
+        'onclick': `showDialogueText("selfDialogue", "Introduction", 2)`
+      });
+      $("body").append(continueButton);
+    } else if(e.keyCode == 32 && tutorial == 3){
+      if(open){
+        openPipBoy();
+      } else if(!open){
+      closePipBoy();
+    }
+  }
+}
+
+window.openPipBoy = function(){
+  open = true;
+  $("#pipboy").css({"display": "block"});
+  setTimeout(function(){
+    $("#pipboy").css({
+      "top": "50%"
+    });
+    $("#videoContainer").css({
+      "filter": "blur(4px)"
+    });
+    setTimeout(function(){
+      $("#pipboy").css({
+        "width": "130%",
+        "height": "130%"
+      });
+    }, 1000);
+  }, 100);
+}
+
+window.closePipBoy = function(){
+  open = false;
+  $("#pipboy").css({
+    "width": "100%",
+    "height": "100%"
+  });
+  setTimeout(function(){
+    $("#pipboy").css({
+      "top": "150%"
+    });
+    $("#videoContainer").css({
+      "filter": "blur(0px)"
+    });
+  }, 1000);
 }
 
 window.prototyping = function(progress) {
