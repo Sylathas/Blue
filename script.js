@@ -115,11 +115,11 @@ window.characterChoice = function(part) {
 }
 
 window.sectionProgress = function(character, communication, progress) {
-  if (progress < 4) {
+  if (progress < 5) {
     //Dialogue and selection of monuments
     console.log(`Section progress reached, with progress ${progress}`);
     selection(character, communication, progress);
-  } else if (progress == 4) {
+  } else if (progress == 5) {
     //End of part
     finalDialogue(character, communication, progress);
     /*part++;
@@ -192,15 +192,15 @@ window.createCharacter = function(character, n) {
   });
   let tagPath = `./Assets/Buttons/"${character}".png`.replace(/['"]+/g, '');
 
-  $("#choosecharacter." + n + ", .QR" + n).mouseenter(function() {
+  $("#choosecharacter." + n + ", .QR" + n + ", #characterTag." + n).mouseenter(function() {
     $("#characterAnimation" + n).css({
-      "opacity": `.5`
+      "opacity": `.3`
     });
     $(".QR" + n).css({
       "opacity": `1`
     });
   });
-  $("#choosecharacter." + n + ", .QR" + n).mouseout(function() {
+  $("#choosecharacter." + n + ", .QR" + n + ", #characterTag." + n).mouseout(function() {
     $("#characterAnimation" + n).css({
       "opacity": `1`
     });
@@ -469,8 +469,9 @@ window.finalDialogue = async function(character, communication, progress) {
   //Self Dialogue
   if (communication == "visual") {
     $("#video").attr({
-      "src": "BG_" + character + ".mp4"
+      "src": "./Assets/BG_" + character + ".mp4"
     });
+    $('#video')[0].play();
   }
 
   for (var i = 0; i < selfDialogue[character][4].length; i++) {
@@ -630,7 +631,7 @@ window.characterFocus = function(character, n) {
       'onclick': `startDialogue("${character}", "visual", 1, "${n}")`
     });
     $("body").append(continueButton);
-  }, 10000);
+  }, 15000);
 
 }
 
@@ -660,7 +661,7 @@ window.selection = function(character, communication, progress) {
   }
   //Self Dialogue
   let optionsSelf = {
-    strings: ["<i>It’s strange, but I almost feel like I can see the directions in my head, I feel like I need to choose wisely…</i>"],
+    strings: ["<b><i>It’s strange, but I almost feel like I can see the directions in my head, I feel like I need to choose wisely…</i></b>"],
     typeSpeed: 20,
     showCursor: false
   };
@@ -687,6 +688,9 @@ window.selection = function(character, communication, progress) {
   }, 1000);
   new Typed('.scrollableDialogue' + dialoghi.toString(), optionsSelf);
   dialoghi++;
+  $("#textHolder").animate({
+    scrollTop: $('#textHolder').prop("scrollHeight")
+  }, 1000);
 
   buttons = shuffleArray(buttons);
 
@@ -741,7 +745,7 @@ window.selection = function(character, communication, progress) {
 
   $("#characterAnimation, #QR").mouseenter(function() {
     $("#characterAnimation").css({
-      "opacity": `.5`
+      "opacity": `.3`
     });
     $("#QR").css({
       "opacity": `1`
@@ -936,18 +940,14 @@ document.body.onkeyup = function(e){
     } else if(e.keyCode == 32 && tutorial == 2){
       tutorial = 3;
       closePipBoy();
-      let continueButton = $("<button></button>").text("Continue");
-      continueButton.attr({
-        "id": "continueButton",
-        "class": "button",
-        'onclick': `showDialogueText("selfDialogue", "Introduction", 2)`
-      });
-      $("body").append(continueButton);
+      setTimeout(function(){
+        showDialogueText("selfDialogue", "Introduction", 2);
+      }, 500);
     } else if(e.keyCode == 32 && tutorial == 3){
       if(open){
-        openPipBoy();
+        closePipBoy();
       } else if(!open){
-      closePipBoy();
+        openPipBoy();
     }
   }
 }
@@ -964,8 +964,8 @@ window.openPipBoy = function(){
     });
     setTimeout(function(){
       $("#pipboy").css({
-        "width": "130%",
-        "height": "130%"
+        "width": "150%",
+        "height": "150%"
       });
     }, 1000);
   }, 100);

@@ -14,6 +14,13 @@
 }
 
 @font-face {
+  font-family: Blender;
+  src: url(./Assets/fonts/BlenderPro-BoldItalic.ttf);
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
   font-family: Bookshelf;
   src: url(./Assets/fonts/BSSYM7.TTF);
 }
@@ -86,6 +93,7 @@ body{
   transition: 1s;
   bottom: 40%;
   opacity: 0;
+  cursor: pointer;
 }
 
 .Eo{

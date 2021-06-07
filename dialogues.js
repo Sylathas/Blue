@@ -1,12 +1,12 @@
 //Arrays with dialogues
 export let selfDialogue = {
   Introduction: [
-    ["My back is killing me.","Everything feels a little blurry, memories are foggy. It feels like I slept for a long time.", "I remember a long journey, the landing was a bit rough, wouldn’t be surprised if that’s why I woke up.","<i>My suit has taken quite a hit, better to check if the systems are all working properly.</i>", "I have to use the spacebar to open my watch."],
+    ["My back is killing me.","Everything feels a little blurry, memories are foggy. It feels like I slept for a long time.", "I remember a long journey, the landing was a bit rough, wouldn’t be surprised if that’s why I woke up.","<b><i>My suit has taken quite a hit, better to check if the systems are all working properly.</i></b>", "<b><i>I have to use the spacebar to open the menu.</i></b>"],
     ["The journey was a year long, I probably slept for a long time. That explains the confusion...","Perhaps in time memories will come back on their own","Now that I notice, the sand feels soft under my feet. Maybe gravity is weaker on this planet.","The horizon is barren, only mountains and a sea of ​​sand.","It’s difficult to explain, but it feels like something is waiting to be found. Whatever it is it must be the reason I’m here.", "It is better to start moving."]
   ],
   Firstmeeting: [
     ["There’s something on the horizon, it looks like it’s some kind of architecture…", "In the middle of all this vastness, it feels like the only thing to cling on to.", "There’s somebody standing below it."],
-    ["Whatever or whoever these things are, they don’t seem harmful and they seem to be interested in the architecture as well.", "It feels like we are all here for the same reason. I wonder what travelling with one of them would feel like…", "I guess I can only try and see."]
+    ["Whatever or whoever these things are, they don’t seem harmful and they seem to be interested in the architecture as well.", "It feels like we are all here for the same reason. I wonder what travelling with one of them would feel like…", "<b><i>I guess I can only try and see.</i></b>"]
   ],
   Eo: [
     ["There seems to be a path...", "Let's try following it","This thing looks unstable, yet charming; it's changing shape slightly"],
@@ -43,7 +43,7 @@ export let selfDialogue = {
 
 export var characterDescription = {
   Eo: [
-    ["This… thing, that’s the only word that comes to mind…", "It looks unstable, its shape is spherical but filled with ripples on the surface and shifting with a lot of different colors.", "It’s clear that it has some kind of connection with the architecture.", "<i>I should scan it.</i>"],
+    ["This… thing, that’s the only word that comes to mind…", "It looks unstable, its shape is spherical but filled with ripples on the surface and shifting with a lot of different colors.", "It’s clear that it has some kind of connection with the architecture.", "<b><i>I should scan it.</i></b>"],
   ],
   Maisie: [
   ],
@@ -55,7 +55,7 @@ export var characterDescription = {
 
   ],
   Neutrum: [
-    ["He is fascinating, or rather it… maybe she? Whatever it may be it looks fascinating.", "He is divided in modules that are assembled in a particular shape, perfectly balanced.", "He is standing still in one spot, near the architecture.", "<i>I should scan it.</i>"]
+    ["He is fascinating, or rather it… maybe she? Whatever it may be it looks fascinating.", "He is divided in modules that are assembled in a particular shape, perfectly balanced.", "He is standing still in one spot, near the architecture.", "<b><i>I should scan it.</i></b>"]
   ],
   Swarm: [
 
@@ -91,7 +91,7 @@ export var characterDialogue = {
 
 export var startingSelfDialogue = {
   Eo: [
-    ["For some reason I feel a strange connection to this being, maybe I’ll try to follow it.", "Now it’s not the time to stop, something still needs to be found.", "Maybe I find another monument something will happen."],
+    ["For some reason I feel a strange connection to this being, maybe I’ll try to follow it.", "Now it’s not the time to stop, something still needs to be found.", "<b><i>Maybe I find another monument something will happen.</i></b>"],
   ],
   Maisie: [
   ],
@@ -103,7 +103,7 @@ export var startingSelfDialogue = {
 
   ],
   Neutrum: [
-    ["For some reason I feel a strange connection to this being, maybe I’ll try to follow it.", "Now it’s not the time to stop, something still needs to be found.", "Maybe I find another monument something will happen."],
+    ["For some reason I feel a strange connection to this being, maybe I’ll try to follow it.", "Now it’s not the time to stop, something still needs to be found.", "<b><i>Maybe I find another monument something will happen.</i></b>"],
   ],
   Swarm: [
 
@@ -148,7 +148,8 @@ export var wrongCharacterDialogue = {
 
   ],
   Neutrum: [
-
+    ["Wrong character dialogue 1"],
+    ["Wrong character dialogue 2"]
   ],
   Swarm: [
 
