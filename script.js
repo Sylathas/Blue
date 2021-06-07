@@ -64,7 +64,7 @@ window.introduction = function(progress) {
           "background-color": "black",
           "background-image": "none"
         });
-      }, 3000);
+      }, 27000);
     }, 1000);
   }
 }
