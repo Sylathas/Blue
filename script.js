@@ -620,7 +620,7 @@ window.characterFocus = function(character, n) {
       "opacity": `0`
     });
   });
-  setTimeout(function(){
+  setTimeout(function() {
     $("#choosecharacter.one, #choosecharacter.two, #choosecharacter.three").css({
       "pointer-events": "auto"
     });
@@ -635,7 +635,7 @@ window.characterFocus = function(character, n) {
 
 }
 
-window.selection = function(character, communication, progress) {
+window.selection = async function(character, communication, progress) {
   stopvideo();
   let buttons = ["choiceOne", "choiceTwo", "choiceThree"];
   //Remove old dialogues and buttons
@@ -661,7 +661,7 @@ window.selection = function(character, communication, progress) {
   }
   //Self Dialogue
   let optionsSelf = {
-    strings: ["<b><i>It’s strange, but I almost feel like I can see the directions in my head, I feel like I need to choose wisely…</i></b>"],
+    strings: ["<b><i>It’s strange, but I almost feel like I can see the directions in my head. I feel confused... Maybe i should look at my companion to find the way…</b></i>"],
     typeSpeed: 20,
     showCursor: false
   };
@@ -933,36 +933,38 @@ window.showDialogueText = async function(part, character, progress) {
   }
 }
 
-document.body.onkeyup = function(e){
-    if(e.keyCode == 32 && tutorial == 1){
-      tutorial = 2;
-      openPipBoy();
-    } else if(e.keyCode == 32 && tutorial == 2){
-      tutorial = 3;
+document.body.onkeyup = function(e) {
+  if (e.keyCode == 32 && tutorial == 1) {
+    tutorial = 2;
+    openPipBoy();
+  } else if (e.keyCode == 32 && tutorial == 2) {
+    tutorial = 3;
+    closePipBoy();
+    setTimeout(function() {
+      showDialogueText("selfDialogue", "Introduction", 2);
+    }, 500);
+  } else if (e.keyCode == 32 && tutorial == 3) {
+    if (open) {
       closePipBoy();
-      setTimeout(function(){
-        showDialogueText("selfDialogue", "Introduction", 2);
-      }, 500);
-    } else if(e.keyCode == 32 && tutorial == 3){
-      if(open){
-        closePipBoy();
-      } else if(!open){
-        openPipBoy();
+    } else if (!open) {
+      openPipBoy();
     }
   }
 }
 
-window.openPipBoy = function(){
+window.openPipBoy = function() {
   open = true;
-  $("#pipboy").css({"display": "block"});
-  setTimeout(function(){
+  $("#pipboy").css({
+    "display": "block"
+  });
+  setTimeout(function() {
     $("#pipboy").css({
       "top": "50%"
     });
     $("#videoContainer").css({
       "filter": "blur(4px)"
     });
-    setTimeout(function(){
+    setTimeout(function() {
       $("#pipboy").css({
         "width": "150%",
         "height": "150%"
@@ -971,13 +973,13 @@ window.openPipBoy = function(){
   }, 100);
 }
 
-window.closePipBoy = function(){
+window.closePipBoy = function() {
   open = false;
   $("#pipboy").css({
     "width": "100%",
     "height": "100%"
   });
-  setTimeout(function(){
+  setTimeout(function() {
     $("#pipboy").css({
       "top": "150%"
     });
