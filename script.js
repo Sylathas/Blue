@@ -4,7 +4,8 @@ import {
   wrongSelfDialogue,
   wrongCharacterDialogue,
   startingSelfDialogue,
-  characterDescription
+  characterDescription,
+  dataLogsCharacters
 } from "./dialogues.js";
 
 var start = true;
@@ -44,15 +45,27 @@ function loading() {
 
 window.introduction = function(progress) {
   if (progress == 0) {
+    $("#loading").css({
+      'pointer-events': "none"
+    });
     textAppear("Every story is unique, this story makes no exception. This is a story made up of many different unique stories from all the corners of the galaxy. This is a story that takes place where diversity can be expressed, at the cost of dealing with complexity. This is a story about the struggle of understanding. Finally, this is also your story.", true, "center");
   } else if (progress == 1) {
     $(".button, p").css({
       "opacity": "0"
     });
+    $("#pipboyDiv").css({
+      "display": "block"
+    });
+    $('#appearingVideo')[0].play();
     setTimeout(function() {
       $(".button, p").remove();
-      videoAppear("Intrvideo.mp4", true);
+      $("#appearingText").css({
+        "opacity": "0"
+      });
       setTimeout(function() {
+        $("#appearingText").css({
+          "display": "none"
+        });
         $("#appearingVideoDiv").css({
           "opacity": "0"
         });
@@ -64,7 +77,7 @@ window.introduction = function(progress) {
           "background-color": "black",
           "background-image": "none"
         });
-      }, 27000);
+      }, 24000);
     }, 1000);
   }
 }
@@ -837,16 +850,6 @@ window.textAppear = function(text, intr, buttonPos) {
 }
 
 window.videoAppear = function(link, intr) {
-  if (intr) {
-    $("#appearingText").css({
-      "opacity": "0"
-    });
-    setTimeout(function() {
-      $("#appearingText").css({
-        "display": "none"
-      });
-    }, 500);
-  }
   let appearingvideodiv = $("<div id='appearingVideoDiv'></div>")
   let appearingvideo = $("<video src='./Assets/" + link + "'></div>")
   appearingvideo.attr({
@@ -942,7 +945,7 @@ document.body.onkeyup = function(e) {
     closePipBoy();
     setTimeout(function() {
       showDialogueText("selfDialogue", "Introduction", 2);
-    }, 500);
+    }, 1000);
   } else if (e.keyCode == 32 && tutorial == 3) {
     if (open) {
       closePipBoy();
@@ -953,40 +956,110 @@ document.body.onkeyup = function(e) {
 }
 
 window.openPipBoy = function() {
-  open = true;
-  $("#pipboy").css({
-    "display": "block"
-  });
+  setTimeout(function(){
+    open = true;
+  }, 1000);
   setTimeout(function() {
-    $("#pipboy").css({
-      "top": "50%"
+    $("#pipboyDiv").css({
+      "top": "50%",
+      "transform": "translate(-50%, -50%) rotate(0deg) scale(1.1)"
     });
-    $("#videoContainer").css({
+    $("#video, #dialogueBoxHolder").css({
       "filter": "blur(4px)"
     });
     setTimeout(function() {
-      $("#pipboy").css({
+      $("#pipboyDiv").css({
         "width": "150%",
         "height": "150%"
       });
-    }, 1000);
-  }, 100);
+      setTimeout(function() {
+        $("#upper, #lower, #separator").css({
+          "opacity": "1"
+        });
+        $('#buzz').prop("volume", 0.3);
+        $('#piponoff').get(0).play();
+        $('#buzz').get(0).play();
+      }, 500);
+    }, 750);
+  }, 1);
+}
+
+window.activate = function(menu) {
+  $(".active").removeClass("active");
+  $(`span:contains("${menu}")`).addClass("active");
+  if (menu == "DATALOG") {
+    $("#datalogs").css({
+      "display": "flex"
+    });
+    $("#radio, #mail").css({
+      "display": "none"
+    });
+  } else if (menu == "MAIL SYSTEM") {
+    $("#mail").css({
+      "display": "flex"
+    });
+    $("#radio, #datalogs").css({
+      "display": "none"
+    });
+  } else if (menu == "RADIO") {
+    $("#radio").css({
+      "display": "flex"
+    });
+    $("#mail, #datalogs").css({
+      "display": "none"
+    });
+  }
 }
 
 window.closePipBoy = function() {
-  open = false;
-  $("#pipboy").css({
-    "width": "100%",
-    "height": "100%"
-  });
-  setTimeout(function() {
-    $("#pipboy").css({
-      "top": "150%"
-    });
-    $("#videoContainer").css({
-      "filter": "blur(0px)"
-    });
+  setTimeout(function(){
+    open = false;
   }, 1000);
+  $("#upper, #lower, #separator").css({
+    "opacity": "0"
+  });
+  $('#piponoff').get(0).play();
+  $('#buzz').stop();
+  setTimeout(function() {
+    $("#pipboyDiv").css({
+      "width": "100%",
+      "height": "100%"
+    });
+    setTimeout(function() {
+      $("#pipboyDiv").css({
+        "top": "180%",
+        "transform": "translate(-50%, -50%) rotate(35deg) scale(1.1)"
+      });
+      $("#video, #dialogueBoxHolder").css({
+        "filter": "blur(0px)"
+      });
+    }, 750);
+  }, 500);
+}
+
+window.changenametag = function(newactive) {
+  var datalogs = "";
+  $(".characterpipboytag").removeClass("cpt-active");
+  $("." + newactive).addClass("cpt-active");
+  $("#datalogs #pipboy-text h1").text(newactive.slice(0,-3));
+  $("#datalogs #pipboy-text h4, #datalogs #pipboy-text br").remove();
+  dataLogsCharacters[newactive.slice(0,-3)].forEach(function(element){
+    datalogs = $("<h4>" + element + "</h4>");
+    $("#datalogs #pipboy-text").append(datalogs);
+  });
+  $("#datalogs-character").css("background-image", "url(./Assets/CharactersPipBoy/" + newactive.slice(0,-3) + "_pipboy.png)");
+}
+
+window.changeMail = function(newactive) {
+  $(".mail").removeClass("mail-active");
+  $("." + newactive).addClass("mail-active");
+  $("#mail #pipboy-text h1").text(newactive.replace('-', ' ' ));
+}
+
+window.changeRadio = function(newactive) {
+  $(".radio-station").removeClass("radio-active");
+  $("." + newactive).addClass("radio-active");
+  $("#mail #pipboy-text h1").text(newactive.replace('-', ' ' ));
 }
 
 window.prototyping = function(progress) {

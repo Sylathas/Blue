@@ -1,7 +1,6 @@
 /*////////////////*/
 /*//////Fonts/////*/
 /*////////////////*/
-
 @font-face {
   font-family: Blender;
   src: url(./Assets/fonts/BlenderPro-Medium.ttf);
@@ -30,11 +29,9 @@
   src: url(./Assets/fonts/BRAILLE.ttf);
 }
 
-body{
-  background-image: url("./Assets/BG.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  height: 100%;
+body {
+  height: 100vh;
+  width: 100vw;
   font-family: Blender;
   overflow: hidden;
   margin: 0;
@@ -43,20 +40,19 @@ body{
 /*////////////////*/
 /*///Characters///*/
 /*////////////////*/
-
-#QR{
+#QR {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%,-50%);
-  width:auto;
+  transform: translate(-50%, -50%);
+  width: auto;
   height: 80%;
   opacity: 0;
   z-index: 1;
   transition: .5s;
 }
 
-#character{
+#character {
   position: absolute;
   left: 20%;
   bottom: 10%;
@@ -69,7 +65,7 @@ body{
   cursor: pointer;
 }
 
-#choosecharacter{
+#choosecharacter {
   position: absolute;
   width: 20%;
   height: 25%;
@@ -83,7 +79,7 @@ body{
   font-size: 0;
 }
 
-#characterTag{
+#characterTag {
   position: absolute;
   width: 6%;
   height: 10%;
@@ -96,35 +92,298 @@ body{
   cursor: pointer;
 }
 
-.Eo{
+.Eo {
   font-family: Braille;
 }
 
-.Neutrum{
+.Neutrum {
   font-family: Bookshelf;
 }
 
-.one{
+.one {
   left: 15%;
 }
 
-.two{
+.two {
   left: 40%;
 }
 
-.oneEo{
+.oneEo {
   background-image: url("./Assets/Buttons/Eo.png")
 }
 
-.twoNeutrum{
+.twoNeutrum {
   background-image: url("./Assets/Buttons/Neutrum.png")
+}
+
+/*////////////////*/
+/*//////Menu//////*/
+/*////////////////*/
+#pipboyDiv {
+  position: absolute;
+  top: 180%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(30deg) scale(1);
+  width: 100%;
+  height: 100%;
+  transition: .75s;
+  z-index: 10;
+  display: none;
+}
+
+#pipboy {
+  position: relative;
+  top: 0;
+  left: 0;
+  background-image: url('./Assets/Menu.png');
+  width: 100%;
+  height: 100%;
+  z-index: 12;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  pointer-events: none
+}
+
+#menu {
+  position: absolute;
+  left: 27%;
+  top: 30%;
+  width: 34%;
+  height: 49%;
+  background-color: black;
+  z-index: 11;
+  min-width: 420px;
+  min-height: 335px;
+}
+
+#upper {
+  position: relative;
+  margin: 5% 10% 2% 10%;
+  width: 80%;
+  height: 10%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  opacity: 0;
+  transition: .25s;
+}
+
+#separator {
+  opacity: 0;
+  transition: .25s;
+}
+
+#lower {
+  position: relative;
+  margin: 2% 10% 2% 10%;
+  width: 80%;
+  height: 70%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  opacity: 0;
+  transition: .25s;
+}
+
+#datalogs-charactertabs {
+  width: 21.6%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#datalogs-character {
+  width: 25.4%;
+  margin: 0% 2% 0% 2%;
+  height: 100%;
+  background-image: url("Assets/CharactersPipBoy/Joe_pipboy.png");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#datalogs-text {
+  width: 50%;
+  height: 100%;
+  background-color: black;
+}
+
+#mail-text {
+  width: 50%;
+  height: 100%;
+}
+
+#mail-names {
+  width: 50%;
+  height: 100%;
+}
+
+#radio-text {
+  width: 100%;
+  height: 40%;
+  color: white;
+}
+
+#radio-text h1{
+  font-size: 50px;
+  margin-bottom: 0;
+}
+
+#radio-text h4{
+  margin-top: 2%;
+  font-weight: normal;
+  font-size: 15px;
+  width: 50%;
+}
+
+#radio-names {
+  width: 100%;
+  height: 60%;
+  display: flex;
+  justify-content: space-between;
+}
+
+#datalogs, #mail, #radio {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  display: none;
+}
+
+#radio {
+  flex-direction: column;
+}
+
+#datalogs {
+  display: flex;
+}
+
+#pipboy-text {
+  margin: 0 10% 0 10%;
+  color: white;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+#pipboy-text h4{
+  font-weight: normal;
+  padding-right: 5%;
+}
+
+#pipboy-text::-webkit-scrollbar-track {
+  background-color: gray;
+  opacity: 0;
+}
+
+#pipboy-text::-webkit-scrollbar {
+  width: 3px;
+  background-color: gray;
+  height: 80%;
+}
+
+#pipboy-text::-webkit-scrollbar-thumb {
+  background-color: #fff;
+  box-shadow: 0 0 30px 3px rgba(255, 255, 255, 0.3);
+}
+
+.menu-title {
+  cursor: pointer;
+  color: white;
+  font-size: 15px;
+}
+
+.active {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.menu-title:hover {
+  background-color: white;
+  color: black;
+}
+
+.characterpipboytag{
+  margin: 5% 0% 5% 0%;
+  width: 100%;
+  height: 13%;
+  background-image: url("./Assets/Buttons/Character.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: left center;
+  cursor: pointer;
+  color: white;
+}
+
+.characterpipboytag h2{
+  position: relative;
+  top: 10%;
+  left: 20%;
+  font-size: 20px;
+}
+
+.cpt-active{
+  background-image: url("./Assets/Buttons/Character_on.png");
+  color: black;
+}
+
+.mail{
+  width: 100%;
+  height: 13%;
+  background-image: url("./Assets/Buttons/Mail.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: left center;
+  cursor: pointer;
+  color: white;
+}
+
+.mail h2{
+  position: relative;
+  top: 35%;
+  left: 15%;
+  font-size: 20px;
+}
+
+.mail-active{
+  color: black;
+  background-image: url("./Assets/Buttons/Mail_on.png");
+}
+
+.radio-station-column{
+  width: 45%;
+  height: 90%;
+}
+
+.radio-station{
+  width: 100%;
+  height: 30%;
+  background-image: url("./Assets/Buttons/Radio.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  cursor: pointer;
+  color: white;
+}
+
+.radio-station h2{
+  position: relative;
+  top: 35%;
+  left: 15%;
+  font-size: 20px;
+}
+
+.radio-active{
+  background-image: url("./Assets/Buttons/Radio_on.png");
+  color: black;
 }
 
 /*////////////////*/
 /*////Dialogues///*/
 /*////////////////*/
-
-#dialogueBox{
+#dialogueBox {
   position: relative;
   top: 0%;
   right: 0%;
@@ -138,11 +397,11 @@ body{
   transition: 1s;
 }
 
-#textHolder{
+#textHolder {
   position: relative;
-  top:50%;
+  top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   width: 90%;
   height: 90%;
   overflow-y: auto;
@@ -165,90 +424,69 @@ body{
   box-shadow: 0 0 30px 3px rgba(255, 255, 255, 0.3);
 }
 
-#dialogueBoxHolder{
+#dialogueBoxHolder {
   position: absolute;
   top: 50%;
   right: -10%;
   width: 30vw;
   height: 0vw;
-  transform: translate(-50%,-50%);
-  overflow:hidden;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
   transition: 1s;
 }
 
-#selfDialogue{
+#selfDialogue {
   color: white;
   width: 80%;
   margin-left: 40px;
   text-align: left;
 }
 
-#characterDialogue{
+#characterDialogue {
   color: #fdc82d;
   width: 80%;
   margin-left: 40px;
   text-align: right;
 }
 
-#finalDialogue{
+#finalDialogue {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 }
 
-#progressDialogue{
+#progressDialogue {
   position: absolute;
   top: 10%;
   left: 10%;
 }
 
-.dialogue{
+.dialogue {
   font-size: 18px;
-}
-
-/*////////////////*/
-/*//////Menu//////*/
-/*////////////////*/
-
-#pipboy{
-  position: absolute;
-  top: 150%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-image: url('./Assets/Menu.png');
-  width: 100%;
-  height: 100%;
-  transition: 1s;
-  z-index: 10;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  display: none;
 }
 
 /*////////////////*/
 /*/////Loading////*/
 /*////////////////*/
-
-#loading{
+#loading {
   position: absolute;
   left: 50%;
   top: 50%;
   width: 100%;
   height: 100%;
   transition: 1s;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 }
 
-#loading1{
+#loading1 {
   position: absolute;
   top: 50%;
   left: 50%;
   height: 25%;
   width: 25%;
   opacity: 0;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   background-image: url('./Assets/Loading/Logo.png');
   background-size: contain;
   background-position: center;
@@ -256,13 +494,13 @@ body{
   transition: 1s;
 }
 
-#loading2{
+#loading2 {
   position: absolute;
   top: 50%;
   left: 50%;
   height: 10%;
   width: 10%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   background-image: url('./Assets/Loading/blue_dot.png');
   background-size: contain;
   background-position: center;
@@ -270,7 +508,7 @@ body{
   transition: 1s;
 }
 
-#pLoading{
+#pLoading {
   position: absolute;
   top: 53%;
   color: white;
@@ -280,15 +518,15 @@ body{
   transition: .5s;
   text-shadow: 0 0 10px #fff;
 }
+
 /*////////////////*/
 /*/////Buttons////*/
 /*////////////////*/
-
-#continueButton{
+#continueButton {
   position: absolute;
   left: 31%;
   top: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   border: 1px solid white;
   border-radius: 5px;
   color: black;
@@ -296,50 +534,50 @@ body{
   transition: .5s;
 }
 
-#introductionButton{
+#introductionButton {
   position: absolute;
   left: 50%;
   top: 50%;
   width: 20%;
   height: 30%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   background-image: url('./Assets/Logo.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
 }
 
-#choiceOne{
+#choiceOne {
   position: absolute;
   left: 11%;
   top: 35%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 }
 
-#choiceTwo{
+#choiceTwo {
   position: absolute;
   left: 31%;
   top: 35%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 }
 
-#choiceThree{
+#choiceThree {
   position: absolute;
   left: 50%;
   top: 35%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 }
 
-#continueButtonCenter{
+#continueButtonCenter {
   position: absolute;
   left: 50%;
   top: 80%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   border: 1px solid white;
   border-radius: 5px;
 }
 
-#fullscreen{
+#fullscreen {
   position: absolute;
   top: 1%;
   right: 5%;
@@ -354,12 +592,12 @@ body{
   transition: .5s;
 }
 
-#fullscreen:hover{
+#fullscreen:hover {
   width: 10.5%;
   height: 10.5%;
 }
 
-.button{
+.button {
   background-color: Transparent;
   color: white;
   cursor: pointer;
@@ -370,11 +608,11 @@ body{
   transition: 0.3s;
 }
 
-.button:hover{
+.button:hover {
   opacity: 1;
 }
 
-.visual{
+.visual {
   font-size: 0;
   width: 16%;
   height: 30%;
@@ -385,7 +623,7 @@ body{
   transition: 1s;
 }
 
-.visual:hover{
+.visual:hover {
   height: 38%;
   width: 20%;
 }
@@ -393,12 +631,11 @@ body{
 /*////////////////*/
 /*///////Text/////*/
 /*////////////////*/
-
-#appearingText{
+#appearingText {
   position: absolute;
   left: 50%;
   top: 45%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   width: 70%;
   color: white;
   font-size: 30px;
@@ -408,7 +645,7 @@ body{
   transition: .5s;
 }
 
-.bold{
+.bold {
   font-weight: bold;
   font-family: Blender;
 }
@@ -416,27 +653,27 @@ body{
 /*////////////////*/
 /*//////Videos////*/
 /*////////////////*/
-
-#appearingVideoDiv{
+#appearingVideoDiv {
   position: absolute;
   left: 0%;
   top: 0%;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background-color: white;
-  z-index: 2;
+  z-index: 0;
   transition: 3s;
   opacity: 1;
 }
 
-#appearingVideo{
-  min-width: 100%;
-  min-height: 100%;
+#appearingVideo {
+  width: 100%;
+  min-width: 100vw;
+  min-height: 100vh;
   background-color: white;
   transition: 1s;
 }
 
-#videobackground{
+#videobackground {
   min-width: 100%;
   min-height: 100%;
   background-color: black;
@@ -444,68 +681,101 @@ body{
   z-index: 1;
 }
 
-#video{
+#video {
   position: relative;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   min-width: 100%;
   min-height: 100%;
-  z-index:-1;
+  z-index: -1;
   min-height: 100vh;
   opacity: 1;
   transition: 1s;
 }
 
-#videoContainer{
+#videoContainer {
   position: absolute;
   width: 0%;
   height: 0%;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   filter: blur(4px);
-  overflow:hidden;
+  overflow: hidden;
 }
 
 /*////////////////*/
 /*////Animation///*/
 /*////////////////*/
-
-.loadAnimation{
+.loadAnimation {
   animation: loading_animation 1s linear infinite;
   animation-timing-function: ease-in-out;
 }
 
-.loadAnimation2{
+.loadAnimation2 {
   animation: glow 1s linear infinite alternate;
   animation-timing-function: ease-in-out;
 }
 
-.turnOn{
+.turnOn {
   animation: turnOn 1.5s linear;
   animation-timing-function: ease-in-out;
   animation-fill-mode: forwards;
 }
 
 @keyframes totems_animation {
-  from {top: 30%;}
-  to {top: 35%;}
+  from {
+    top: 30%;
+  }
+
+  to {
+    top: 35%;
+  }
 }
 
 @keyframes loading_animation {
-  from {transform: translate(-50%,-50%) rotate(0deg);}
-  to {transform: translate(-50%,-50%) rotate(360deg);}
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
 @keyframes glow {
-  from {text-shadow: 0 0 10px #fff;}
-  to {text-shadow: 0 0 20px #fff;}
+  from {
+    text-shadow: 0 0 10px #fff;
+  }
+
+  to {
+    text-shadow: 0 0 20px #fff;
+  }
 }
 
 @keyframes turnOn {
-  0% {height: 0%; width: 0%; filter: blur(4px);}
-  30% {height: .5%; width: 100%; filter: blur(2px);}
-  70% {height: 100%; width: 100%; filter: blur(1px);}
-  100% {height: 100%; width: 100%; filter: blur(0px);}
+  0% {
+    height: 0%;
+    width: 0%;
+    filter: blur(4px);
+  }
+
+  30% {
+    height: .5%;
+    width: 100%;
+    filter: blur(2px);
+  }
+
+  70% {
+    height: 100%;
+    width: 100%;
+    filter: blur(1px);
+  }
+
+  100% {
+    height: 100%;
+    width: 100%;
+    filter: blur(0px);
+  }
 }

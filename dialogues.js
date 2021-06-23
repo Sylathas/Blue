@@ -155,3 +155,33 @@ export var wrongCharacterDialogue = {
 
   ]
 };
+
+export var dataLogsCharacters = {
+  Eo: [
+    ["Wrong character dialogue 1"],
+    ["Wrong character dialogue 2"]
+  ],
+  Maisie: [
+    ["This one looks like she could be a woman, she is covered in rags and machines. She seems distrustful, at the same time she looks fragile, I wonder if that is why she is here"],
+    ["She’s following me from a distance, she looks like she is having some troubles carrying all that machinery on her back"],
+    ["She stopped as soon as the sound stopped, maybe she uses hearing to orient herself, now that the sound stopped she seems more calm"],
+    ["as soon as the sound became pleasing she took the machinery off, the machines probably helped her resist the sound. Under all that junk she looks… beautiful"]
+  ],
+  Pa: [
+  ],
+  Tedd: [
+  ],
+  Joe: [
+    ["This guy is definitely from earth, he’s wearing an old suit and a trench coat. He doesn’t seem to be too talkative though, I wonder if that’s the reason he’s here"],
+    ["I didn’t make any progress in making this guy talk, he seems to always go forward and never stop"],
+    ["After I figured out the inscriptions he spoke some words, he seemed sad. Maybe he would have liked walking forward forever"],
+    ["he stopped and muttered some more words. He said: 'I’d better go home', whatever was his purpose here I guess he made up his mind. I’m glad, I bet someone is waiting for him"]
+  ],
+  Neutrum: [
+    ["Wrong character dialogue 1"],
+    ["Wrong character dialogue 2"]
+  ],
+  Swarm: [
+
+  ]
+}

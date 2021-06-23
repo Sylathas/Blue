@@ -5,22 +5,99 @@
   <meta charset="UTF-8">
   <title>Lesssgoooo</title>
   <link rel="stylesheet" href="./style.css">
-  <link rel="icon" href="./Assets/favicon.png" type="image/png"/>
+  <link rel="icon" href="./Assets/favicon.png" type="image/png" />
 </head>
 
 <body>
   <div id="videoContainer">
     <video loop src="./Assets/BG.mp4" id="video"></video>
   </div>
+  <div id='appearingVideoDiv'>
+    <video src="./Assets/Intrvideo.mp4" id="appearingVideo"></video>
+    <div id="videobackground"></div>
+  </div>
   <div id="fullscreen" onclick="fullScreen()"></div>
   <div id="loading">
     <div id="loading1" onclick="introduction(0)"></div>
     <div id="loading2" class="loadAnimation"></div>
     <p id="pLoading" class="loadAnimation2">Loading</p>
+    <audio id="piponoff" src="Assets/Sounds/pipboyonoff.wav" type="audio/wav" style="display: none;"></audio>
+    <audio loop id="buzz" src="Assets/Sounds/buzz.wav" type="audio/wav" style="display: none;"></audio>
   </div>
-  <div id="pipboy"></div>
+  <div id="pipboyDiv">
+    <div id="pipboy"></div>
+    <div id="menu">
+      <div id="upper">
+        <span class="menu-title active" onclick="activate('DATALOG')">DATALOG</span>
+        <span class="menu-title" onclick="activate('MAIL SYSTEM')">MAIL SYSTEM</span>
+        <span class="menu-title" onclick="activate('RADIO')">RADIO</span>
+      </div>
+      <hr style="width: 93%;" id="separator">
+      <div id="lower">
+        <div id="datalogs">
+          <div id="datalogs-charactertabs">
+            <div class="Joetag characterpipboytag cpt-active"onclick="changenametag('Joetag')">
+              <h2>JOE</h2>
+            </div>
+            <div class="Maisietag characterpipboytag" onclick="changenametag('Maisietag')">
+              <h2>Maisie</h2>
+            </div>
+          </div>
+          <div id="datalogs-character">
+          </div>
+          <div id="datalogs-text">
+            <div id="pipboy-text">
+              <h1>JOE</h1>
+              <h4 style="font-weight: normal;">Dear customer,<br> thank you for choosing <b>Space Express</b>.<br><br>Below you can find the details of your trip:<br><br>SHIP: STS<br>BLUE 35918<br>DEPARTURE: EARTH (07/06/2153)<br>ARRIVAL: NOT CLASSIFIED (07/06/2154)<br>COACH: 11<br>SEAT: 16A<br>STANDARD FEE<br>TRAVELLER NAME: NOT SPECIFIED<br></h4>
+            </div>
+          </div>
+        </div>
+        <div id="mail">
+          <div id="mail-names">
+            <div class="mail message-1 mail-active"onclick="changeMail('message-1')">
+              <h2>Message 1</h2>
+            </div>
+            <div class="mail message-2" onclick="changeMail('message-2')">
+              <h2>Message 2</h2>
+            </div>
+          </div>
+          <div id="mail-text">
+            <div id="pipboy-text">
+              <h1>SPACE EXPRESS PAYMENT RECEIPT</h1>
+              <h4 style="font-weight: normal;">Dear customer,<br> thank you for choosing <b>Space Express</b>.<br><br>Below you can find the details of your trip:<br><br>SHIP: STS<br>BLUE 35918<br>DEPARTURE: EARTH (07/06/2153)<br>ARRIVAL: NOT CLASSIFIED (07/06/2154)<br>COACH: 11<br>SEAT: 16A<br>STANDARD FEE<br>TRAVELLER NAME: NOT SPECIFIED<br></h4>
+            </div>
+          </div>
+        </div>
+        <div id="radio">
+          <div id="radio-text">
+            <h1>Deep Listening</h1>
+            <h4>Choose one of the following tracks to immerse yourself in an imaginary panorama of atmospheric soundscapes</h4>
+          </div>
+          <div id="radio-names">
+            <div class="radio-station-column">
+              <div class="radio-station radio0 radio-active"onclick="changeRadio('radio0')">
+                <h2>Station 1</h2>
+              </div>
+              <div class="radio-station radio1"onclick="changeRadio('radio1')">
+                <h2>Station 2</h2>
+              </div>
+            </div>
+            <div class="radio-station-column">
+              <div class="radio-station radio2"onclick="changeRadio('radio2')">
+                <h2>Station 3</h2>
+              </div>
+              <div class="radio-station radio3"onclick="changeRadio('radio3')">
+                <h2>Station 4</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/screenfull.js/5.1.0/screenfull.min.js" integrity="sha512-SGPHIoS+NsP1NUL5RohNpDs44JlF36tXLN6H3Cw+EUyenEc5zPXWqfw9D+xmvR00QYUYewQIJQ6P5yH82Vw6Fg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/screenfull.js/5.1.0/screenfull.min.js" integrity="sha512-SGPHIoS+NsP1NUL5RohNpDs44JlF36tXLN6H3Cw+EUyenEc5zPXWqfw9D+xmvR00QYUYewQIJQ6P5yH82Vw6Fg==" crossorigin="anonymous"
+    referrerpolicy="no-referrer"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script type="module" src="./dialogues.js"></script>
   <script type="module" src="./script.js"></script>
@@ -36,7 +113,7 @@
         });
       }
       if (screenfull.isEnabled) {
-          screenfull.toggle();
+        screenfull.toggle();
       }
     }
   </script>
