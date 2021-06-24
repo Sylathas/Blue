@@ -43,7 +43,7 @@ body {
 #QR {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: -50%;
   transform: translate(-50%, -50%);
   width: auto;
   height: 80%;
@@ -87,7 +87,7 @@ body {
   background-position: center;
   background-size: contain;
   transition: 1s;
-  bottom: 40%;
+  bottom: 35%;
   opacity: 0;
   cursor: pointer;
 }
@@ -255,7 +255,7 @@ body {
   flex-direction: column;
 }
 
-#datalogs {
+#mail {
   display: flex;
 }
 
@@ -342,8 +342,8 @@ body {
 
 .mail h2{
   position: relative;
-  top: 35%;
-  left: 15%;
+  top: 30%;
+  left: 10%;
   font-size: 20px;
 }
 
@@ -655,8 +655,9 @@ body {
 /*////////////////*/
 #appearingVideoDiv {
   position: absolute;
-  left: 0%;
-  top: 0%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
   width: 100vw;
   height: 100vh;
   background-color: white;
@@ -666,11 +667,14 @@ body {
 }
 
 #appearingVideo {
-  width: 100%;
   min-width: 100vw;
   min-height: 100vh;
   background-color: white;
   transition: 1s;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
 }
 
 #videobackground {

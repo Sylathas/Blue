@@ -28,8 +28,8 @@
     <div id="pipboy"></div>
     <div id="menu">
       <div id="upper">
-        <span class="menu-title active" onclick="activate('DATALOG')">DATALOG</span>
-        <span class="menu-title" onclick="activate('MAIL SYSTEM')">MAIL SYSTEM</span>
+        <span class="menu-title" onclick="activate('DATALOG')">DATALOG</span>
+        <span class="menu-title active" onclick="activate('MAIL SYSTEM')">MAIL SYSTEM</span>
         <span class="menu-title" onclick="activate('RADIO')">RADIO</span>
       </div>
       <hr style="width: 93%;" id="separator">
@@ -54,11 +54,8 @@
         </div>
         <div id="mail">
           <div id="mail-names">
-            <div class="mail message-1 mail-active"onclick="changeMail('message-1')">
-              <h2>Message 1</h2>
-            </div>
-            <div class="mail message-2" onclick="changeMail('message-2')">
-              <h2>Message 2</h2>
+            <div class="mail message-1 mail-active"onclick="changeMail('message-1', 'SPACE EXPRESS PAYMENT RECEIPT')">
+              <h2>PAYMENT RECEIPT</h2>
             </div>
           </div>
           <div id="mail-text">
@@ -104,13 +101,9 @@
   <script>
     function fullScreen() {
       if (!window.screenTop && !window.screenY) {
-        $('#fullscreen').css({
-          'background-image': './Assets/Buttons/FullscreenOpen.png'
-        });
+        $('#fullscreen').css("background-image", "url(./Assets/Buttons/FullscreenOpen.png");
       } else {
-        $('#fullscreen').css({
-          'background-image': './Assets/Buttons/FullscreenClose.png'
-        });
+        $('#fullscreen').css("background-image", "url(./Assets/Buttons/FullscreenClose.png");
       }
       if (screenfull.isEnabled) {
         screenfull.toggle();

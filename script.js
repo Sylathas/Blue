@@ -77,7 +77,7 @@ window.introduction = function(progress) {
           "background-color": "black",
           "background-image": "none"
         });
-      }, 24000);
+      }, 1000);
     }, 1000);
   }
 }
@@ -880,13 +880,13 @@ window.showDialogueText = async function(part, character, progress) {
     if (part == "selfDialogue") {
       var optionsSelf = {
         strings: [selfDialogue[character][progress - 1][i]],
-        typeSpeed: 40,
+        typeSpeed: 30,
         showCursor: false
       };
     } else {
       var optionsSelf = {
         strings: [characterDescription[character][progress - 1][i]],
-        typeSpeed: 40,
+        typeSpeed: 30,
         showCursor: false
       };
     }
@@ -913,15 +913,14 @@ window.showDialogueText = async function(part, character, progress) {
       scrollTop: $('#textHolder').prop("scrollHeight")
     }, 1000);
     if (part == "selfDialogue") {
-      await new Promise(r => setTimeout(r, 70 * selfDialogue[character][progress - 1][i].length));
+      await new Promise(r => setTimeout(r, 50 * selfDialogue[character][progress - 1][i].length));
     } else {
-      await new Promise(r => setTimeout(r, 70 * characterDescription[character][progress - 1][i].length));
+      await new Promise(r => setTimeout(r, 50 * characterDescription[character][progress - 1][i].length));
     }
   }
   $("#textHolder").animate({
     scrollTop: $('#textHolder').prop("scrollHeight")
   }, 1000);
-  let continueButton = $("<button></button>").text("Continue");
   if (progress == 1 && character == "Introduction") {
     tutorial = 1;
   } else if (progress == 2 && character == "Introduction") {
@@ -1050,10 +1049,10 @@ window.changenametag = function(newactive) {
   $("#datalogs-character").css("background-image", "url(./Assets/CharactersPipBoy/" + newactive.slice(0,-3) + "_pipboy.png)");
 }
 
-window.changeMail = function(newactive) {
+window.changeMail = function(newactive, object) {
   $(".mail").removeClass("mail-active");
   $("." + newactive).addClass("mail-active");
-  $("#mail #pipboy-text h1").text(newactive.replace('-', ' ' ));
+  $("#mail #pipboy-text h1").text(object);
 }
 
 window.changeRadio = function(newactive) {
