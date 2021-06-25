@@ -475,7 +475,7 @@ body {
   width: 100%;
   height: 100%;
   background-color: white;
-  transition: 3s;
+  transition: 2s;
 }
 
 .dialogue {
@@ -543,11 +543,19 @@ body {
   left: 31%;
   top: 50%;
   transform: translate(-50%, -50%);
-  border: 1px solid white;
-  border-radius: 5px;
-  color: black;
-  background-color: rgba(255, 255, 255, 50);
+  background-image: url("./Assets/Buttons/Button.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  color: white;
   transition: .5s;
+  width: 10%;
+  height: 8%;
+}
+
+#continueButton:hover {
+  background-image: url("./Assets/Buttons/Button_on.png")
+  color: black;
 }
 
 #chooseCharacterButton {
@@ -635,6 +643,11 @@ body {
   height: 10.5%;
 }
 
+#totem{
+  position: absolute;
+  bottom:
+}
+
 .chooseCharacterButtonPre{
   width:18%;
   top: 30%;
@@ -644,8 +657,8 @@ body {
 }
 
 .chooseCharacterButton{
-  color: white;
-  background-image: url('./Assets/Buttons/Button.png');
+  color: black;
+  background-image: url('./Assets/Buttons/Button_on.png');
   opacity: 1;
   width:12%;
   top: 15%;
@@ -654,13 +667,11 @@ body {
 }
 
 .chooseCharacterButton:hover{
-  color: black;
-  background-image: url("./Assets/Buttons/Button_on.png");
+  width:13%;
 }
 
 .button {
   background-color: Transparent;
-  color: white;
   cursor: pointer;
   padding: 10px;
   background-size: contain;

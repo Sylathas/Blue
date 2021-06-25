@@ -153,7 +153,7 @@ window.sectionProgress = function(character, communication, progress) {
     selection(character, communication, progress);
   } else if (progress == 5) {
     //End of part
-    finalDialogue(character, communication, progress);
+    finalDialogue(character, communication, progress, 0);
     /*part++;
     if(part < 4){
       //Choose new character
@@ -226,7 +226,7 @@ window.createCharacter = function(character, n) {
   });
   //append everything
   $("body").append(characterDiv, characterTag);
-  setTimeout(function(){
+  setTimeout(function() {
     $(".selezionepersonaggio").css({
       "opacity": ".5"
     });
@@ -254,7 +254,7 @@ window.startDialogue = async function(character, communication, progress, n) {
   $(".button").css({
     "opacity": "0"
   });
-  setTimeout(function(){
+  setTimeout(function() {
     $(".button").remove();
   }, 500);
   startvideo();
@@ -419,10 +419,17 @@ window.progressDialogue = async function(character, communication, progress) {
   continueButton.attr({
     "id": "continueButton",
     "class": "button",
-    'onclick': `sectionProgress("${character}", "${communication}", ${progress})`
+    'onclick': `startvideo(); totem.remove(); setTimeout(() => {sectionProgress("${character}", "${communication}", ${progress})}, 2000);`
   });
   //Add them to the body
-  $("body").append(continueButton);
+  setTimeout(() => {
+    stopvideo();
+    let totem = $("<div id='totemone'></div>");
+    $("body").append(continueButton, totem);
+    totem.css({
+      "opacity": "1"
+    });
+  }, 3000);
 }
 
 window.wrongDialogue = async function(character, communication, progress) {
@@ -504,64 +511,80 @@ window.wrongDialogue = async function(character, communication, progress) {
   continueButton.attr({
     "id": "continueButton",
     "class": "button",
-    'onclick': `sectionProgress("${character}", "${communication}", ${progress})`
+    'onclick': `$(".button").remove();setTimeout(() => {sectionProgress("${character}", "${communication}", ${progress})}, 1000);`
   });
   //Add them to the body
-  $("body").append(continueButton);
+  setTimeout(() => {
+    $("body").append(continueButton);
+  }, 3000);
 }
 
-window.finalDialogue = async function(character, communication, progress) {
-  //Remove old dialogues and buttons
-  $(".button").remove();
-  progress++;
-  //Prototyping help
-  //prototyping(progress);
-  //Self Dialogue
-  let endingDiv = $("<div id='endingDiv'></div>");
-  $("body").append(endingDiv);
-  setTimeout(function(){
-    $("#endingDiv").css({
-      "opacity": "1"
-    });
-    setTimeout(function(){
-      if (communication == "visual") {
-        $("#video").attr({
-          "src": "./Assets/BG_" + character + ".mp4"
+window.finalDialogue = async function(character, communication, progress, part) {
+  if (part == 0) {
+    //Remove old dialogues and buttons
+    $(".button").remove();
+    //Create white DIV
+    let endingDiv = $("<div id='endingDiv'></div>");
+    $("body").append(endingDiv);
+    setTimeout(() => {
+      $("#endingDiv").css({
+        "opacity": "1"
+      });
+      setTimeout(() => {
+        $("#appearingText").css({
+          "opacity": "1"
         });
-        $('#video')[0].play();
-      }
-    }, 2000);
-  }, 200);
-
-  for (var i = 0; i < selfDialogue[character][4].length; i++) {
-    //typed
-    let optionsSelf = {
-      strings: [selfDialogue[character][4][i]],
-      typeSpeed: 20,
-      showCursor: false
-    };
+      }, 1000);
+    }, 200);
+    //Self Dialogue
     let selfText = $("<p style='color: black; z-index:11; opacity: 1'></p>");
     selfText.attr({
       "id": "appearingText",
     });
     $("body").append(selfText);
-    let type = new Typed("#appearingText", optionsSelf);
-    dialoghi++;
-    await new Promise(r => setTimeout(r, 35 * selfDialogue[character][4][i].length));
-    $("#appearingText").css({
-      "opacity": "0"
-    });
   }
-
-  //Continue button
-  let continueButton = $("<button></button>").text("Continue");
-  continueButton.attr({
-    "id": "continueButtonCenter",
-    "class": "button",
-    'onclick': `sectionProgress("${character}", "${communication}", ${progress})`
+  $("#appearingText").css({
+    "opacity": "1"
   });
-  //Add them to the body
-  $("body").append(continueButton);
+
+  progress++;
+  //Prototyping help
+  //prototyping(progress);
+
+  setTimeout(function() {
+    if (communication == "visual") {
+      $("#video").attr({
+        "src": "./Assets/BG_" + character + ".mp4"
+      });
+      $('#video')[0].play();
+    }
+  }, 2000);
+
+  $("#appearingText").text(selfDialogue[character][4][part]);
+
+  setTimeout(function() {
+    if (part < selfDialogue[character][4].length) {
+      $("#appearingText").css({
+        "opacity": "1"
+      });
+      setTimeout(() => {
+        finalDialogue(character, communication, progress, part + 1);
+      }, 1000);
+    } else {
+      //Continue button
+      let continueButton = $("<button style='z-index: 11; opacity: 0;'></button>").text("Continue");
+      continueButton.attr({
+        "id": "continueButtonCenter",
+        "class": "button",
+        'onclick': `sectionProgress("${character}", "${communication}", ${progress})`
+      });
+      //Add them to the body
+      $("body").append(continueButton);
+      continueButton.css({
+        "opacity": "1"
+      });
+    }
+  }, 2000);
 }
 
 window.characterFocus = function(character, n) {
@@ -652,18 +675,22 @@ window.characterFocus = function(character, n) {
   });
 
   $("#chooseCharacterButton").text("Choose " + character);
-  $("#chooseCharacterButton").attr({
-    'onclick': `startDialogue("${character}", "visual", 1, "${n}")`
-  });
+  $("#chooseCharacterButton").text("Choose " + character);
+  $("#chooseCharacterButton").css({
+    "opacity": ".5"
+  })
   $("#chooseCharacterButton").removeClass("chooseCharacterButtonPre");
   $("#chooseCharacterButton").addClass("chooseCharacterButton");
-  $("#chooseCharacterButton").css({
-    "opacity": "1"
-  })
   setTimeout(function() {
     $("#choosecharacter.one, #choosecharacter.two, #choosecharacter.three").css({
       "pointer-events": "auto"
     });
+    $("#chooseCharacterButton").attr({
+      'onclick': `startDialogue("${character}", "visual", 1, "${n}")`
+    });
+    $("#chooseCharacterButton").css({
+      "opacity": "1"
+    })
   }, 10000);
 
 }
@@ -866,7 +893,7 @@ window.textAppear = function(text, intr, buttonPos) {
   appearingtext.attr({
     "id": "appearingText"
   });
-  let continuetext = $("<p style='margin-top: 0;'>Continue</p>");
+  let continuetext = $("<p style='margin-top: 0; color: white'>Continue</p>");
 
   $("body").append(appearingtext, continueButton);
   $("#continueButtonCenter").append(continuetext);
@@ -982,9 +1009,9 @@ document.body.onkeyup = function(e) {
 }
 
 window.openPipBoy = function() {
-  if(pipboyanimate){
+  if (pipboyanimate) {
     pipboyanimate = false;
-    setTimeout(function(){
+    setTimeout(function() {
       open = true;
     }, 1000);
     setTimeout(function() {
@@ -1042,9 +1069,9 @@ window.activate = function(menu) {
 }
 
 window.closePipBoy = function() {
-  if(pipboyanimate){
+  if (pipboyanimate) {
     pipboyanimate = false;
-    setTimeout(function(){
+    setTimeout(function() {
       open = false;
     }, 1000);
     $("#upper, #lower, #separator").css({
@@ -1075,13 +1102,13 @@ window.changenametag = function(newactive) {
   var datalogs = "";
   $(".characterpipboytag").removeClass("cpt-active");
   $("." + newactive).addClass("cpt-active");
-  $("#datalogs #pipboy-text h1").text(newactive.slice(0,-3));
+  $("#datalogs #pipboy-text h1").text(newactive.slice(0, -3));
   $("#datalogs #pipboy-text h4, #datalogs #pipboy-text br").remove();
-  dataLogsCharacters[newactive.slice(0,-3)].forEach(function(element){
+  dataLogsCharacters[newactive.slice(0, -3)].forEach(function(element) {
     datalogs = $("<h4>" + element + "</h4>");
     $("#datalogs #pipboy-text").append(datalogs);
   });
-  $("#datalogs-character").css("background-image", "url(./Assets/CharactersPipBoy/" + newactive.slice(0,-3) + "_pipboy.png)");
+  $("#datalogs-character").css("background-image", "url(./Assets/CharactersPipBoy/" + newactive.slice(0, -3) + "_pipboy.png)");
 }
 
 window.changeMail = function(newactive, object) {
@@ -1093,7 +1120,7 @@ window.changeMail = function(newactive, object) {
 window.changeRadio = function(newactive) {
   $(".radio-station").removeClass("radio-active");
   $("." + newactive).addClass("radio-active");
-  $("#mail #pipboy-text h1").text(newactive.replace('-', ' ' ));
+  $("#mail #pipboy-text h1").text(newactive.replace('-', ' '));
 }
 
 window.prototyping = function(progress) {
