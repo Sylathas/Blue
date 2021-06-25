@@ -43,7 +43,7 @@ body {
 #QR {
   position: absolute;
   left: 50%;
-  top: -50%;
+  top: -100%;
   transform: translate(-50%, -50%);
   width: auto;
   height: 80%;
@@ -92,6 +92,10 @@ body {
   cursor: pointer;
 }
 
+.selezionepersonaggio{
+  opacity: 0;
+}
+
 .Eo {
   font-family: Braille;
 }
@@ -109,11 +113,11 @@ body {
 }
 
 .oneEo {
-  background-image: url("./Assets/Buttons/Eo.png")
+  background-image: url(./Assets/Buttons/Eo.png)
 }
 
 .twoNeutrum {
-  background-image: url("./Assets/Buttons/Neutrum.png")
+  background-image: url(./Assets/Buttons/Neutrum.png)
 }
 
 /*////////////////*/
@@ -197,7 +201,7 @@ body {
   width: 25.4%;
   margin: 0% 2% 0% 2%;
   height: 100%;
-  background-image: url("Assets/CharactersPipBoy/Joe_pipboy.png");
+  background-image: url(Assets/CharactersPipBoy/Joe_pipboy.png);
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
@@ -309,7 +313,7 @@ body {
   margin: 5% 0% 5% 0%;
   width: 100%;
   height: 13%;
-  background-image: url("./Assets/Buttons/Character.png");
+  background-image: url(./Assets/Buttons/Character.png);
   background-repeat: no-repeat;
   background-size: contain;
   background-position: left center;
@@ -325,14 +329,14 @@ body {
 }
 
 .cpt-active{
-  background-image: url("./Assets/Buttons/Character_on.png");
+  background-image: url(./Assets/Buttons/Character_on.png);
   color: black;
 }
 
 .mail{
   width: 100%;
   height: 13%;
-  background-image: url("./Assets/Buttons/Mail.png");
+  background-image: url(./Assets/Buttons/Mail.png);
   background-repeat: no-repeat;
   background-size: contain;
   background-position: left center;
@@ -349,7 +353,7 @@ body {
 
 .mail-active{
   color: black;
-  background-image: url("./Assets/Buttons/Mail_on.png");
+  background-image: url(./Assets/Buttons/Mail_on.png);
 }
 
 .radio-station-column{
@@ -360,7 +364,7 @@ body {
 .radio-station{
   width: 100%;
   height: 30%;
-  background-image: url("./Assets/Buttons/Radio.png");
+  background-image: url(./Assets/Buttons/Radio.png);
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -376,7 +380,7 @@ body {
 }
 
 .radio-active{
-  background-image: url("./Assets/Buttons/Radio_on.png");
+  background-image: url(./Assets/Buttons/Radio_on.png);
   color: black;
 }
 
@@ -389,7 +393,7 @@ body {
   right: 0%;
   width: 30vw;
   height: 39.5vw;
-  background-image: url("./Assets/dialogue-box.png");
+  background-image: url(./Assets/dialogue-box.png);
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -460,6 +464,18 @@ body {
   position: absolute;
   top: 10%;
   left: 10%;
+}
+
+#endingDiv{
+  opacity: 0;
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  transition: 3s;
 }
 
 .dialogue {
@@ -534,6 +550,19 @@ body {
   transition: .5s;
 }
 
+#chooseCharacterButton {
+  position: absolute;
+  left: 31%;
+  height: 10%;
+  transform: translate(-50%, -50%);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  transition: .25s;
+  font-size: 20px;
+  font-family: Blender;
+}
+
 #introductionButton {
   position: absolute;
   left: 50%;
@@ -573,8 +602,17 @@ body {
   left: 50%;
   top: 80%;
   transform: translate(-50%, -50%);
-  border: 1px solid white;
-  border-radius: 5px;
+  width: 10%;
+  height: 8%;
+  font-size: 20px;
+  background-image: url("./Assets/Buttons/Button.png");
+  font-family: Blender;
+}
+
+#continueButtonCenter:hover {
+  width: 11%;
+  height: 9%;
+  font-size: 21px;
 }
 
 #fullscreen {
@@ -583,7 +621,7 @@ body {
   right: 5%;
   width: 10%;
   height: 10%;
-  background-image: url("./Assets/Buttons/FullscreenOpen.png");
+  background-image: url(./Assets/Buttons/FullscreenOpen.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -595,6 +633,29 @@ body {
 #fullscreen:hover {
   width: 10.5%;
   height: 10.5%;
+}
+
+.chooseCharacterButtonPre{
+  width:18%;
+  top: 30%;
+  pointer-events: none;
+  color: white;
+  transition: 1s;
+}
+
+.chooseCharacterButton{
+  color: white;
+  background-image: url('./Assets/Buttons/Button.png');
+  opacity: 1;
+  width:12%;
+  top: 15%;
+  pointer-events: auto;
+  transition: .5s;
+}
+
+.chooseCharacterButton:hover{
+  color: black;
+  background-image: url("./Assets/Buttons/Button_on.png");
 }
 
 .button {
@@ -626,6 +687,8 @@ body {
 .visual:hover {
   height: 38%;
   width: 20%;
+  box-shadow: 0px 0px 5px white;
+  border-radius: 100px;
 }
 
 /*////////////////*/
@@ -636,7 +699,7 @@ body {
   left: 50%;
   top: 45%;
   transform: translate(-50%, -50%);
-  width: 70%;
+  width: 50%;
   color: white;
   font-size: 30px;
   text-shadow: 0 0 10px #fff;

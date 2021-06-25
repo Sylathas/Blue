@@ -12,6 +12,7 @@ var start = true;
 var dialoghi = 0;
 var tutorial = 0;
 var open = false;
+var pipboyanimate = true;
 
 $(document).ready(function() {
   loading();
@@ -114,16 +115,34 @@ window.characterChoice = function(part) {
   //Create the divs containing the sprites and QR's of the characters
   stopvideo();
   if (part == 1) {
-    createCharacter("Pa", "one");
-    createCharacter("TEDD", "two");
-    createCharacter("Joe", "three");
-  } else if (part == 2) {
     showDialogueText("selfDialogue", "Firstmeeting", 2);
     createCharacter("Eo", "one");
     createCharacter("Neutrum", "two");
+    let continueButton = $("<button></button>").text("Wait for the dialogue to end...");
+    continueButton.attr({
+      "id": "chooseCharacterButton",
+      "class": "button chooseCharacterButtonPre"
+    });
+    $("body").append(continueButton);
+  } else if (part == 2) {
+    createCharacter("Pa", "one");
+    createCharacter("TEDD", "two");
+    createCharacter("Joe", "three");
+    let continueButton = $("<button></button>").text("Wait for the dialogue to end...");
+    continueButton.attr({
+      "id": "chooseCharacterButton",
+      "class": "button chooseCharacterButtonPre"
+    });
+    $("body").append(continueButton);
   } else if (part == 3) {
     createCharacter("Maisie", "one");
     createCharacter("Swarm", "two");
+    let continueButton = $("<button></button>").text("Wait for the dialogue to end...");
+    continueButton.attr({
+      "id": "chooseCharacterButton",
+      "class": "button chooseCharacterButtonPre"
+    });
+    $("body").append(continueButton);
   }
 }
 
@@ -179,15 +198,23 @@ window.createCharacter = function(character, n) {
     "id": "choosecharacter",
     "class": n
   });
+
   setTimeout(function() {
     characterDiv.attr({
       "onclick": `characterFocus("${character}", "${n}")`
     });
-  }, 18000);
+    $("#chooseCharacterButton").css({
+      "opacity": "0"
+    });
+    $("#chooseCharacterButton").text("");
+    $(".selezionepersonaggio").css({
+      "opacity": "1"
+    });
+  }, 15000);
   //Create Div with as background image the sprite of the character
   let characterPath = `./Assets/Characters/"${character}".gif`.replace(/['"]+/g, '');
   let characterId = `characterAnimation"${n}"`.replace(/['"]+/g, '');
-  let characterAnimation = $(`<img id="${characterId}" src='${characterPath}' style='width:auto; height:100%; position: relative; left: 10%; transition: .5s;'>`);
+  let characterAnimation = $(`<img id="${characterId}" src='${characterPath}' class="selezionepersonaggio" style='width:auto; height:100%; position: relative; left: 10%; transition: .5s'>`);
   //Create Div with as background the QR of the character
   let qrPath = `./Assets/QR/"${character}".png`.replace(/['"]+/g, '');
   let characterQR = $("<img id='QR' class='QR" + n + "' src=" + qrPath + "></img>");
@@ -199,32 +226,37 @@ window.createCharacter = function(character, n) {
   });
   //append everything
   $("body").append(characterDiv, characterTag);
+  setTimeout(function(){
+    $(".selezionepersonaggio").css({
+      "opacity": ".5"
+    });
+  }, 200);
+
   $("#choosecharacter." + n).append(characterAnimation, characterQR);
   $("#choosecharacter." + n + ", #characterTag." + n).css({
     "opacity": "1"
   });
   let tagPath = `./Assets/Buttons/"${character}".png`.replace(/['"]+/g, '');
 
-  $("#choosecharacter." + n + ", .QR" + n + ", #characterTag." + n).mouseenter(function() {
+  $("#choosecharacter." + n + ", #characterTag." + n).mouseenter(function() {
     $("#characterAnimation" + n).css({
-      "opacity": `.3`
-    });
-    $(".QR" + n).css({
-      "opacity": `1`
+      "transform": `scale(1.1)`
     });
   });
-  $("#choosecharacter." + n + ", .QR" + n + ", #characterTag." + n).mouseout(function() {
+  $("#choosecharacter." + n + ", #characterTag." + n).mouseout(function() {
     $("#characterAnimation" + n).css({
-      "opacity": `1`
-    });
-    $(".QR" + n).css({
-      "opacity": `0`
+      "transform": `scale(1)`
     });
   });
 }
 
 window.startDialogue = async function(character, communication, progress, n) {
-  $(".button").remove();
+  $(".button").css({
+    "opacity": "0"
+  });
+  setTimeout(function(){
+    $(".button").remove();
+  }, 500);
   startvideo();
   //Remove old dialogues and buttons
   $("#characterTag.one").css({
@@ -255,6 +287,11 @@ window.startDialogue = async function(character, communication, progress, n) {
     $("#characterTag.one").remove();
     $("#characterTag.two").remove();
   }, 500);
+
+  $("#QR").css({
+    "top": "50%",
+    "opacity": "0"
+  });
   //Prototyping help
   //prototyping(progress);
   //Self Dialogue
@@ -480,86 +517,46 @@ window.finalDialogue = async function(character, communication, progress) {
   //Prototyping help
   //prototyping(progress);
   //Self Dialogue
-  if (communication == "visual") {
-    $("#video").attr({
-      "src": "./Assets/BG_" + character + ".mp4"
+  let endingDiv = $("<div id='endingDiv'></div>");
+  $("body").append(endingDiv);
+  setTimeout(function(){
+    $("#endingDiv").css({
+      "opacity": "1"
     });
-    $('#video')[0].play();
-  }
+    setTimeout(function(){
+      if (communication == "visual") {
+        $("#video").attr({
+          "src": "./Assets/BG_" + character + ".mp4"
+        });
+        $('#video')[0].play();
+      }
+    }, 2000);
+  }, 200);
 
   for (var i = 0; i < selfDialogue[character][4].length; i++) {
-    $("#textHolder").animate({
-      scrollTop: $('#textHolder').prop("scrollHeight")
-    }, 1000);
     //typed
     let optionsSelf = {
       strings: [selfDialogue[character][4][i]],
       typeSpeed: 20,
       showCursor: false
     };
-    let selfName = $("<p></p>").html("<span class='bold'>Me: </span>");
-    selfName.attr({
-      "id": "selfDialogue",
-      "class": "dialogue"
-    });
-    selfName.css({
-      "margin-bottom": "0"
-    });
-    let selfText = $("<p></p>");
+    let selfText = $("<p style='color: black; z-index:11; opacity: 1'></p>");
     selfText.attr({
-      "id": "selfDialogue",
-      "class": "dialogue scrollableDialogue" + dialoghi.toString()
+      "id": "appearingText",
     });
-    selfText.css({
-      "margin-top": "0"
-    });
-    $("#textHolder").append(selfName, selfText);
-    new Typed(".scrollableDialogue" + dialoghi.toString(), optionsSelf);
+    $("body").append(selfText);
+    let type = new Typed("#appearingText", optionsSelf);
     dialoghi++;
-    $("#textHolder").animate({
-      scrollTop: $('#textHolder').prop("scrollHeight")
-    }, 1000);
     await new Promise(r => setTimeout(r, 35 * selfDialogue[character][4][i].length));
+    $("#appearingText").css({
+      "opacity": "0"
+    });
   }
-  //Character Dialogue
-  for (i = 0; i < characterDialogue[character][4].length; i++) {
-    $("#textHolder").animate({
-      scrollTop: $('#textHolder').prop("scrollHeight")
-    }, 1000);
-    let optionsCharacter = {
-      strings: [characterDialogue[character][4][i]],
-      typeSpeed: 20,
-      showCursor: false
-    };
-    let characterName = $("<p></p>").html("<span class='bold'>" + character + ": </span>");
-    characterName.attr({
-      "id": "characterDialogue",
-      "class": "dialogue"
-    });
-    characterName.css({
-      "margin-bottom": "0"
-    });
-    let characterText = $("<p></p>");
-    characterText.attr({
-      "id": "characterDialogue",
-      "class": "dialogue scrollableDialogue" + dialoghi.toString()
-    });
-    characterText.addClass(character);
-    characterText.css({
-      "margin-top": "0"
-    });
-    $("#textHolder").append(characterName, characterText);
-    new Typed(".scrollableDialogue" + dialoghi.toString(), optionsCharacter);
-    dialoghi++;
-    $("#textHolder").animate({
-      scrollTop: $('#textHolder').prop("scrollHeight")
-    }, 1000);
-    await new Promise(r => setTimeout(r, 35 * characterDialogue[character][4].length));
-  }
+
   //Continue button
   let continueButton = $("<button></button>").text("Continue");
   continueButton.attr({
-    "id": "continueButton",
+    "id": "continueButtonCenter",
     "class": "button",
     'onclick': `sectionProgress("${character}", "${communication}", ${progress})`
   });
@@ -568,7 +565,6 @@ window.finalDialogue = async function(character, communication, progress) {
 }
 
 window.characterFocus = function(character, n) {
-  $(".button").remove();
   showDialogueText("characterDescription", character, 1);
   $("#choosecharacter." + n).css({
     "pointer-events": "none",
@@ -576,75 +572,99 @@ window.characterFocus = function(character, n) {
     "width": "20%",
     "height": "25%"
   });
+  $("#characterTag." + n).css({
+    "pointer-events": "none",
+    "opacity": "1",
+    "width": "6%",
+    "height": "10%",
+    "bottom": "35%"
+  });
+  $(".QRone, .QRtwo, .QRthree").css({
+    "opacity": "1"
+  });
   if (n == "one") {
-    $("#choosecharacter.two, .QRtwo, #choosecharacter.three, .QRthree").off('mouseenter, mouseout');
-    $("#choosecharacter.two").css({
+    $("#choosecharacter.two, .QRtwo, #choosecharacter.three, .QRthree, #characterTag.two").off('mouseenter, mouseout');
+    $("#choosecharacter.two, #choosecharacter.three").css({
       "pointer-events": "none",
       "opacity": "0.5",
       "width": "20%",
       "height": "15%"
     });
-    if ($("#choosecharacter.three")) {
-      $("#choosecharacter.three").css({
-        "pointer-events": "none",
-        "opacity": "0.5",
-        "width": "20%",
-        "height": "15%"
-      });
-    }
+    $(".QRtwo, .QRthree").css({
+      "pointer-events": "none",
+      "opacity": "0"
+    });
+    $("#characterTag.two, #characterTag.three").css({
+      "pointer-events": "none",
+      "opacity": "0.5",
+      "width": "5%",
+      "height": "8%",
+      "bottom": "30%"
+    });
   } else if (n == "two") {
-    $("#choosecharacter.one, .QRone, #choosecharacter.three, .QRthree").off('mouseenter, mouseout');
-    $("#choosecharacter.one").css({
+    $("#choosecharacter.one, .QRone, #choosecharacter.three, .QRthree, #characterTag.three, #characterTag.one").off('mouseenter, mouseout');
+    $("#choosecharacter.one, #choosecharacter.three").css({
       "pointer-events": "none",
       "opacity": "0.5",
       "width": "20%",
       "height": "15%"
     });
-    if ($("#choosecharacter.three")) {
-      $("#choosecharacter.three").css({
-        "pointer-events": "none",
-        "opacity": "0.5",
-        "width": "20%",
-        "height": "15%"
-      });
-    }
+    $(".QRone, .QRthree").css({
+      "pointer-events": "none",
+      "opacity": "0"
+    });
+    $("#characterTag.one, #characterTag.three").css({
+      "pointer-events": "none",
+      "opacity": "0.5",
+      "width": "5%",
+      "height": "8%",
+      "bottom": "30%"
+    });
   } else if (n == "three") {
-    $("#choosecharacter.one, .QRone, #choosecharacter.two, .QRtwo").off('mouseenter, mouseout');
+    $("#choosecharacter.one, .QRone, #choosecharacter.two, .QRtwo, #characterTag.one, #characterTag.two").off('mouseenter, mouseout');
     $("#choosecharacter.one, #choosecharacter.two").css({
       "pointer-events": "none",
       "opacity": "0.5",
       "width": "20%",
       "height": "15%"
     });
+    $(".QRone, .QRtwo").css({
+      "pointer-events": "none",
+      "opacity": "0"
+    });
+    $("#characterTag.one, #characterTag.two").css({
+      "pointer-events": "none",
+      "opacity": "0.5",
+      "width": "5%",
+      "height": "8%",
+      "bottom": "30%"
+    });
   }
-  $("#choosecharacter." + n + ", .QR" + n).mouseenter(function() {
+  $("#choosecharacter." + n).mouseenter(function() {
     $("#characterAnimation" + n).css({
       "opacity": `.5`
     });
-    $(".QR" + n).css({
-      "opacity": `1`
-    });
   });
-  $("#choosecharacter." + n + ", .QR" + n).mouseout(function() {
+  $("#choosecharacter." + n).mouseout(function() {
     $("#characterAnimation" + n).css({
       "opacity": `1`
     });
-    $(".QR" + n).css({
-      "opacity": `0`
-    });
   });
+
+  $("#chooseCharacterButton").text("Choose " + character);
+  $("#chooseCharacterButton").attr({
+    'onclick': `startDialogue("${character}", "visual", 1, "${n}")`
+  });
+  $("#chooseCharacterButton").removeClass("chooseCharacterButtonPre");
+  $("#chooseCharacterButton").addClass("chooseCharacterButton");
+  $("#chooseCharacterButton").css({
+    "opacity": "1"
+  })
   setTimeout(function() {
     $("#choosecharacter.one, #choosecharacter.two, #choosecharacter.three").css({
       "pointer-events": "auto"
     });
-    let continueButton = $("<button></button>").text("Choose");
-    continueButton.attr({
-      "id": "continueButton",
-      "class": "button",
-      'onclick': `startDialogue("${character}", "visual", 1, "${n}")`
-    });
-    $("body").append(continueButton);
-  }, 15000);
+  }, 10000);
 
 }
 
@@ -674,7 +694,7 @@ window.selection = async function(character, communication, progress) {
   }
   //Self Dialogue
   let optionsSelf = {
-    strings: ["<b><i>It’s strange, but I almost feel like I can see the directions in my head. I feel confused... Maybe i should look at my companion to find the way…</b></i>"],
+    strings: ["It’s strange, but I almost feel like I can see the directions in my head. I feel confused... Maybe i should look at my companion to find the way…"],
     typeSpeed: 20,
     showCursor: false
   };
@@ -755,10 +775,14 @@ window.selection = async function(character, communication, progress) {
   $(".visual, .text, .sound").css({
     "opacity": ".8"
   });
+  $("#QR").css({
+    "top": "50%",
+  });
 
   $("#characterAnimation, #QR").mouseenter(function() {
     $("#characterAnimation").css({
-      "opacity": `.3`
+      "transform": `scale(1.1)`,
+      "opacity": ".3"
     });
     $("#QR").css({
       "opacity": `1`
@@ -766,7 +790,8 @@ window.selection = async function(character, communication, progress) {
   });
   $("#characterAnimation, #QR").mouseout(function() {
     $("#characterAnimation").css({
-      "opacity": `1`
+      "transform": `scale(1)`,
+      "opacity": "1"
     });
     $("#QR").css({
       "opacity": `0`
@@ -831,7 +856,7 @@ window.textAppear = function(text, intr, buttonPos) {
       'cursor': 'auto'
     })
   }
-  let continueButton = $("<button></button>").text("Continue");
+  let continueButton = $("<button></button>");
   continueButton.attr({
     "id": "continueButtonCenter",
     "class": "button",
@@ -841,7 +866,10 @@ window.textAppear = function(text, intr, buttonPos) {
   appearingtext.attr({
     "id": "appearingText"
   });
+  let continuetext = $("<p style='margin-top: 0;'>Continue</p>");
+
   $("body").append(appearingtext, continueButton);
+  $("#continueButtonCenter").append(continuetext);
   setTimeout(function() {
     $("#appearingText").css({
       "opacity": "1"
@@ -865,7 +893,6 @@ window.videoAppear = function(link, intr) {
 }
 
 window.showDialogueText = async function(part, character, progress) {
-  $(".button").remove();
   let number;
   if (part == "selfDialogue") {
     number = selfDialogue[character][progress - 1].length;
@@ -930,8 +957,8 @@ window.showDialogueText = async function(part, character, progress) {
       document.querySelector('video').playbackRate = 1;
     }, 3500);
     setTimeout(function() {
-      characterChoice(2);
-    }, 18000);
+      characterChoice(1);
+    }, 13000);
   }
 }
 
@@ -955,32 +982,36 @@ document.body.onkeyup = function(e) {
 }
 
 window.openPipBoy = function() {
-  setTimeout(function(){
-    open = true;
-  }, 1000);
-  setTimeout(function() {
-    $("#pipboyDiv").css({
-      "top": "50%",
-      "transform": "translate(-50%, -50%) rotate(0deg) scale(1.1)"
-    });
-    $("#video, #dialogueBoxHolder").css({
-      "filter": "blur(4px)"
-    });
+  if(pipboyanimate){
+    pipboyanimate = false;
+    setTimeout(function(){
+      open = true;
+    }, 1000);
     setTimeout(function() {
       $("#pipboyDiv").css({
-        "width": "150%",
-        "height": "150%"
+        "top": "50%",
+        "transform": "translate(-50%, -50%) rotate(0deg) scale(1.1)"
+      });
+      $("#video, #dialogueBoxHolder").css({
+        "filter": "blur(4px)"
       });
       setTimeout(function() {
-        $("#upper, #lower, #separator").css({
-          "opacity": "1"
+        $("#pipboyDiv").css({
+          "width": "150%",
+          "height": "150%"
         });
-        $('#buzz').prop("volume", 0.3);
-        $('#piponoff').get(0).play();
-        $('#buzz').get(0).play();
-      }, 500);
-    }, 750);
-  }, 1);
+        setTimeout(function() {
+          $("#upper, #lower, #separator").css({
+            "opacity": "1"
+          });
+          $('#buzz').prop("volume", 0.3);
+          $('#piponoff').get(0).play();
+          //$('#buzz').get(0).play();
+          pipboyanimate = true;
+        }, 500);
+      }, 750);
+    }, 1);
+  }
 }
 
 window.activate = function(menu) {
@@ -1011,29 +1042,33 @@ window.activate = function(menu) {
 }
 
 window.closePipBoy = function() {
-  setTimeout(function(){
-    open = false;
-  }, 1000);
-  $("#upper, #lower, #separator").css({
-    "opacity": "0"
-  });
-  $('#piponoff').get(0).play();
-  $('#buzz').stop();
-  setTimeout(function() {
-    $("#pipboyDiv").css({
-      "width": "100%",
-      "height": "100%"
+  if(pipboyanimate){
+    pipboyanimate = false;
+    setTimeout(function(){
+      open = false;
+    }, 1000);
+    $("#upper, #lower, #separator").css({
+      "opacity": "0"
     });
+    $('#piponoff').get(0).play();
+    $('#buzz').stop();
     setTimeout(function() {
       $("#pipboyDiv").css({
-        "top": "180%",
-        "transform": "translate(-50%, -50%) rotate(35deg) scale(1.1)"
+        "width": "100%",
+        "height": "100%"
       });
-      $("#video, #dialogueBoxHolder").css({
-        "filter": "blur(0px)"
-      });
-    }, 750);
-  }, 500);
+      setTimeout(function() {
+        $("#pipboyDiv").css({
+          "top": "230%",
+          "transform": "translate(-50%, -50%) rotate(35deg) scale(1.1)"
+        });
+        $("#video, #dialogueBoxHolder").css({
+          "filter": "blur(0px)"
+        });
+        pipboyanimate = true;
+      }, 750);
+    }, 250);
+  }
 }
 
 window.changenametag = function(newactive) {
