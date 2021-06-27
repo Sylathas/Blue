@@ -420,7 +420,7 @@ window.progressDialogue = async function(character, communication, progress, n) 
   continueButton.attr({
     "id": "continueButton",
     "class": "button",
-    'onclick': `startvideo(); setTimeout(() => {sectionProgress("${character}", "${communication}", ${progress})}, 2000);`
+    'onclick': `startvideo(); $(".button, #totemone").remove(); setTimeout(() => {sectionProgress("${character}", "${communication}", ${progress})}, 2000);`
   });
   //Add them to the body
   setTimeout(() => {
@@ -430,6 +430,13 @@ window.progressDialogue = async function(character, communication, progress, n) 
     totem.css({
       "opacity": "1"
     });
+    if(character == "Eo" || character == "Tedd" || character == "Swarm"){
+      totem.addClass("totemRound");
+    } else if(character == "Pa" || character == "Maisie"){
+      totem.addClass("totemSquare");
+    } else if(character == "Joe" || character == "Neutrum"){
+      totem.addClass("totemTriangle");
+    }
   }, 3000);
 }
 

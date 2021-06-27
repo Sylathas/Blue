@@ -642,11 +642,39 @@ body {
 }
 
 /*////////////////*/
+/*/////Graphic////*/
+/*////////////////*/
+
+#totemone{
+  position: absolute;
+  left: 5%;
+  bottom: 30%;
+  width: 20%;
+  height: 60%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.totemRound{
+  background-image: url("./Assets/Totems/Big/1.gif");
+}
+
+.totemSquare{
+  background-image: url("./Assets/Totems/Big/2.gif");
+}
+
+.totemTriangle{
+  background-image: url("./Assets/Totems/Big/3.gif");
+}
+
+/*////////////////*/
 /*/////Buttons////*/
 /*////////////////*/
+
 #continueButton {
   position: absolute;
-  left: 31%;
+  left: 40%;
   top: 50%;
   transform: translate(-50%, -50%);
   background-image: url("./Assets/Buttons/Button.png");
