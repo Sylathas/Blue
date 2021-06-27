@@ -15,16 +15,17 @@ var dialoghi = 0;
 var tutorial = 0;
 var open = false;
 var pipboyanimate = true;
-var part = 0;
+var part = 4;
 var log1 = 0;
 var log2 = 0;
 var log3 = 0;
-var pg1;
-var pg2;
-var pg3;
+var pg1 = "Eo";
+var pg2 = "Joe";
+var pg3 = "Swarm";
 
 $(document).ready(function() {
-  loading();
+  //loading();
+  finalDialogue("Swarm", "audio", 4, 0);
 });
 
 //FUNCTIONS ABOUT THE PROGRESSION OF THE STORY
@@ -99,7 +100,7 @@ window.introduction = function(progress) {
             clearInterval(intervalId);
           }
         }, 100);
-      }, 24000);
+      }, 1000);
     }, 1000);
   }
 }
@@ -174,29 +175,21 @@ window.characterChoice = function() {
 }
 
 window.sectionProgress = function(character, communication, progress, n) {
-  if (progress < 5) {
-    //Dialogue and selection of monuments
-    console.log(`Section progress reached, with progress ${progress}`);
-    selection(character, communication, progress, n);
-  } else if (progress == 5) {
-    //End of part
-    progress = 0;
-    newMail();
-    part++;
-    finalDialogue(character, communication, progress, 0);
+  if(part < 4){
+    if (progress < 5) {
+      //Dialogue and selection of monuments
+      console.log(`Section progress reached, with progress ${progress}`);
+      selection(character, communication, progress, n);
+    } else if (progress == 5) {
+      //End of part
+      progress = 0;
+      newMail();
+      part++;
+      finalDialogue(character, communication, progress, 0);
+    }
+  } else {
+    ending();
   }
-}
-
-window.ending = function() {
-  //Remove old dialogues and buttons
-  $(".dialogue, .button").remove();
-  //Self Dialogue
-  let selfText = $("<p></p>").text("End of prototype");
-  selfText.attr({
-    "id": "finalDialogue",
-    "class": "dialogue"
-  });
-  $("body").append(selfText);
 }
 
 //FUNCTIONS ABOUT DIALOGUES, CHOICES AND DIV CREATION
@@ -569,6 +562,7 @@ window.wrongDialogue = async function(character, communication, progress, n) {
 window.finalDialogue = async function(character, communication, progress, partNumber) {
   stopvideo();
   if (partNumber == 0) {
+    console.log(part);
     //Remove old dialogues and buttons
     $(".button").remove();
     //Create white DIV
@@ -611,20 +605,20 @@ window.finalDialogue = async function(character, communication, progress, partNu
   $("#appearingText").text(selfDialogue[character][4][partNumber]);
 
   setTimeout(function() {
-    if (partNumber < selfDialogue[character][4].length) {
+    if (partNumber < selfDialogue[character][4].length - 1) {
       $("#appearingText").css({
-        "opacity": "1"
+        "opacity": "0"
       });
       setTimeout(() => {
         finalDialogue(character, communication, progress, partNumber + 1);
       }, 1000);
     } else {
       //Continue button
-      let continueButton = $("<button style='z-index: 11; opacity: 0;'></button>").text("Continue");
+      let continueButton = $("<button style='z-index: 10; opacity: 0;'></button>").text("Continue");
       continueButton.attr({
         "id": "continueButtonCenter",
         "class": "button",
-        'onclick': `part++; if(part < 4){intermezzo();} else{ending();}`
+        'onclick': `intermezzo()`
       });
       //Add them to the body
       $("body").append(continueButton);
@@ -635,15 +629,83 @@ window.finalDialogue = async function(character, communication, progress, partNu
   }, 4000);
 }
 
-window.intermezzo = function() {
-  $(".button").remove();
-  $("#character").remove();
-  $("#endingDiv").css({"opacity": "0"});
+window.ending = function() {
+  //ending
+  $("#endingDiv").css({
+    "background-color": "black"
+  });
+  $("#appearingText, #continueButtonCenter").css({
+    "opacity": "0"
+  });
   setTimeout(() => {
-    $("#endingDiv").remove();
-    startvideo();
-    characterChoice();
-  }, 2000);
+    $("#appearingText, #continueButtonCenter").remove();
+    let phrase1 = $(`<h2 style="color: white; font-family: Blender; text-align: center; position: absolute; left: 50%; transform: translate(-50%,-50%); top: 20%; opacity: 0; transition: 1s; font-weight: normal">${selfDialogue[pg1][4][2]}</h2>`);
+    let phrase2 = $(`<h2 style="color: white; font-family: Blender; text-align: center; position: absolute; left: 50%; transform: translate(-50%,-50%); top: 50%; opacity: 0; transition: 1s; font-weight: normal">${selfDialogue[pg2][4][2]}</h2>`);
+    let phrase3 = $(`<h2 style="color: white; font-family: Blender; text-align: center; position: absolute; left: 50%; transform: translate(-50%,-50%); top: 80%; opacity: 0; transition: 1s; font-weight: normal">${selfDialogue[pg3][4][2]}</h2>`);
+    $("#endingDiv").append(phrase1, phrase2, phrase3);
+    setTimeout(() => {
+      $("#endingDiv h2").css({
+        "opacity": "1"
+      });
+    }, 500);
+    setTimeout(() => {
+      $("#endingDiv h2").css({
+        "opacity": "0"
+      });
+      let finalphrase = $(`<h1 style="font-weight: normal; color: white; font-family: Blender; text-align: center; position: absolute; left: 50%; transform: translate(-50%,-50%); top: 40%; opacity: 0; transition: 1s;">I have come a long way…<br>I feel this is the end…<br>Or maybe… a new beginning.</h1>`);
+      let finalButton = $("<button style='opacity: 0; transition: 1s; color: white;'><p style='margin-top: 0;'>Send a signal</p></button>");
+      finalButton.attr({
+        "id": "continueButtonCenter",
+        "class": "button",
+        'onclick': `playFinalVideo()`
+      });
+      $("#endingDiv").append(finalphrase, finalButton);
+      setTimeout(() => {
+        $("#endingDiv h2").remove();
+        $("#endingDiv h1, #endingDiv button").css({
+          "opacity": "1"
+        });
+      }, 1000);
+    }, 8000);
+  }, 3000);
+}
+
+window.playFinalVideo = function() {
+  $("#endingDiv h5, #continueButtonCenter").css({
+    "opacity": "0"
+  });
+  setTimeout(() => {
+    $("#endingDiv h5, #continueButtonCenter").remove();
+    let finalVideoDiv = $(`<div id="finalVideo" style="opacity: 0; transition: 1s;"></div>`);
+    let finalVideo = $(`<video src="./Assets/finalVideo.mp4" style="position: absolute; left: 0; top: 0; width: 100vw; height: auto; z-index: 20; transition: 1s;"></video>`);
+    $("body").append(finalVideoDiv);
+    finalVideoDiv.append(finalVideo);
+    finalVideoDiv.css({
+      "opacity": "1"
+    });
+    $("#finalVideoDiv video").get(0).play();
+    setTimeout(() => {
+      $("#endingDiv h1, #endingDiv button").remove();
+      finalVideoDiv.css({
+        "opacity": "0"
+      });
+    }, 15000);
+  }, 1000);
+}
+
+window.intermezzo = function() {
+  if(part < 4){
+    $(".button").remove();
+    $("#character").remove();
+    $("#endingDiv").css({"opacity": "0"});
+    setTimeout(() => {
+      $("#endingDiv").remove();
+      startvideo();
+      characterChoice();
+    }, 2000);
+  } else {
+    ending();
+  }
 }
 
 window.characterFocus = function(character, n) {
@@ -778,7 +840,7 @@ window.characterFocus = function(character, n) {
       "pointer-events": "auto"
     });
     $("#chooseCharacterButton").attr({
-      'onclick': `startDialogue("${character}", "${style}", 1, "${n}")`
+      'onclick': `pg${part} = "${character}"; startDialogue("${character}", "${style}", 1, "${n}")`
     });
     $("#chooseCharacterButton").css({
       "opacity": "1"
@@ -1129,7 +1191,7 @@ window.showDialogueText = async function(textPart, character, progress) {
       document.querySelector('video').playbackRate = 1;
     }, 3500);
     setTimeout(function() {
-      part++;
+      part = 3;
       characterChoice();
     }, 13000);
   }
@@ -1294,11 +1356,11 @@ window.playSound = function(choice, character, communication, progress, n){
     "opacity": ".8"
   });
   if(character == "Maisie"){
-    if(choice == "choiceOne" || choice == "choiceTwo"){
+    if(choice == "choiceThree" || choice == "choiceTwo"){
       $("#chooseAudioButton").attr({
         "onclick": `wrongDialogue("${character}", "${communication}", ${progress}, "${n}")`
       });
-    } else if(choice == "choiceThree"){
+    } else if(choice == "choiceOne"){
       $("#chooseAudioButton").attr({
         "onclick": `progressDialogue("${character}", "${communication}", ${progress}, "${n}")`
       });

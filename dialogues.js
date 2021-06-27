@@ -28,29 +28,28 @@ export let selfDialogue = {
 ["More inscriptions…", "I heard a voice before, it was in my head."," Maybe it’s that giant thing.","He said these things have no meaning.. I don’t believe it."],
 ["Even more inscriptions.","Seems like the voice comes from this giant man, somehow I can hear it in my head.","He’s saying that the inscriptions have no meaning, yet they are all they have.","Wait a second.","Part of this inscription seems to be covered by sand.","It seems there is more signs under the sand.","That must change something."],
 ["Even more inscriptions.","I knew it, I found something!","Not that I know what it is but it is something.","Maybe that is exactly what I needed to find.","At least I gave that big man a lesson.","I feel accomplished."],
-["That was strange, this place seems to know what it needs to do better than you do. What happened makes no sense, and yet…","One could think there is no pourpose … but pourpose is a complex thing.","Pourpose can also be dangerous… too much pourpose can even lead someone to stop seeing the things he was looking for."],
+["That was strange, this place seems to know what it needs to do better than you do. What happened makes no sense, and yet…","One could think there is no purpose … but purpose is a complex thing.","Purpose can also be dangerous… too much purpose can even lead someone to stop seeing the things he was looking for."],
   ],
   Tedd: [
     ["What are these inscriptions?","I wonder what they mean.","The inscription is too ruined, I can’t make out any of these symbols.","What?","The drone started repairing the monument, now the letters are much more legible."],
 ["Even more inscriptions.","These are also very difficult to read, I wonder if the drone can do something about it.","As expected, he’s repairing these too.","He looks like he’s starting to take it at heart."],
 ["Even more inscriptions.","These are even more worn out, no way the drone can do somethnig about it.","Seems I was wrong, it repaired these too.","I still can’t understand what they mean anyway."],
-["Even more inscriptions.","The drone is repairing these too.", "To be honest I don’t really care about what they mean anymore, what matters is that this little guy has a pourpose now.","I feel accomplished"],
-["That was strange, this place seems to know what it needs to do better than you do, what happened makes no sense, and yet…","One could think there is no pourpose … but pourpose is a complex thing.","Pourpose is not a given, it needs to be embraced… sometimes pourpose can even make."]
+["Even more inscriptions.","The drone is repairing these too.", "To be honest I don’t really care about what they mean anymore, what matters is that this little guy has a purpose now.","I feel accomplished"],
+["That was strange, this place seems to know what it needs to do better than you do, what happened makes no sense, and yet…","One could think there is no purpose … but purpose is a complex thing.","Purpose is not a given, it needs to be embraced… sometimes purpose can even make."]
   ],
   Joe: [
     ["What are these inscriptions?","I don’t recognize the letters, it’s probably some kind of alien language.","I wonder what they mean.", "Wait a second, that guy is walking away!","Hey you, wait!"],
 ["More inscriptions, looking closer at them they seem to be divided in paragraphs, they probably tell a story.","I wonder what they mean.","…","The big guy doesen’t seem interested, he won’t stop walking."],
 ["More inscriptions, these all look the same…", "Wait a second.","They don’t look the same, they are the same", "These probably don’t mean anything at all.", "Huh?","Did the big guy stop?"],
-["Even more inscriptions.","There’s no doubt, they are all the same.", "Well, they may not mean anything, but maybe there’s no need.", "The big guy stopped once again."],
-["He seems like he’s found his meaning","I wonder what it is."],
-["That was strange, this place seems to know what it needs to do better than you do, what happened makes no sense, and yet…","One could think there is no pourpose … but pourpose is a complex thing.”,“Pourpose doesen’t exist, and if it does it can easily be ignored… sometimes though a man could very well need a pourpose, while pourpose almost never needs a man."]
+["Even more inscriptions.","There’s no doubt, they are all the same.", "Well, they may not mean anything, but maybe there’s no need.", "The big guy stopped once again.", "He seems like he’s found his meaning","I wonder what it is."],
+["That was strange, this place seems to know what it needs to do better than you do, what happened makes no sense, and yet…","One could think there is no purpose … but purpose is a complex thing.","Purpose doesen’t exist, and if it does it can easily be ignored… sometimes though a man could very well need a purpose, while purpose almost never needs a man."]
   ],
   Neutrum: [
     ["It looks like there is a path, I should try to follow it.", "The being has started following me, but it looks to be calm, completely still.", "It’s difficult to stop looking at it."],
     ["There is something about this path, it doesn't seem to be leading anywhere.","How strange, I stopped looking at the being for a second and now its shape has changed.","It looks like its crystals rearranged in yet another shape.","Maybe it has something to do with the path."],
     ["This place looks familiar…", "Either I'm going crazy, or the path is looping on itself.","There it is, the thing changed shape once again.", "It looks like it’s trying to rearrange according to the path itself."],
     ["This is enough, the path just keeps looping on itself, this is a waste of time.","…","The thing changed shape once again, now it’s a perfect pyramid, how strange… It never looked so simple.", "From up this hill I can see the whole path, I didn’t notice before but it looks like a perfect triangle.","The thing stopped following me, maybe it was travelling all this time just to reach this specific spot.", "Somehow, it feels at peace."],
-    ["That was strange, this place seems to know what it needs to do better than you do, what happened makes no sense, and yet…","One could think there is no understanding… but understanding is a complex thing.","Understanding goes two ways.. one may think he’s trying to understand the other, but all the while he’s the one being uderstood."]
+    ["That was strange, this place seems to know what it needs to do better than you do, what happened makes no sense, and yet…","One could think there is no understanding… but understanding is a complex thing.","Understanding goes two ways.. one may think he’s trying to understand the other, but all the while he’s the one being understood."]
       ],
   Swarm: [
 ["Wha-"," What is this this sound? It’s almost impossible to hear."," This sound is so annoying, am I the only hearing it? ","...","..."," The insects are moving in a mesmerizing pattern, maybe the sound is coming from them, I can’t understand."," I’d better move."],
@@ -242,7 +241,7 @@ export var dataLogsCharacters = {
   Tedd: [
     ["This must be some kind of drone, it looks like it lost whatever its purpouse was. I found it stranded near a monument on the planet, it looks cute, maybe I can help it."],
 ["I found some ruined inscriptions and the drone started repairing them, maybe it was a repairing drone. While it was patching the inscriptions up it looked almost happy, if that makes sense."],
-["I found some more inscriptions and the drone repaired those too, it definetly is its pourpose, It looks like it knows it too."],
+["I found some more inscriptions and the drone repaired those too, it definetly is its purpose, It looks like it knows it too."],
 ["The drone has repaired all the inscriptions up until now, at a point it stoped following me and sprinted to the horizon, I think it found a new porpouse, I’m glad."],
   ],
   Joe: [
