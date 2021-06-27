@@ -612,7 +612,7 @@ window.finalDialogue = async function(character, communication, progress, partNu
         "opacity": "1"
       });
     }
-  }, 2000);
+  }, 4000);
 }
 
 window.intermezzo = function() {
