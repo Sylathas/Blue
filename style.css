@@ -42,11 +42,11 @@ body {
 /*////////////////*/
 #QR {
   position: absolute;
-  left: 50%;
-  top: -26vh;
+  left: 31%;
+  top: 35%;
   transform: translate(-50%, -50%);
   width: auto;
-  height: 20vh;
+  height: 15vh;
   opacity: 0;
   z-index: 1;
   transition: .5s;
@@ -783,6 +783,32 @@ body {
   bottom:
 }
 
+#chooseAudioButton{
+  position: absolute;
+  left: 31%;
+  height: 10%;
+  width:12%;
+  top: 20%;
+  transform: translate(-50%, -50%);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  transition: .25s;
+  font-size: 20px;
+  font-family: Blender;
+  background-image: url('./Assets/Buttons/Button_on.png');
+  opacity: .5;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+
+#chooseAudioButton:hover{
+  height: 11%;
+  width:13%;
+  opacity: 1;
+}
+
 .chooseCharacterButtonPre{
   width:18%;
   top: 30%;
@@ -796,7 +822,7 @@ body {
   background-image: url('./Assets/Buttons/Button_on.png');
   opacity: 1;
   width:12%;
-  top: 15%;
+  top: 20%;
   pointer-events: auto;
   transition: .5s;
 }
@@ -871,15 +897,15 @@ body {
 
 .audio {
   width: 16%;
-  height: 30%;
+  height: 20%;
   background-position: center;
   opacity: 0;
   transition: 1s;
 }
 
 .audio:hover {
-  height: 38%;
-  width: 20%;
+  height: 34%;
+  width: 18%;
 }
 
 /*////////////////*/

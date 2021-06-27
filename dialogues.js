@@ -185,7 +185,7 @@ export var wrongSelfDialogue = {
     ["It looks angry, when it's angry the shape looks to lose stability."],
   ],
   Swarm: [
-    ["The insects are buzzing fouriously, this is probably the wrong way."]
+    ["The insects are buzzing fouriously, this is probably the wrong way."],
     ["The movement of the insects is less coordinated now, this is probably the wrong way."]
   ]
 };
