@@ -20,10 +20,8 @@ export let selfDialogue = {
     ["Wha-"," What is this this sound? It hurts so bad. "," The sound is unbearable, the vision is starting to blur.... ","...","..."," What happened? This place is different from before.","Did she bring me here?"],
     ["The sound is still there, but it doesn’t hurt like before","…","She’s keeping her distance, she looks like she doesn’t trust me.", "Maybe she hears this sound too, that’s why she’s uncomfortable."],
     ["The sound is always there, but it doesn’t hurt anymore", "…", " I have walked quite a lot, it seems the sound changes depending on my position.","…","If that’s the case I’m getting close to something.","Even she seems to be more calm now."],
-    ["The sound is now almost soothing.","I’m almost there, I can feel it.", "Here it is.", "I can feel she is completely calm too now.", "She took her helmet off.", "She is .. beautiful."]
+    ["The sound is now almost soothing.","I’m almost there, I can feel it.", "Here it is.", "I can feel she is completely calm too now.", "She took her helmet off.", "She is .. beautiful."],
     ["That was strange, this place seems to know what it needs to do better than you do. What happened makes no sense, and yet…","One could think there is no meaning… but meaning is a complex thing","On the way towards meaning, one could even end up finding the meaning he was searching for… at that point another journey begins."]
-
-
   ],
   Pa: [
 ["What are these inscriptions?","I don’t recognize the letters, it’s probably some kind of alien language.","I wonder what they mean.","Wait a second, I’m hearing a voice."],
@@ -44,7 +42,7 @@ export let selfDialogue = {
 ["More inscriptions, looking closer at them they seem to be divided in paragraphs, they probably tell a story.","I wonder what they mean.","…","The big guy doesen’t seem interested, he won’t stop walking."],
 ["More inscriptions, these all look the same…", "Wait a second.","They don’t look the same, they are the same", "These probably don’t mean anything at all.", "Huh?","Did the big guy stop?"],
 ["Even more inscriptions.","There’s no doubt, they are all the same.", "Well, they may not mean anything, but maybe there’s no need.", "The big guy stopped once again."],
-["He seems like he’s found his meaning","I wonder what it is."]
+["He seems like he’s found his meaning","I wonder what it is."],
 ["That was strange, this place seems to know what it needs to do better than you do, what happened makes no sense, and yet…","One could think there is no pourpose … but pourpose is a complex thing.”,“Pourpose doesen’t exist, and if it does it can easily be ignored… sometimes though a man could very well need a pourpose, while pourpose almost never needs a man."]
   ],
   Neutrum: [
@@ -119,7 +117,7 @@ export var characterDialogue = {
     ["…"],
     ["…"],
     ["So they never meant anything…"],
-    ["I’d better go home."],
+    ["I’d better go home."]
   ],
   Neutrum: [
     ["o xo j o ksa sk k k as a a kd jd sjeu j jsk"],
@@ -269,25 +267,25 @@ export var dataLogsCharacters = {
 
 export var textButtonText = {
   Round: [
-    ["Tedd"],
-    ["Tedd"],
-    ["Tedd"],
-    ["Tedd"],
-    ["Tedd"]
+    ["000100100"],
+    ["001001001"],
+    ["010010001"],
+    ["010100010"],
+    ["010010000"]
   ],
   Square: [
-    ["Joe"],
-    ["Joe"],
-    ["Joe"],
-    ["Joe"],
-    ["Joe"]
+    ["Frankly, my dear, I don’t give a damn."],
+    ["Fasten your seatbelts. It's going to be a bumpy night."],
+    ["Louis, I think this is the beginning of a beautiful friendship"],
+    ["I'll have what she's having."],
+    ["Houston, we have a problem"]
   ],
   Triangle: [
-    ["Pa"],
-    ["Pa"],
-    ["Pa"],
-    ["Pa"],
-    ["Pa"]
+    ["In the cicada's cry","No sign can foretell","How soon it must die."],
+    ["In the twilight rain","these brilliant-hued hibiscus","A lovely sunset"],
+    ["The shallows-","a crane’s thighs splashed in","cool waves"],
+    ["Autumn moonlight-","a worm digs silently","into the chestnut"],
+    ["First winter rain-","even the monkey","seems to want a raincoat"]
   ]
 }
 
