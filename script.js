@@ -16,6 +16,12 @@ var tutorial = 0;
 var open = false;
 var pipboyanimate = true;
 var part = 0;
+var log1 = 0;
+var log2 = 0;
+var log3 = 0;
+var pg1;
+var pg2;
+var pg3;
 
 $(document).ready(function() {
   loading();
@@ -93,7 +99,7 @@ window.introduction = function(progress) {
             clearInterval(intervalId);
           }
         }, 100);
-      }, 1000);
+      }, 24000);
     }, 1000);
   }
 }
@@ -175,6 +181,7 @@ window.sectionProgress = function(character, communication, progress, n) {
   } else if (progress == 5) {
     //End of part
     progress = 0;
+    newMail();
     part++;
     finalDialogue(character, communication, progress, 0);
   }
@@ -560,7 +567,6 @@ window.wrongDialogue = async function(character, communication, progress, n) {
 }
 
 window.finalDialogue = async function(character, communication, progress, partNumber) {
-  newMail();
   stopvideo();
   if (partNumber == 0) {
     //Remove old dialogues and buttons
@@ -1265,6 +1271,14 @@ window.changeMail = function(newactive, object, partona) {
 window.newMail = function(){
   let mailNameDiv = $(`<div class="mail message-${part}" onclick="changeMail('message-${part}', '${mails["Mails"][part][1]}', '${part}')"><h2>${mails["Mails"][part][0]}</h2></div>`);
   $("#mail-names").append(mailNameDiv);
+}
+
+window.creteLog = function(character){
+  let mailNameDiv = $(`<div class="${character}tag characterpipboytag" onclick="changenametag('${character}tag')"><h2>${character}</h2></div>`);
+}
+
+window.updateLog = function(character, progress){
+  let mailNameDiv = $(`<div class="mail message-${part}" onclick="changeMail('message-${part}', '${mails["Mails"][part][1]}', '${part}')"><h2>${mails["Mails"][part][0]}</h2></div>`);
 }
 
 window.changeRadio = function(newactive, station) {
