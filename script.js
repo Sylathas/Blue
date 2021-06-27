@@ -15,17 +15,16 @@ var dialoghi = 0;
 var tutorial = 0;
 var open = false;
 var pipboyanimate = true;
-var part = 4;
+var part = 0;
 var log1 = 0;
 var log2 = 0;
 var log3 = 0;
-var pg1 = "Eo";
-var pg2 = "Joe";
-var pg3 = "Swarm";
+var pg1;
+var pg2;
+var pg3;
 
 $(document).ready(function() {
-  //loading();
-  finalDialogue("Swarm", "audio", 4, 0);
+  loading();
 });
 
 //FUNCTIONS ABOUT THE PROGRESSION OF THE STORY
@@ -666,7 +665,7 @@ window.ending = function() {
           "opacity": "1"
         });
       }, 1000);
-    }, 8000);
+    }, 14000);
   }, 3000);
 }
 
