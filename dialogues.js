@@ -71,22 +71,22 @@ export var characterDescription = {
     ["This… thing, that’s the only word that comes to mind…", "It looks unstable, its shape is spherical but filled with ripples on the surface and shifting with a lot of different colors.", "It’s clear that it has some kind of connection with the architecture.", "I should scan it."],
   ],
   Maisie: [
-    ["There is someone over there, I can’t really make out the details… Whoever they are they are covered in rags and machines, the look heavy, I wonder what they are for…"],
+    ["There is someone over there.", "I can’t really make out the details… Whoever they are they are covered in rags and machines. They look heavy.", "I wonder what they are for…"],
   ],
   Pa: [
-    ["That is huge, I don’t think I could follow him but I don’t really need to, he’s so huge I can see it all the way from here, I can try and reach for him, he’s so big he has to know something about this place."],
+    ["That thing is huge", "I don’t think I could follow him but I don’t really need to, he’s so huge I can see it all the way from here", "I can try and reach for him, he’s so big he has to know something about this place."],
   ],
   Tedd: [
-    ["This drone looks cute, I have never seen another model like it, maybe it has some informations about this planet, I should try following it."],
+    ["This drone looks cute", "I have never seen another model like it, maybe it has some informations about this planet", "I should try following it."],
   ],
   Joe: [
-    ["Is that.. Another human? He looks pretty cool, he never spoke since I got here… I wonder why he’s here, maybe If I follow him I’ll find out."],
+    ["Is that.. Another human?", "He looks pretty cool, he never spoke since I got here…"," I wonder why he’s here, maybe If I follow him I’ll find out."],
 ],
   Neutrum: [
     ["He is fascinating, or rather it… Maybe she? Whatever it may be it looks fascinating.", "He is divided in modules that are assembled in a particular shape, perfectly balanced.", "He is standing still in one spot, near the architecture.", "I should scan it."]
   ],
   Swarm: [
-    ["Gross, these insects are enormous… I have never seen them before, they are probably from another planet, afte looking at them for a while, their movement is almost mesmerizing, I feel like I never want to stop looking at them."],
+    ["Gross, these insects are enormous… ", "I have never seen them before, they are probably from another planet.","After looking at them for a while, their movement is almost mesmerizing", "I feel like I never want to stop looking at them."],
   ]
 };
 
@@ -104,7 +104,7 @@ export var characterDialogue = {
     ["!!!"],
   ],
   Pa: [
-    ["Those inscriptions mean nothing, little thing."]
+    ["Those inscriptions mean nothing, little thing."],
     ["It’s not about belief, it’s about knowledge, and I traveled long and seen many places and I know those inscriptions mean nothing."],
     ["Well, that was unexpected…. It seems my judgment was too… Superficial."],
     ["That is quite embarassing."],
@@ -264,5 +264,29 @@ export var dataLogsCharacters = {
 ["their movement looks like it has some disturbances, it’s almost like they are missing a piece."],
 ["The insects are constantly failing to reproduce the movement, their missing part is probably causing the problem."],
 ["The insects stopped abruptly and started a new one, the new movement is even more mesmerizing, they look like they have found a new balance."],
+  ]
+}
+
+export var textButtonText = {
+  Round: [
+    ["Tedd"],
+    ["Tedd"],
+    ["Tedd"],
+    ["Tedd"],
+    ["Tedd"]
+  ],
+  Square: [
+    ["Joe"],
+    ["Joe"],
+    ["Joe"],
+    ["Joe"],
+    ["Joe"]
+  ],
+  Triangle: [
+    ["Pa"],
+    ["Pa"],
+    ["Pa"],
+    ["Pa"],
+    ["Pa"]
   ]
 }

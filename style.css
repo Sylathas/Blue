@@ -843,11 +843,30 @@ body {
   background-position: center;
   opacity: 0;
   transition: 1s;
+  color: white;
+  font-family: Blender;
+  font-size: 20px;
 }
 
 .text:hover {
-  height: 38%;
-  width: 20%;
+  height: 34%;
+  width: 18%;
+}
+
+.text::-webkit-scrollbar-track {
+  background-color: gray;
+  opacity: 0;
+}
+
+.text::-webkit-scrollbar {
+  width: 3px;
+  background-color: gray;
+  height: 80%;
+}
+
+.text::-webkit-scrollbar-thumb {
+  background-color: #fff;
+  box-shadow: 0 0 30px 3px rgba(255, 255, 255, 0.3);
 }
 
 .audio {

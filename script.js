@@ -5,7 +5,8 @@ import {
   wrongCharacterDialogue,
   startingSelfDialogue,
   characterDescription,
-  dataLogsCharacters
+  dataLogsCharacters,
+  textButtonText
 } from "./dialogues.js";
 
 var start = true;
@@ -91,7 +92,7 @@ window.introduction = function(progress) {
             clearInterval(intervalId);
           }
         }, 100);
-      }, 24000);
+      }, 1000);
     }, 1000);
   }
 }
@@ -214,7 +215,7 @@ window.createCharacter = function(character, n) {
       "opacity": "0"
     });
     $("#chooseCharacterButton").text("");
-    $(".selezionepersonaggio").css({
+    $(".selezionepersonaggio, #characterAnimation" + n).css({
       "opacity": "1"
     });
   }
@@ -781,20 +782,22 @@ window.selection = async function(character, communication, progress, n) {
     scrollTop: $('#textHolder').prop("scrollHeight")
   }, 1000);
 
-  buttons = shuffleArray(buttons);
-
   //Create the three buttons with the choices
   let choiceThree = $("<button></button>");
   let choiceOne = $("<button></button>");
   let choiceTwo = $("<button></button>");
   if(communication == "visual"){
+    buttons = shuffleArray(buttons);
     choiceOne.css("background-image", "url(./Assets/Totems/1/" + (Math.floor(Math.random() * 5) + 1) + ".gif");
     choiceTwo.css("background-image", "url(./Assets/Totems/2/" + (Math.floor(Math.random() * 5) + 1) + ".gif");
     choiceThree.css("background-image", "url(./Assets/Totems/3/" + (Math.floor(Math.random() * 5) + 1) + ".gif");
   } else if(communication == "text"){
     choiceOne.css("background-image", "url(./Assets/Buttons/TextBox.png");
+    var choiceOneText = $("<p></p>").text(textButtonText["Square"][rand(5)]);
     choiceTwo.css("background-image", "url(./Assets/Buttons/TextBox.png");
+    var choiceTwoText = $("<p></p>").text(textButtonText["Round"][rand(5)]);
     choiceThree.css("background-image", "url(./Assets/Buttons/TextBox.png");
+    var choiceThreeText = $("<p></p>").text(textButtonText["Triangle"][rand(5)]);
   } else if(communication == "audio"){
     choiceOne.css("background-image", "url(./Assets/Buttons/PlayBox.png");
     choiceTwo.css("background-image", "url(./Assets/Buttons/PlayBox.png");
@@ -817,7 +820,7 @@ window.selection = async function(character, communication, progress, n) {
       "class": communication + " button",
       'onclick': `progressDialogue("${character}", "${communication}", ${progress}, "${n}")`
     });
-  } else if (character == "Eo" || character == "Joe" || character == "Maisie") {
+  } else if (character == "Eo" || character == "Tedd" || character == "Maisie") {
     choiceOne.attr({
       "id": buttons[0],
       "class": communication + " button",
@@ -833,7 +836,7 @@ window.selection = async function(character, communication, progress, n) {
       "class": communication + " button",
       'onclick': `wrongDialogue("${character}", "${communication}", ${progress}, "${n}")`
     });
-  } else if (character == "Tedd"){
+  } else if (character == "Joe"){
     choiceOne.attr({
       "id": buttons[0],
       "class": communication + " button",
@@ -852,6 +855,11 @@ window.selection = async function(character, communication, progress, n) {
   }
   //Add them to the page
   $("body").append(choiceOne, choiceTwo, choiceThree);
+  if(communication == "text"){
+    $("#choiceOne").append(choiceOneText);
+    $("#choiceTwo").append(choiceTwoText);
+    $("#choiceThree").append(choiceThreeText);
+  }
   $(".visual, .text, .sound").css({
     "opacity": ".8"
   });
@@ -1041,7 +1049,7 @@ window.showDialogueText = async function(textPart, character, progress) {
       document.querySelector('video').playbackRate = 1;
     }, 3500);
     setTimeout(function() {
-      part++;
+      part = 2;
       characterChoice();
     }, 13000);
   }
@@ -1192,4 +1200,8 @@ window.prototyping = function(progress) {
     "class": "dialogue"
   });
   $("body").append(progressText);
+}
+
+window.rand = function(i){
+  return Math.floor(Math.random() * i);
 }
