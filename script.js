@@ -6,7 +6,8 @@ import {
   startingSelfDialogue,
   characterDescription,
   dataLogsCharacters,
-  textButtonText
+  textButtonText,
+  mails
 } from "./dialogues.js";
 
 var start = true;
@@ -92,7 +93,7 @@ window.introduction = function(progress) {
             clearInterval(intervalId);
           }
         }, 100);
-      }, 24000);
+      }, 1000);
     }, 1000);
   }
 }
@@ -142,6 +143,9 @@ window.characterChoice = function() {
     createCharacter("Pa", "three");
     createCharacter("Tedd", "four");
     createCharacter("Joe", "five");
+    $(".selezionepersonaggio").css({
+      "opacity": "1"
+    });
     let continueButton = $("<button></button>");
     continueButton.attr({
       "id": "chooseCharacterButton",
@@ -151,6 +155,9 @@ window.characterChoice = function() {
   } else if (part == 3) {
     createCharacter("Maisie", "six");
     createCharacter("Swarm", "seven");
+    $(".selezionepersonaggio").css({
+      "opacity": "1"
+    });
     let continueButton = $("<button></button>");
     continueButton.attr({
       "id": "chooseCharacterButton",
@@ -234,11 +241,17 @@ window.createCharacter = function(character, n) {
   });
   //append everything
   $("body").append(characterDiv, characterTag, characterQR);
-  setTimeout(function() {
+  if(n === "one" || n === "two"){
+    setTimeout(function() {
+      $(".selezionepersonaggio").css({
+        "opacity": ".5"
+      });
+    }, 200);
+  } else{
     $(".selezionepersonaggio").css({
-      "opacity": ".5"
+      "opacity": "1"
     });
-  }, 200);
+  }
 
   $("#choosecharacter." + n).append(characterAnimation);
   $("#choosecharacter." + n + ", #characterTag." + n).css({
@@ -547,6 +560,7 @@ window.wrongDialogue = async function(character, communication, progress, n) {
 }
 
 window.finalDialogue = async function(character, communication, progress, partNumber) {
+  newMail();
   stopvideo();
   if (partNumber == 0) {
     //Remove old dialogues and buttons
@@ -629,60 +643,93 @@ window.intermezzo = function() {
 window.characterFocus = function(character, n) {
   let style;
   showDialogueText("characterDescription", character, 1);
-  $("#choosecharacter." + n).removeClass("temp");
-  $("#characterTag." + n).removeClass("tempTag");
+  $("#choosecharacter." + n).css({
+    "opacity": "1",
+    "pointer-events": "auto"
+  });
+  $("#characterTag." + n).css({
+    "opacity": "1"
+  });
   $(".QRone, .QRtwo, .QRthree, .QRfour, .QRfive, .QRsix, .QRseven").css({
     "opacity": "1"
   });
   if (n == "one") {
     style = "visual";
     $("#choosecharacter.two, .QRtwo, #characterTag.two").off('mouseenter, mouseout');
-    $("#choosecharacter.two").addClass("temp");
+    $("#choosecharacter.two").css({
+      "opacity": ".5",
+      "pointer-events": "none"
+    });
     $(".QRtwo").css({
       "pointer-events": "none",
       "opacity": "0"
     });
-    $("#characterTag.two").addClass("tempTag");
+    $("#characterTag.two").css({
+      "opacity": ".5",
+    });
   } else if (n == "two") {
     style = "visual";
     $("#choosecharacter.one, .QRone, #characterTag.one").off('mouseenter, mouseout');
-    $("#choosecharacter.one").addClass("temp");
+    $("#choosecharacter.one").css({
+      "opacity": ".5",
+      "pointer-events": "none"
+    });
     $(".QRone").css({
       "pointer-events": "none",
       "opacity": "0"
     });
-    $("#characterTag.one").addClass("tempTag");
+    $("#characterTag.one").css({
+      "opacity": ".5",
+    });
   } else if (n == "three") {
     style = "text";
     $("#choosecharacter.four, .QRfour, #characterTag.four, #choosecharacter.five, .QRfive, #characterTag.five").off('mouseenter, mouseout');
-    $("#choosecharacter.four, #choosecharacter.five").addClass("temp");
+    $("#choosecharacter.four, #choosecharacter.five").css({
+      "opacity": ".5",
+      "pointer-events": "none"
+    });
     $(".QRfour, .QRfive").css({
       "pointer-events": "none",
       "opacity": "0"
     });
-    $("#characterTag.four, #characterTag.five").addClass("tempTag");
+    $("#characterTag.four, #characterTag.five").css({
+      "opacity": ".5",
+    });
   } else if (n == "four") {
     style = "text";
     $("#choosecharacter.three, .QRthree, #characterTag.three, #choosecharacter.five, .QRfive, #characterTag.five").off('mouseenter, mouseout');
-    $("#choosecharacter.three, #choosecharacter.five").addClass("temp");
+    $("#choosecharacter.three, #choosecharacter.five").css({
+      "opacity": ".5",
+      "pointer-events": "none"
+    });
     $(".QRthree, .QRfive").css({
       "pointer-events": "none",
       "opacity": "0"
     });
-    $("#characterTag.three, #characterTag.five").addClass("tempTag");
+    $("#characterTag.three, #characterTag.five").css({
+      "opacity": ".5",
+    });
   } else if (n == "five") {
     style = "text";
     $("#choosecharacter.three, .QRthree, #characterTag.three, #choosecharacter.four, .QRfour, #characterTag.four").off('mouseenter, mouseout');
-    $("#choosecharacter.three, #choosecharacter.four").addClass("temp");
+    $("#choosecharacter.three, #choosecharacter.four").css({
+      "opacity": ".5",
+      "pointer-events": "none"
+    });
     $(".QRthree, .QRfour").css({
       "pointer-events": "none",
       "opacity": "0"
     });
-    $("#characterTag.three, #characterTag.four").addClass("tempTag");
+    $("#characterTag.three, #characterTag.four").css({
+      "opacity": ".5",
+    });
   } else if (n == "six") {
     style = "audio";
     $("#choosecharacter.seven, .QRseven, #characterTag.seven").off('mouseenter, mouseout');
-    $("#choosecharacter.seven").addClass("temp");
+    $("#choosecharacter.seven").css({
+      "opacity": ".5",
+      "pointer-events": "none"
+    });
     $(".QRseven").css({
       "pointer-events": "none",
       "opacity": "0"
@@ -691,12 +738,17 @@ window.characterFocus = function(character, n) {
   } else if (n == "seven") {
     style = "audio";
     $("#choosecharacter.six, .QRsix, #characterTag.six").off('mouseenter, mouseout');
-    $("#choosecharacter.six").addClass("temp");
+    $("#choosecharacter.six").css({
+      "opacity": ".5",
+      "pointer-events": "none"
+    });
     $(".QRsix").css({
       "pointer-events": "none",
       "opacity": "0"
     });
-    $("#characterTag.six").addClass("tempTag");
+    $("#characterTag.six").css({
+      "opacity": ".5",
+    });
   }
   $("#choosecharacter." + n).mouseenter(function() {
     $("#characterAnimation" + n).css({
@@ -1199,10 +1251,20 @@ window.changenametag = function(newactive) {
   $("#datalogs-character").css("background-image", "url(./Assets/CharactersPipBoy/" + newactive.slice(0, -3) + "_pipboy.png)");
 }
 
-window.changeMail = function(newactive, object) {
+window.changeMail = function(newactive, object, partona) {
   $(".mail").removeClass("mail-active");
   $("." + newactive).addClass("mail-active");
   $("#mail #pipboy-text h1").text(object);
+  $("#mail #pipboy-text h4").remove();
+  for(let i = 2; i < mails["Mails"][partona].length; i++){
+    let h4text = $("<h4>" + mails["Mails"][partona][i] + "</h4>")
+    $("#mail #pipboy-text").append(h4text);
+  }
+}
+
+window.newMail = function(){
+  let mailNameDiv = $(`<div class="mail message-${part}" onclick="changeMail('message-${part}', '${mails["Mails"][part][1]}', '${part}')"><h2>${mails["Mails"][part][0]}</h2></div>`);
+  $("#mail-names").append(mailNameDiv);
 }
 
 window.changeRadio = function(newactive, station) {
