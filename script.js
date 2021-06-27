@@ -50,7 +50,7 @@ window.introduction = function(progress) {
     $("#loading").css({
       'pointer-events': "none"
     });
-    textAppear("Every story is unique, this story makes no exception. This is a story made up of many different unique stories from all the corners of the galaxy. This is a story that takes place where diversity can be expressed, at the cost of dealing with complexity. This is a story about the struggle of understanding. Finally, this is also your story.", true, "center");
+    textAppear("Every story is unique, this story makes no exception.\n This is a story made up of many different unique stories from all the corners of the galaxy.\n This is a story that takes place where diversity can be expressed, at the cost of dealing with complexity.\n This is a story about the struggle of understanding.\n Finally, this is also your story.", true, "center");
   } else if (progress == 1) {
     $(".button, p").css({
       "opacity": "0"
@@ -79,7 +79,19 @@ window.introduction = function(progress) {
           "background-color": "black",
           "background-image": "none"
         });
-      }, 1000);
+        $('#music').prop("volume", 0);
+        $("#music").get(0).play();
+        var i = 0;
+        var j = 1;
+        var intervalId = window.setInterval(function() {
+          i = i + 0.1;
+          j++;
+          $('#music').prop("volume", i);
+          if (j == 5) {
+            clearInterval(intervalId);
+          }
+        }, 100);
+      }, 24000);
     }, 1000);
   }
 }
@@ -880,6 +892,8 @@ window.shuffleArray = function(array) {
 }
 
 window.startvideo = function() {
+  $("#footsteps").prop("volume", .5);
+  $("#footsteps").get(0).play();
   $('#video')[0].play();
   var i = 1 / 16;
   document.querySelector('video').playbackRate = i;
@@ -894,6 +908,7 @@ window.startvideo = function() {
 }
 
 window.stopvideo = function() {
+  $("#footsteps").get(0).pause();
   var i = 1;
   var j = 1;
   var intervalId = window.setInterval(function() {
@@ -930,7 +945,7 @@ window.textAppear = function(text, intr, buttonPos) {
     "class": "button",
     'onclick': `introduction(1)`
   });
-  let appearingtext = $("<p></p>").text(text);
+  let appearingtext = $("<p style='white-space: pre-line;'></p>").text(text);
   appearingtext.attr({
     "id": "appearingText"
   });
@@ -1160,10 +1175,12 @@ window.changeMail = function(newactive, object) {
   $("#mail #pipboy-text h1").text(object);
 }
 
-window.changeRadio = function(newactive) {
+window.changeRadio = function(newactive, station) {
   $(".radio-station").removeClass("radio-active");
   $("." + newactive).addClass("radio-active");
   $("#mail #pipboy-text h1").text(newactive.replace('-', ' '));
+  $("#music").attr("src","Assets/Sounds/" + station + ".mp3");
+  $("#music").get(0).play();
 }
 
 window.prototyping = function(progress) {

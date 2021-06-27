@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Lesssgoooo</title>
+  <title>Blue</title>
   <link rel="stylesheet" href="./style.css">
   <link rel="icon" href="./Assets/favicon.png" type="image/png" />
 </head>
@@ -22,7 +22,8 @@
     <div id="loading2" class="loadAnimation"></div>
     <p id="pLoading" class="loadAnimation2">Loading</p>
     <audio id="piponoff" src="Assets/Sounds/pipboyonoff.wav" type="audio/wav" style="display: none;"></audio>
-    <audio loop id="buzz" src="Assets/Sounds/buzz.wav" type="audio/wav" style="display: none;"></audio>
+    <audio loop id="music" src="Assets/Sounds/Staz1.mp3" type="audio/mpeg" style="display: none;"></audio>
+    <audio loop id="footsteps" src="Assets/Sounds/footsteps.mp3" type="audio/mpeg" style="display: none;"></audio>
   </div>
   <div id="pipboyDiv">
     <div id="pipboy"></div>
@@ -72,18 +73,18 @@
           </div>
           <div id="radio-names">
             <div class="radio-station-column">
-              <div class="radio-station radio0 radio-active"onclick="changeRadio('radio0')">
+              <div class="radio-station radio0 radio-active"onclick="changeRadio('radio0', 'Staz1')">
                 <h2>Station 1</h2>
               </div>
-              <div class="radio-station radio1"onclick="changeRadio('radio1')">
+              <div class="radio-station radio1"onclick="changeRadio('radio1', 'Staz2')">
                 <h2>Station 2</h2>
               </div>
             </div>
             <div class="radio-station-column">
-              <div class="radio-station radio2"onclick="changeRadio('radio2')">
+              <div class="radio-station radio2"onclick="changeRadio('radio2', 'Staz3')">
                 <h2>Station 3</h2>
               </div>
-              <div class="radio-station radio3"onclick="changeRadio('radio3')">
+              <div class="radio-station radio3"onclick="changeRadio('radio3', 'Staz4')">
                 <h2>Station 4</h2>
               </div>
             </div>
