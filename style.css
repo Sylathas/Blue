@@ -43,10 +43,10 @@ body {
 #QR {
   position: absolute;
   left: 50%;
-  top: -100%;
+  top: -26vh;
   transform: translate(-50%, -50%);
   width: auto;
-  height: 80%;
+  height: 20vh;
   opacity: 0;
   z-index: 1;
   transition: .5s;
@@ -55,9 +55,7 @@ body {
 #character {
   position: absolute;
   left: 20%;
-  bottom: 10%;
   width: 20%;
-  height: 25%;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -68,15 +66,15 @@ body {
 #choosecharacter {
   position: absolute;
   width: 20%;
-  height: 25%;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
   transition: 1s;
-  bottom: 10%;
   opacity: 0;
   cursor: pointer;
   font-size: 0;
+  display: flex;
+  justify-content: center;
 }
 
 #characterTag {
@@ -87,7 +85,6 @@ body {
   background-position: center;
   background-size: contain;
   transition: 1s;
-  bottom: 35%;
   opacity: 0;
   cursor: pointer;
 }
@@ -105,19 +102,128 @@ body {
 }
 
 .one {
-  left: 15%;
+  height: 25%;
+  left: 7%;
+  bottom: 10%;
 }
 
 .two {
+  left: 35%;
+  height: 25%;
+  bottom: 10%;
+}
+
+.three {
+  left: 0;
+  height: 100%;
+  bottom: 0%;
+}
+
+.four {
+  left: 25%;
+  height: 15%;
+  bottom: 10%;
+}
+
+.five {
   left: 40%;
+  height: 45%;
+  bottom: 10%;
+}
+
+.six {
+  left: 5%;
+  height: 45%;
+  bottom: 10%;
+}
+
+.seven {
+  left: 30%;
+  height: 40%;
+  bottom: 10%;
+}
+
+.onechar {
+  height: 25%;
+  bottom: 10%;
+}
+
+.twochar {
+  height: 25%;
+  bottom: 10%;
+}
+
+.threechar {
+  height: 100%;
+  bottom: 0%;
+}
+
+.fourchar {
+  height: 15%;
+  bottom: 10%;
+}
+
+.fivechar {
+  height: 45%;
+  bottom: 10%;
+}
+
+.sixchar {
+  height: 45%;
+  bottom: 10%;
+}
+
+.sevenchar {
+  height: 40%;
+  bottom: 10%;
+}
+
+.temp {
+  pointer-events: none;
+  opacity: 0.5;
+  height: 15%;
 }
 
 .oneEo {
-  background-image: url(./Assets/Buttons/Eo.png)
+  background-image: url(./Assets/Buttons/Eo.png);
+  bottom: 35%;
 }
 
 .twoNeutrum {
-  background-image: url(./Assets/Buttons/Neutrum.png)
+  background-image: url(./Assets/Buttons/Neutrum.png);
+  bottom: 35%;
+}
+
+.threePa {
+  background-image: url(./Assets/Buttons/Pa.png);
+  bottom: 85%;
+  left: 30%;
+}
+
+.fourTedd {
+  background-image: url(./Assets/Buttons/Tedd.png);
+  bottom: 25%;
+}
+
+.fiveJoe {
+  background-image: url(./Assets/Buttons/Joe.png);
+  bottom: 55%;
+}
+
+.sixMaisie {
+  background-image: url(./Assets/Buttons/Maisie.png);
+  bottom: 50%;
+}
+
+.sevenSwarm {
+  background-image: url(./Assets/Buttons/Swarm.png);
+  bottom: 45%;
+}
+
+.tempTag {
+  pointer-events: none;
+  opacity: .5;
+  bottom: 30%;
 }
 
 /*////////////////*/
@@ -551,6 +657,7 @@ body {
   transition: .5s;
   width: 10%;
   height: 8%;
+  z-index: 10;
 }
 
 #continueButton:hover {
@@ -700,6 +807,32 @@ body {
   width: 20%;
   box-shadow: 0px 0px 5px white;
   border-radius: 100px;
+}
+
+.text {
+  width: 16%;
+  height: 30%;
+  background-position: center;
+  opacity: 0;
+  transition: 1s;
+}
+
+.text:hover {
+  height: 38%;
+  width: 20%;
+}
+
+.audio {
+  width: 16%;
+  height: 30%;
+  background-position: center;
+  opacity: 0;
+  transition: 1s;
+}
+
+.audio:hover {
+  height: 38%;
+  width: 20%;
 }
 
 /*////////////////*/

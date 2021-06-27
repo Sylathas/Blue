@@ -13,6 +13,7 @@ var dialoghi = 0;
 var tutorial = 0;
 var open = false;
 var pipboyanimate = true;
+var part = 0;
 
 $(document).ready(function() {
   loading();
@@ -111,7 +112,7 @@ window.gameBeginning = async function() {
   }, 1200);
 }
 
-window.characterChoice = function(part) {
+window.characterChoice = function() {
   //Create the divs containing the sprites and QR's of the characters
   stopvideo();
   if (part == 1) {
@@ -125,19 +126,19 @@ window.characterChoice = function(part) {
     });
     $("body").append(continueButton);
   } else if (part == 2) {
-    createCharacter("Pa", "one");
-    createCharacter("TEDD", "two");
-    createCharacter("Joe", "three");
-    let continueButton = $("<button></button>").text("Wait for the dialogue to end...");
+    createCharacter("Pa", "three");
+    createCharacter("Tedd", "four");
+    createCharacter("Joe", "five");
+    let continueButton = $("<button></button>");
     continueButton.attr({
       "id": "chooseCharacterButton",
       "class": "button chooseCharacterButtonPre"
     });
     $("body").append(continueButton);
   } else if (part == 3) {
-    createCharacter("Maisie", "one");
-    createCharacter("Swarm", "two");
-    let continueButton = $("<button></button>").text("Wait for the dialogue to end...");
+    createCharacter("Maisie", "six");
+    createCharacter("Swarm", "seven");
+    let continueButton = $("<button></button>");
     continueButton.attr({
       "id": "chooseCharacterButton",
       "class": "button chooseCharacterButtonPre"
@@ -146,34 +147,16 @@ window.characterChoice = function(part) {
   }
 }
 
-window.sectionProgress = function(character, communication, progress) {
+window.sectionProgress = function(character, communication, progress, n) {
   if (progress < 5) {
     //Dialogue and selection of monuments
     console.log(`Section progress reached, with progress ${progress}`);
-    selection(character, communication, progress);
+    selection(character, communication, progress, n);
   } else if (progress == 5) {
     //End of part
-    finalDialogue(character, communication, progress, 0);
-    /*part++;
-    if(part < 4){
-      //Choose new character
-      characterChoice(part);
-    } else{
-      //End adventure
-      ending();
-    }*/
-  } else {
-    //End of part
-    ending();
-    /*finalDialogue(character);
+    progress = 0;
     part++;
-    if(part < 4){
-      //Choose new character
-      characterChoice(part);
-    } else{
-      //End adventure
-      ending();
-    }*/
+    finalDialogue(character, communication, progress, 0);
   }
 }
 
@@ -198,8 +181,20 @@ window.createCharacter = function(character, n) {
     "id": "choosecharacter",
     "class": n
   });
-
-  setTimeout(function() {
+  if(n === "one" || n === "two"){
+    setTimeout(function() {
+      characterDiv.attr({
+        "onclick": `characterFocus("${character}", "${n}")`
+      });
+      $("#chooseCharacterButton").css({
+        "opacity": "0"
+      });
+      $("#chooseCharacterButton").text("");
+      $(".selezionepersonaggio").css({
+        "opacity": "1"
+      });
+    }, 15000);
+  } else{
     characterDiv.attr({
       "onclick": `characterFocus("${character}", "${n}")`
     });
@@ -210,7 +205,7 @@ window.createCharacter = function(character, n) {
     $(".selezionepersonaggio").css({
       "opacity": "1"
     });
-  }, 15000);
+  }
   //Create Div with as background image the sprite of the character
   let characterPath = `./Assets/Characters/"${character}".gif`.replace(/['"]+/g, '');
   let characterId = `characterAnimation"${n}"`.replace(/['"]+/g, '');
@@ -259,25 +254,26 @@ window.startDialogue = async function(character, communication, progress, n) {
   }, 500);
   startvideo();
   //Remove old dialogues and buttons
-  $("#characterTag.one").css({
-    "opacity": "0"
-  });
-  $("#characterTag.two").css({
+  $("#characterTag.one, #characterTag.two, #characterTag.three, #characterTag.four, #characterTag.five, #characterTag.six, #characterTag.seven").css({
     "opacity": "0"
   });
   if (n == "one") {
     $("#choosecharacter.two").remove();
-    if ($("#choosecharacter.three")) {
-      $("#choosecharacter.three").remove();
-    }
   } else if (n == "two") {
     $("#choosecharacter.one").remove();
-    if ($("#choosecharacter.three")) {
-      $("#choosecharacter.three").remove();
-    }
   } else if (n == "three") {
-    $("#choosecharacter.one").remove();
-    $("#choosecharacter.two").remove();
+    $("#choosecharacter.four").remove();
+    $("#choosecharacter.five").remove();
+  } else if (n == "four") {
+    $("#choosecharacter.five").remove();
+    $("#choosecharacter.three").remove();
+  } else if (n == "five") {
+    $("#choosecharacter.four").remove();
+    $("#choosecharacter.three").remove();
+  } else if (n == "six") {
+    $("#choosecharacter.seven").remove();
+  } else if (n == "seven") {
+    $("#choosecharacter.six").remove();
   }
 
   $("." + n).css({
@@ -286,6 +282,11 @@ window.startDialogue = async function(character, communication, progress, n) {
   setTimeout(function() {
     $("#characterTag.one").remove();
     $("#characterTag.two").remove();
+    $("#characterTag.three").remove();
+    $("#characterTag.four").remove();
+    $("#characterTag.five").remove();
+    $("#characterTag.six").remove();
+    $("#characterTag.seven").remove();
   }, 500);
 
   $("#QR").css({
@@ -329,10 +330,10 @@ window.startDialogue = async function(character, communication, progress, n) {
     }, 1000);
     await new Promise(r => setTimeout(r, 70 * startingSelfDialogue[character][0][i].length));
   }
-  sectionProgress(character, communication, 1);
+  sectionProgress(character, communication, 1, n);
 }
 
-window.progressDialogue = async function(character, communication, progress) {
+window.progressDialogue = async function(character, communication, progress, n) {
   startvideo();
   //Remove old dialogues and buttons
   $(".button").remove();
@@ -419,7 +420,7 @@ window.progressDialogue = async function(character, communication, progress) {
   continueButton.attr({
     "id": "continueButton",
     "class": "button",
-    'onclick': `startvideo(); totem.remove(); setTimeout(() => {sectionProgress("${character}", "${communication}", ${progress})}, 2000);`
+    'onclick': `startvideo(); setTimeout(() => {sectionProgress("${character}", "${communication}", ${progress})}, 2000);`
   });
   //Add them to the body
   setTimeout(() => {
@@ -432,7 +433,7 @@ window.progressDialogue = async function(character, communication, progress) {
   }, 3000);
 }
 
-window.wrongDialogue = async function(character, communication, progress) {
+window.wrongDialogue = async function(character, communication, progress, n) {
   startvideo();
   //Remove old dialogues and buttons
   $(".button").css({
@@ -511,7 +512,7 @@ window.wrongDialogue = async function(character, communication, progress) {
   continueButton.attr({
     "id": "continueButton",
     "class": "button",
-    'onclick': `$(".button").remove();setTimeout(() => {sectionProgress("${character}", "${communication}", ${progress})}, 1000);`
+    'onclick': `$(".button").remove();setTimeout(() => {sectionProgress("${character}", "${communication}", "${progress}", "${n}")}, 1000);`
   });
   //Add them to the body
   setTimeout(() => {
@@ -519,8 +520,9 @@ window.wrongDialogue = async function(character, communication, progress) {
   }, 3000);
 }
 
-window.finalDialogue = async function(character, communication, progress, part) {
-  if (part == 0) {
+window.finalDialogue = async function(character, communication, progress, partNumber) {
+  stopvideo();
+  if (partNumber == 0) {
     //Remove old dialogues and buttons
     $(".button").remove();
     //Create white DIV
@@ -541,7 +543,7 @@ window.finalDialogue = async function(character, communication, progress, part) 
     selfText.attr({
       "id": "appearingText",
     });
-    $("body").append(selfText);
+    $("#endingDiv").append(selfText);
   }
   $("#appearingText").css({
     "opacity": "1"
@@ -560,15 +562,15 @@ window.finalDialogue = async function(character, communication, progress, part) 
     }
   }, 2000);
 
-  $("#appearingText").text(selfDialogue[character][4][part]);
+  $("#appearingText").text(selfDialogue[character][4][partNumber]);
 
   setTimeout(function() {
-    if (part < selfDialogue[character][4].length) {
+    if (partNumber < selfDialogue[character][4].length) {
       $("#appearingText").css({
         "opacity": "1"
       });
       setTimeout(() => {
-        finalDialogue(character, communication, progress, part + 1);
+        finalDialogue(character, communication, progress, partNumber + 1);
       }, 1000);
     } else {
       //Continue button
@@ -576,7 +578,7 @@ window.finalDialogue = async function(character, communication, progress, part) 
       continueButton.attr({
         "id": "continueButtonCenter",
         "class": "button",
-        'onclick': `sectionProgress("${character}", "${communication}", ${progress})`
+        'onclick': `part++; if(part < 4){intermezzo();} else{ending();}`
       });
       //Add them to the body
       $("body").append(continueButton);
@@ -587,81 +589,88 @@ window.finalDialogue = async function(character, communication, progress, part) 
   }, 2000);
 }
 
+window.intermezzo = function() {
+  $(".button").remove();
+  $("#character").remove();
+  $("#endingDiv").css({"opacity": "0"});
+  setTimeout(() => {
+    $("#endingDiv").remove();
+    startvideo();
+    characterChoice();
+  }, 2000);
+}
+
 window.characterFocus = function(character, n) {
+  let style;
   showDialogueText("characterDescription", character, 1);
-  $("#choosecharacter." + n).css({
-    "pointer-events": "none",
-    "opacity": "1",
-    "width": "20%",
-    "height": "25%"
-  });
-  $("#characterTag." + n).css({
-    "pointer-events": "none",
-    "opacity": "1",
-    "width": "6%",
-    "height": "10%",
-    "bottom": "35%"
-  });
-  $(".QRone, .QRtwo, .QRthree").css({
+  $("#choosecharacter." + n).removeClass("temp");
+  $("#characterTag." + n).removeClass("tempTag");
+  $(".QRone, .QRtwo, .QRthree, .QRfour, .QRfive, .QRsix, .QRseven").css({
     "opacity": "1"
   });
   if (n == "one") {
-    $("#choosecharacter.two, .QRtwo, #choosecharacter.three, .QRthree, #characterTag.two").off('mouseenter, mouseout');
-    $("#choosecharacter.two, #choosecharacter.three").css({
-      "pointer-events": "none",
-      "opacity": "0.5",
-      "width": "20%",
-      "height": "15%"
-    });
-    $(".QRtwo, .QRthree").css({
+    style = "visual";
+    $("#choosecharacter.two, .QRtwo, #characterTag.two").off('mouseenter, mouseout');
+    $("#choosecharacter.two").addClass("temp");
+    $(".QRtwo").css({
       "pointer-events": "none",
       "opacity": "0"
     });
-    $("#characterTag.two, #characterTag.three").css({
-      "pointer-events": "none",
-      "opacity": "0.5",
-      "width": "5%",
-      "height": "8%",
-      "bottom": "30%"
-    });
+    $("#characterTag.two").addClass("tempTag");
   } else if (n == "two") {
-    $("#choosecharacter.one, .QRone, #choosecharacter.three, .QRthree, #characterTag.three, #characterTag.one").off('mouseenter, mouseout');
-    $("#choosecharacter.one, #choosecharacter.three").css({
-      "pointer-events": "none",
-      "opacity": "0.5",
-      "width": "20%",
-      "height": "15%"
-    });
-    $(".QRone, .QRthree").css({
+    style = "visual";
+    $("#choosecharacter.one, .QRone, #characterTag.one").off('mouseenter, mouseout');
+    $("#choosecharacter.one").addClass("temp");
+    $(".QRone").css({
       "pointer-events": "none",
       "opacity": "0"
     });
-    $("#characterTag.one, #characterTag.three").css({
-      "pointer-events": "none",
-      "opacity": "0.5",
-      "width": "5%",
-      "height": "8%",
-      "bottom": "30%"
-    });
+    $("#characterTag.one").addClass("tempTag");
   } else if (n == "three") {
-    $("#choosecharacter.one, .QRone, #choosecharacter.two, .QRtwo, #characterTag.one, #characterTag.two").off('mouseenter, mouseout');
-    $("#choosecharacter.one, #choosecharacter.two").css({
-      "pointer-events": "none",
-      "opacity": "0.5",
-      "width": "20%",
-      "height": "15%"
-    });
-    $(".QRone, .QRtwo").css({
+    style = "text";
+    $("#choosecharacter.four, .QRfour, #characterTag.four, #choosecharacter.five, .QRfive, #characterTag.five").off('mouseenter, mouseout');
+    $("#choosecharacter.four, #choosecharacter.five").addClass("temp");
+    $(".QRfour, .QRfive").css({
       "pointer-events": "none",
       "opacity": "0"
     });
-    $("#characterTag.one, #characterTag.two").css({
+    $("#characterTag.four, #characterTag.five").addClass("tempTag");
+  } else if (n == "four") {
+    style = "text";
+    $("#choosecharacter.six, .QRsix, #characterTag.six, #choosecharacter.five, .QRfive, #characterTag.five").off('mouseenter, mouseout');
+    $("#choosecharacter.six, #choosecharacter.five").addClass("temp");
+    $(".QRsix, .QRfive").css({
       "pointer-events": "none",
-      "opacity": "0.5",
-      "width": "5%",
-      "height": "8%",
-      "bottom": "30%"
+      "opacity": "0"
     });
+    $("#characterTag.six, #characterTag.five").addClass("tempTag");
+  } else if (n == "five") {
+    style = "text";
+    $("#choosecharacter.six, .QRsix, #characterTag.six, #choosecharacter.four, .QRfour, #characterTag.four").off('mouseenter, mouseout');
+    $("#choosecharacter.six, #choosecharacter.four").addClass("temp");
+    $(".QRsix, .QRfour").css({
+      "pointer-events": "none",
+      "opacity": "0"
+    });
+    $("#characterTag.six, #characterTag.four").addClass("tempTag");
+  } else if (n == "six") {
+    style = "sound";
+    $("#choosecharacter.seven, .QRseven, #characterTag.seven").off('mouseenter, mouseout');
+    $("#choosecharacter.seven").addClass("temp");
+    $(".QRseven").css({
+      "pointer-events": "none",
+      "opacity": "0"
+    });
+    $("#characterTag.seven").addClass("tempTag");
+  } else if (n == "seven") {
+    style = "sound";
+    $("#choosecharacter.six, .QRsix, #characterTag.six").off('mouseenter, mouseout');
+    $("#choosecharacter.six").addClass("temp");
+    $(".QRsix").css({
+      "pointer-events": "none",
+      "opacity": "0"
+    });
+    $("#characterTag.six").addClass("tempTag");
   }
   $("#choosecharacter." + n).mouseenter(function() {
     $("#characterAnimation" + n).css({
@@ -682,11 +691,11 @@ window.characterFocus = function(character, n) {
   $("#chooseCharacterButton").removeClass("chooseCharacterButtonPre");
   $("#chooseCharacterButton").addClass("chooseCharacterButton");
   setTimeout(function() {
-    $("#choosecharacter.one, #choosecharacter.two, #choosecharacter.three").css({
+    $("#choosecharacter.one, #choosecharacter.two, #choosecharacter.three, #choosecharacter.four, #choosecharacter.five, #choosecharacter.six, #choosecharacter.seven").css({
       "pointer-events": "auto"
     });
     $("#chooseCharacterButton").attr({
-      'onclick': `startDialogue("${character}", "visual", 1, "${n}")`
+      'onclick': `startDialogue("${character}", "${style}", 1, "${n}")`
     });
     $("#chooseCharacterButton").css({
       "opacity": "1"
@@ -695,7 +704,7 @@ window.characterFocus = function(character, n) {
 
 }
 
-window.selection = async function(character, communication, progress) {
+window.selection = async function(character, communication, progress, n) {
   stopvideo();
   let buttons = ["choiceOne", "choiceTwo", "choiceThree"];
   //Remove old dialogues and buttons
@@ -708,7 +717,8 @@ window.selection = async function(character, communication, progress) {
     $("#choosecharacter").remove();
     let characterDiv = $("<div></div>");
     characterDiv.attr({
-      "id": "character"
+      "id": "character",
+      "class": `${n}char`
     });
     let characterPath = `./Assets/Characters/"${character}".gif`.replace(/['"]+/g, '');
     let characterAnimation = $(`<img id="characterAnimation" src="${characterPath}" style='width:auto; height:100%; position: relative; left: 10%; transition: .5s;'></video>`);
@@ -755,47 +765,71 @@ window.selection = async function(character, communication, progress) {
   buttons = shuffleArray(buttons);
 
   //Create the three buttons with the choices
-  let choiceOne = $("<button></button>");
-  choiceOne.css("background-image", "url(./Assets/Totems/1/" + (Math.floor(Math.random() * 5) + 1) + ".gif");
-  let choiceTwo = $("<button></button>");
-  choiceTwo.css("background-image", "url(./Assets/Totems/2/" + (Math.floor(Math.random() * 5) + 1) + ".gif");
   let choiceThree = $("<button></button>");
-  choiceThree.css("background-image", "url(./Assets/Totems/3/" + (Math.floor(Math.random() * 5) + 1) + ".gif");
-  if (character == "Neutrum") {
-    choiceOne.attr({
-      "id": buttons[0],
-      "class": communication + " button",
-      'onclick': `wrongDialogue("${character}", "${communication}", ${progress})`
-    });
-    choiceTwo.attr({
-      "id": buttons[1],
-      "class": communication + " button",
-      'onclick': `wrongDialogue("${character}", "${communication}", ${progress})`
-    });
-    choiceThree.attr({
-      "id": buttons[2],
-      "class": communication + " button",
-      'onclick': `progressDialogue("${character}", "${communication}", ${progress})`
-    });
-  } else if (character == "Eo") {
-    choiceOne.attr({
-      "id": buttons[0],
-      "class": communication + " button",
-      'onclick': `wrongDialogue("${character}", "${communication}", ${progress})`
-    });
+  let choiceOne = $("<button></button>");
+  let choiceTwo = $("<button></button>");
+  if(communication == "visual"){
     choiceOne.css("background-image", "url(./Assets/Totems/1/" + (Math.floor(Math.random() * 5) + 1) + ".gif");
+    choiceTwo.css("background-image", "url(./Assets/Totems/2/" + (Math.floor(Math.random() * 5) + 1) + ".gif");
+    choiceThree.css("background-image", "url(./Assets/Totems/3/" + (Math.floor(Math.random() * 5) + 1) + ".gif");
+  } else if(communication == "text"){
+    choiceOne.css("background-image", "url(./Assets/Buttons/TextBox.png");
+    choiceTwo.css("background-image", "url(./Assets/Buttons/TextBox.png");
+    choiceThree.css("background-image", "url(./Assets/Buttons/TextBox.png");
+  } else if(communication == "audio"){
+    choiceOne.css("background-image", "url(./Assets/Buttons/PlayBox.png");
+    choiceTwo.css("background-image", "url(./Assets/Buttons/PlayBox.png");
+    choiceThree.css("background-image", "url(./Assets/Buttons/PlayBox.png");
+  }
+
+  if (character == "Neutrum" || character == "Pa" || character == "Swarm") {
+    choiceOne.attr({
+      "id": buttons[0],
+      "class": communication + " button",
+      'onclick': `wrongDialogue("${character}", "${communication}", ${progress}, "${n}")`
+    });
     choiceTwo.attr({
       "id": buttons[1],
       "class": communication + " button",
-      'onclick': `progressDialogue("${character}", "${communication}", ${progress})`
+      'onclick': `wrongDialogue("${character}", "${communication}", ${progress}, "${n}")`
     });
-    choiceTwo.css("background-image", "url(./Assets/Totems/2/" + (Math.floor(Math.random() * 5) + 1) + ".gif");
     choiceThree.attr({
       "id": buttons[2],
       "class": communication + " button",
-      'onclick': `wrongDialogue("${character}", "${communication}", ${progress})`
+      'onclick': `progressDialogue("${character}", "${communication}", ${progress}, "${n}")`
     });
-    choiceThree.css("background-image", "url(./Assets/Totems/3/" + (Math.floor(Math.random() * 5) + 1) + ".gif");
+  } else if (character == "Eo" || character == "Joe" || character == "Maisie") {
+    choiceOne.attr({
+      "id": buttons[0],
+      "class": communication + " button",
+      'onclick': `wrongDialogue("${character}", "${communication}", ${progress}, "${n}")`
+    });
+    choiceTwo.attr({
+      "id": buttons[1],
+      "class": communication + " button",
+      'onclick': `progressDialogue("${character}", "${communication}", ${progress}, "${n}")`
+    });
+    choiceThree.attr({
+      "id": buttons[2],
+      "class": communication + " button",
+      'onclick': `wrongDialogue("${character}", "${communication}", ${progress}, "${n}")`
+    });
+  } else if (character == "Tedd"){
+    choiceOne.attr({
+      "id": buttons[0],
+      "class": communication + " button",
+      'onclick': `progressDialogue("${character}", "${communication}", ${progress}, "${n}")`
+    });
+    choiceTwo.attr({
+      "id": buttons[1],
+      "class": communication + " button",
+      'onclick': `wrongDialogue("${character}", "${communication}", ${progress}, "${n}")`
+    });
+    choiceThree.attr({
+      "id": buttons[2],
+      "class": communication + " button",
+      'onclick': `wrongDialogue("${character}", "${communication}", ${progress}, "${n}")`
+    });
   }
   //Add them to the page
   $("body").append(choiceOne, choiceTwo, choiceThree);
@@ -919,11 +953,12 @@ window.videoAppear = function(link, intr) {
   $('#appearingVideo')[0].play();
 }
 
-window.showDialogueText = async function(part, character, progress) {
+window.showDialogueText = async function(textPart, character, progress) {
   let number;
-  if (part == "selfDialogue") {
+  if (textPart == "selfDialogue") {
     number = selfDialogue[character][progress - 1].length;
   } else {
+    console.log(character);
     number = characterDescription[character][progress - 1].length;
   }
   for (var i = 0; i < number; i++) {
@@ -931,7 +966,7 @@ window.showDialogueText = async function(part, character, progress) {
       scrollTop: $('#textHolder').prop("scrollHeight")
     }, 1000);
     //typed
-    if (part == "selfDialogue") {
+    if (textPart == "selfDialogue") {
       var optionsSelf = {
         strings: [selfDialogue[character][progress - 1][i]],
         typeSpeed: 30,
@@ -966,7 +1001,7 @@ window.showDialogueText = async function(part, character, progress) {
     $("#textHolder").animate({
       scrollTop: $('#textHolder').prop("scrollHeight")
     }, 1000);
-    if (part == "selfDialogue") {
+    if (textPart == "selfDialogue") {
       await new Promise(r => setTimeout(r, 50 * selfDialogue[character][progress - 1][i].length));
     } else {
       await new Promise(r => setTimeout(r, 50 * characterDescription[character][progress - 1][i].length));
@@ -984,7 +1019,8 @@ window.showDialogueText = async function(part, character, progress) {
       document.querySelector('video').playbackRate = 1;
     }, 3500);
     setTimeout(function() {
-      characterChoice(1);
+      part++;
+      characterChoice();
     }, 13000);
   }
 }
