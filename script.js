@@ -663,22 +663,22 @@ window.characterFocus = function(character, n) {
     $("#characterTag.four, #characterTag.five").addClass("tempTag");
   } else if (n == "four") {
     style = "text";
-    $("#choosecharacter.six, .QRsix, #characterTag.six, #choosecharacter.five, .QRfive, #characterTag.five").off('mouseenter, mouseout');
-    $("#choosecharacter.six, #choosecharacter.five").addClass("temp");
-    $(".QRsix, .QRfive").css({
+    $("#choosecharacter.three, .QRthree, #characterTag.three, #choosecharacter.five, .QRfive, #characterTag.five").off('mouseenter, mouseout');
+    $("#choosecharacter.three, #choosecharacter.five").addClass("temp");
+    $(".QRthree, .QRfive").css({
       "pointer-events": "none",
       "opacity": "0"
     });
-    $("#characterTag.six, #characterTag.five").addClass("tempTag");
+    $("#characterTag.three, #characterTag.five").addClass("tempTag");
   } else if (n == "five") {
     style = "text";
-    $("#choosecharacter.six, .QRsix, #characterTag.six, #choosecharacter.four, .QRfour, #characterTag.four").off('mouseenter, mouseout');
-    $("#choosecharacter.six, #choosecharacter.four").addClass("temp");
-    $(".QRsix, .QRfour").css({
+    $("#choosecharacter.three, .QRthree, #characterTag.three, #choosecharacter.four, .QRfour, #characterTag.four").off('mouseenter, mouseout');
+    $("#choosecharacter.three, #choosecharacter.four").addClass("temp");
+    $(".QRthree, .QRfour").css({
       "pointer-events": "none",
       "opacity": "0"
     });
-    $("#characterTag.six, #characterTag.four").addClass("tempTag");
+    $("#characterTag.three, #characterTag.four").addClass("tempTag");
   } else if (n == "six") {
     style = "audio";
     $("#choosecharacter.seven, .QRseven, #characterTag.seven").off('mouseenter, mouseout');
