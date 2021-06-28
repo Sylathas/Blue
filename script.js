@@ -15,16 +15,17 @@ var dialoghi = 0;
 var tutorial = 0;
 var open = false;
 var pipboyanimate = true;
-var part = 0;
+var part = 4;
 var log1 = 0;
 var log2 = 0;
 var log3 = 0;
-var pg1;
-var pg2;
-var pg3;
+var pg1 = "Eo";
+var pg2 = "Joe";
+var pg3 = "Maisie";
 
 $(document).ready(function() {
-  loading();
+  //loading();
+  finalDialogue("Maisie", "audio", 3, 0);
 });
 
 //FUNCTIONS ABOUT THE PROGRESSION OF THE STORY
@@ -694,6 +695,7 @@ window.playFinalVideo = function() {
 
 window.intermezzo = function() {
   if(part < 4){
+
     $(".button").remove();
     $("#character").remove();
     $("#endingDiv").css({"opacity": "0"});
@@ -1190,7 +1192,7 @@ window.showDialogueText = async function(textPart, character, progress) {
       document.querySelector('video').playbackRate = 1;
     }, 3500);
     setTimeout(function() {
-      part = 3;
+      part++;
       characterChoice();
     }, 13000);
   }
