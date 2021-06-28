@@ -42,7 +42,7 @@ export let selfDialogue = {
 ["More inscriptions, looking closer at them they seem to be divided in paragraphs, they probably tell a story.","I wonder what they mean.","…","The big guy doesen’t seem interested, he won’t stop walking."],
 ["More inscriptions, these all look the same…", "Wait a second.","They don’t look the same, they are the same", "These probably don’t mean anything at all.", "Huh?","Did the big guy stop?"],
 ["Even more inscriptions.","There’s no doubt, they are all the same.", "Well, they may not mean anything, but maybe there’s no need.", "The big guy stopped once again.", "He seems like he’s found his meaning","I wonder what it is."],
-["That was strange, this place seems to know what it needs to do better than you do, what happened makes no sense, and yet…","One could think there is no purpose … but purpose is a complex thing.","Purpose doesen’t exist, and if it does it can easily be ignored… sometimes though a man could very well need a purpose, while purpose almost never needs a man."]
+["That was strange, this place seems to know what it needs to do better than you do, what happened makes no sense, and yet…","One could think there is no purpose … but purpose is a complex thing.","Purpose doesn’t exist, and if it does it can easily be ignored… sometimes though a man could very well need a purpose, while purpose almost never needs a man."]
   ],
   Neutrum: [
     ["It looks like there is a path, I should try to follow it.", "The being has started following me, but it looks to be calm, completely still.", "It’s difficult to stop looking at it."],

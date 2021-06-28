@@ -21,8 +21,8 @@ var part = 0;
 var log1 = 0;
 var log2 = 0;
 var log3 = 0;
-var pg1;
-var pg2;
+var pg1 = "Understanding goes two ways.. one may think that he’s trying to understand the other, but all the while he’s the one being understood.";
+var pg2 = "Purpose doesn’t exist, and if it does it can easily be ignored… sometimes though a man could very well need a purpose, while purpose almost never needs a man.";
 var pg3;
 var again = true;
 var clickedtag = false;
@@ -303,11 +303,9 @@ window.startDialogue = async function(character, communication, progress, n) {
   if ("communication" == "visual") {
     createLog(character, log1);
     notify("log", character);
-    pg1 = selfDialogue[character][4][2];
   } else if ("communication" == "text") {
     createLog(character, log2);
     notify("log", character);
-    pg2 = selfDialogue[character][4][2];
   } else {
     createLog(character, log3);
     notify("log", character);
