@@ -12,9 +12,9 @@ export let selfDialogue = {
     ["There seems to be a path...", "Let's try following it","This thing looks unstable, yet charming; it's changing shape slightly."],
     ["There is something about this path, it doesn't seem to lead anywhere.","The thing is still changing shape, a little faster now.", "It seems to react to the path."],
     ["This place looks familiar...","Either I'm going crazy, or the path is looping on itself.","The shifting is uncontrollable now, something is about to happen."],
-    ["Looking from here the path is forming a shape. It looks like a perfect circle.","The creature is still now. It looks like a perfect sphere.","For some reason, it looks peaceful now, how soothing."],
+    ["Looking from here the path is forming a shape. It looks like a perfect circle.","The creature is still now. It looks like a sphere.","For some reason, it looks peaceful now, how soothing."],
     ["That was strange, this place seems to know what it needs to do better than you do. What happened makes no sense, and yet…","One could think there is no understanding… but understanding is a complex thing.",
-"Understanding isn’t always pretty, one may think he’s not understanding, but really he just doesn’t like what he understood."]
+"Understanding isn’t always pretty. One may think that he’s not understanding, but really he just doesn’t like what he has understood."]
   ],
   Maisie: [
     ["Wha-"," What is this this sound? It hurts so bad. "," The sound is unbearable, the vision is starting to blur.... ","...","..."," What happened? This place is different from before.","Did she bring me here?"],
@@ -46,10 +46,10 @@ export let selfDialogue = {
   ],
   Neutrum: [
     ["It looks like there is a path, I should try to follow it.", "The being has started following me, but it looks to be calm, completely still.", "It’s difficult to stop looking at it."],
-    ["There is something about this path, it doesn't seem to be leading anywhere.","How strange, I stopped looking at the being for a second and now its shape has changed.","It looks like its crystals rearranged in yet another shape.","Maybe it has something to do with the path."],
+    ["There is something about this path, it doesn't seem to lead anywhere.","How strange, I stopped looking at the being for a second and now its shape has changed.","It looks like its crystals rearranged again.","Maybe it has something to do with the path."],
     ["This place looks familiar…", "Either I'm going crazy, or the path is looping on itself.","There it is, the thing changed shape once again.", "It looks like it’s trying to rearrange according to the path itself."],
-    ["This is enough, the path just keeps looping on itself, this is a waste of time.","…","The thing changed shape once again, now it’s a perfect pyramid, how strange… It never looked so simple.", "From up this hill I can see the whole path, I didn’t notice before but it looks like a perfect triangle.","The thing stopped following me, maybe it was travelling all this time just to reach this specific spot.", "Somehow, it feels at peace."],
-    ["That was strange, this place seems to know what it needs to do better than you do, what happened makes no sense, and yet…","One could think there is no understanding… but understanding is a complex thing.","Understanding goes two ways.. one may think he’s trying to understand the other, but all the while he’s the one being understood."]
+    ["This is enough, the path just keeps looping on itself, this is a waste of time.","…","The thing changed shape once again, now it’s a perfect pyramid, how strange… It never looked so simple.", "From up this hill I can see the whole path, I didn’t notice before but it looks like a triangle.","The thing stopped following me, maybe it was travelling all this time just to reach this specific spot.", "Somehow, it feels at peace."],
+    ["That was strange, this place seems to know what it needs to do better than you do, what happened makes no sense, and yet…","One could think there is no understanding… but understanding is a complex thing.","Understanding goes two ways.. one may think that he’s trying to understand the other, but all the while he’s the one being understood."]
       ],
   Swarm: [
 ["Wha-"," What is this this sound? It’s almost impossible to hear."," This sound is so annoying, am I the only hearing it? ","...","..."," The insects are moving in a mesmerizing pattern, maybe the sound is coming from them, I can’t understand."," I’d better move."],
@@ -294,6 +294,24 @@ export var mails = {
     ["TOURIST SERVICE", "SPACE EXPRESS TOURIST SERVICE", "Dear customer,"," your purchase gives you access to our complimentary tourist service; please enjoy a brief compendium of all the most interesting informations of your chosen holiday destination:","","LOCATION: PLANET ”ABX001*SJK428” CODENAME: “BLUE”","STATUS: “UNEXPLORED”","DATA: “The planet was discovered after receiving a signal sent from its surface to planet earth, source of the signal is unknown. From that moment numerous signals were registered coming form this location from unknown location, the planet seems to show traces of life"],
     ["CONGRATULATIONS", "CONGRATULATIONS", "Dear customer,"," From the headquarters of space express, we send our deepest congratulations.","Your efforts on planet “ABX001*SJK428” CODENAME: “BLUE” are astonishing, and allowed our corporation to retrieve fundamental informations about this unexplored location.","It seems that the planet was inhabited some centuries ago by a very technologically developed civilization.","We don’t know what brought to the end of the civilization, but it seems the architectures you encountered up until now are remnants of that period.","Furthermore, it looks like these architectures are some sort of “wayfinding”,  although very diffcult to understand.","It is also unclear what the wayfinding is leading towards.","Dear customer, you have proven fundamental in the task of uncovering this planet’s mistery, whatever it may be you are getting close, and we ask you for one final push.","Once again, we send our deepest regards, ","We are with you"],
     ["EXPLORED", "EXPLORED", "Dear customer, ","your efforts have contributed to gathering enough informations on planet “ABX001*SJK428” CODENAME: “BLUE” to ultimately granting it the status of: “EXPLORED”","From the headquarters of space express, we are astonished","The monuments were leading you to the source of the signal, however it seems that its source is not a physical place.","The technology behind the monuments is beyond our understanding, but it seems their “understanding” allows human will to reach through space and time.","The signals from the planet were probably coming from other explorers like you, who were able to send their message across space.","It is only speculation, but the purpose of the monuments and of the civilisation itself may have been to simply “reach out”, to others life forms.","We can only offer to help you spreading the signal even more by offering you the full support of our technologies, and act as an amplifier for the signal you are about to send.","For one last time, we send our deepest regards,","The space express corporation.", "The Team:"],
-    ["IN CASE OF EMERGENCY", "IN CASE OF EMERGENCY", "Dear customer, your well-being is our main concern.","Space travel is can be a dangerous thing for the mind, please enjoy this complimentary documentation on how to better understand your situation.","The space express corporation."]
+    ["IN CASE OF EMERGENCY", "IN CASE OF EMERGENCY", "Dear customer, your well-being is our main concern.","Space travel can be a dangerous thing for the mind, please enjoy this complimentary documentation on how to better understand your situation.","The space express corporation."]
+  ]
+}
+
+export var names = {
+  Names: [
+    ["Marta Crippa"],
+    ["Niccolò Abate"],
+    ["Massimiliano Cason Villa"],
+    ["Alvise Gregorio Aspesi"],
+    ["Davide Perucchini"],
+    ["Lillian Helen Wilson"],
+    ["Enzo Giovanni Taboada Fung"]
+  ]
+}
+
+export var intermezzo = {
+  Intermezzo: [
+    ["...", "What happened?", "Where am I?", "I passed out for a second.", "I feel strangely calm...", "...", "This is no time to stop.", "I see someone in the distance."],
   ]
 }

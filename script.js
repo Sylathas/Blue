@@ -7,7 +7,9 @@ import {
   characterDescription,
   dataLogsCharacters,
   textButtonText,
-  mails
+  mails,
+  names,
+  intermezzo
 } from "./dialogues.js";
 
 var start = true;
@@ -43,11 +45,11 @@ $(document).ready(function() {
 });
 
 window.startWebsite = function() {
-  if(again){
+  if (again) {
     setTimeout(() => {
       startWebsite();
     }, 1000);
-  } else{
+  } else {
     loading();
   }
 }
@@ -199,7 +201,7 @@ window.characterChoice = function() {
 }
 
 window.sectionProgress = function(character, communication, progress, n) {
-  if(part < 4){
+  if (part < 4) {
     if (progress < 5) {
       //Dialogue and selection of monuments
       console.log(`Section progress reached, with progress ${progress}`);
@@ -208,6 +210,7 @@ window.sectionProgress = function(character, communication, progress, n) {
       //End of part
       progress = 0;
       newMail();
+      notify("mail", character);
       part++;
       finalDialogue(character, communication, progress, 0);
       start = true;
@@ -226,7 +229,7 @@ window.createCharacter = function(character, n) {
     "id": "choosecharacter",
     "class": n
   });
-  if(n === "one" || n === "two"){
+  if (n === "one" || n === "two") {
     setTimeout(function() {
       characterDiv.attr({
         "onclick": `characterFocus("${character}", "${n}")`
@@ -239,7 +242,7 @@ window.createCharacter = function(character, n) {
         "opacity": "1"
       });
     }, 15000);
-  } else{
+  } else {
     characterDiv.attr({
       "onclick": `characterFocus("${character}", "${n}")`
     });
@@ -266,13 +269,13 @@ window.createCharacter = function(character, n) {
   });
   //append everything
   $("body").append(characterDiv, characterTag, characterQR);
-  if(n === "one" || n === "two"){
+  if (n === "one" || n === "two") {
     setTimeout(function() {
       $(".selezionepersonaggio").css({
         "opacity": ".5"
       });
     }, 200);
-  } else{
+  } else {
     $(".selezionepersonaggio").css({
       "opacity": "1"
     });
@@ -297,15 +300,18 @@ window.createCharacter = function(character, n) {
 }
 
 window.startDialogue = async function(character, communication, progress, n) {
-  if("communication" == "visual"){
+  if ("communication" == "visual") {
     createLog(character, log1);
-    pg1 = character;
-  } else if("communication" == "text"){
+    notify("log", character);
+    pg1 = selfDialogue[character][4][2];
+  } else if ("communication" == "text") {
     createLog(character, log2);
-    pg2 = character;
-  } else{
+    notify("log", character);
+    pg2 = selfDialogue[character][4][2];
+  } else {
     createLog(character, log3);
-    pg3 = character;
+    notify("log", character);
+    pg3 = selfDialogue[character][4][2];
   }
   $(".button, #QR").css({
     "opacity": "0"
@@ -396,7 +402,7 @@ window.startDialogue = async function(character, communication, progress, n) {
 
 window.progressDialogue = async function(character, communication, progress, n) {
   startvideo();
-  if(communication == "audio"){
+  if (communication == "audio") {
     $("#audioButton, #chooseAudioButton").remove();
   }
   //Remove old dialogues and buttons
@@ -479,23 +485,26 @@ window.progressDialogue = async function(character, communication, progress, n) 
     await new Promise(r => setTimeout(r, 35 * characterDialogue[character][progress - 1].length));
   }
   progress++;
-  if("communication" == "visual"){
-    if(progress > log1 + 1){
+  if ("communication" == "visual") {
+    if (progress > log1 + 1) {
       log1++;
+      notify("log", character);
       $(`.${character}tag`).attr({
         "onclick": `changenametag('${character}tag', ${log1})`
       });
     }
-  } else if("communication" == "text"){
-    if(progress > log2 + 1){
+  } else if ("communication" == "text") {
+    if (progress > log2 + 1) {
       log2++;
+      notify("log", character);
       $(`.${character}tag`).attr({
         "onclick": `changenametag('${character}tag', ${log2})`
       });
     }
-  } else{
-    if(progress > log3 + 1){
+  } else {
+    if (progress > log3 + 1) {
       log3++;
+      notify("log", character);
       $(`.${character}tag`).attr({
         "onclick": `changenametag('${character}tag', ${log3})`
       });
@@ -506,7 +515,7 @@ window.progressDialogue = async function(character, communication, progress, n) 
   continueButton.attr({
     "id": "continueButton",
     "class": "button",
-    'onclick': `startvideo(); $(".button, #totemone").remove(); setTimeout(() => {sectionProgress("${character}", "${communication}", ${progress})}, 2000);`
+    'onclick': `startvideo(); $(".button, #totemone").remove(); setTimeout(() => {sectionProgress("${character}", "${communication}", ${progress})}, 3000);`
   });
   //Add them to the body
   setTimeout(() => {
@@ -516,11 +525,11 @@ window.progressDialogue = async function(character, communication, progress, n) 
     totem.css({
       "opacity": "1"
     });
-    if(character == "Eo" || character == "Tedd" || character == "Swarm"){
+    if (character == "Eo" || character == "Tedd" || character == "Swarm") {
       totem.addClass("totemRound");
-    } else if(character == "Pa" || character == "Maisie"){
+    } else if (character == "Pa" || character == "Maisie") {
       totem.addClass("totemSquare");
-    } else if(character == "Joe" || character == "Neutrum"){
+    } else if (character == "Joe" || character == "Neutrum") {
       totem.addClass("totemTriangle");
     }
   }, 3000);
@@ -528,7 +537,7 @@ window.progressDialogue = async function(character, communication, progress, n) 
 
 window.wrongDialogue = async function(character, communication, progress, n) {
   startvideo();
-  if(communication == "audio"){
+  if (communication == "audio") {
     $("#audioButton, #chooseAudioButton").remove();
   }
   //Remove old dialogues and buttons
@@ -608,7 +617,7 @@ window.wrongDialogue = async function(character, communication, progress, n) {
   continueButton.attr({
     "id": "continueButton",
     "class": "button",
-    'onclick': `$(".button").remove();setTimeout(() => {sectionProgress("${character}", "${communication}", "${progress}", "${n}")}, 1000);`
+    'onclick': `$(".button").remove();setTimeout(() => {sectionProgress("${character}", "${communication}", "${progress}", "${n}")}, 3000);`
   });
   //Add them to the body
   setTimeout(() => {
@@ -696,9 +705,9 @@ window.ending = function() {
   });
   setTimeout(() => {
     $("#appearingText, #continueButtonCenter").remove();
-    let phrase1 = $(`<h2 style="color: white; font-family: Blender; text-align: center; position: absolute; left: 50%; transform: translate(-50%,-50%); top: 20%; opacity: 0; transition: 1s; font-weight: normal">${selfDialogue[pg1][4][2]}</h2>`);
-    let phrase2 = $(`<h2 style="color: white; font-family: Blender; text-align: center; position: absolute; left: 50%; transform: translate(-50%,-50%); top: 50%; opacity: 0; transition: 1s; font-weight: normal">${selfDialogue[pg2][4][2]}</h2>`);
-    let phrase3 = $(`<h2 style="color: white; font-family: Blender; text-align: center; position: absolute; left: 50%; transform: translate(-50%,-50%); top: 80%; opacity: 0; transition: 1s; font-weight: normal">${selfDialogue[pg3][4][2]}</h2>`);
+    let phrase1 = $(`<h2 style="color: white; font-family: Blender; text-align: center; position: absolute; left: 50%; transform: translate(-50%,-50%); top: 20%; opacity: 0; transition: 1s; font-weight: normal">${pg1}</h2>`);
+    let phrase2 = $(`<h2 style="color: white; font-family: Blender; text-align: center; position: absolute; left: 50%; transform: translate(-50%,-50%); top: 50%; opacity: 0; transition: 1s; font-weight: normal">${pg2}</h2>`);
+    let phrase3 = $(`<h2 style="color: white; font-family: Blender; text-align: center; position: absolute; left: 50%; transform: translate(-50%,-50%); top: 80%; opacity: 0; transition: 1s; font-weight: normal">${pg3}</h2>`);
     $("#endingDiv").append(phrase1, phrase2, phrase3);
     setTimeout(() => {
       $("#endingDiv h2").css({
@@ -750,16 +759,54 @@ window.playFinalVideo = function() {
   }, 1000);
 }
 
-window.intermezzo = function() {
-  if(part < 4){
-
+window.intermezzo = async function() {
+  if (part < 4) {
+    stopvideo();
     $(".button").remove();
     $("#character").remove();
-    $("#endingDiv").css({"opacity": "0"});
+    $("#endingDiv").css({
+      "opacity": "0"
+    });
+    for (var i = 0; i < intermezzo["Intermezzo"][0].length; i++) {
+      $("#textHolder").animate({
+        scrollTop: $('#textHolder').prop("scrollHeight")
+      }, 1000);
+      //typed
+      let optionsSelf = {
+        strings: [intermezzo["Intermezzo"][0][i]],
+        typeSpeed: 40,
+        showCursor: false
+      };
+      let selfName = $("<p></p>").html("<span class='bold'>Me: </span>");
+      selfName.attr({
+        "id": "selfDialogue",
+        "class": "dialogue"
+      });
+      selfName.css({
+        "margin-bottom": "0"
+      });
+      let selfText = $("<p></p>");
+      selfText.attr({
+        "id": "selfDialogue",
+        "class": "dialogue scrollableDialogue" + dialoghi.toString()
+      });
+      selfText.css({
+        "margin-top": "0"
+      });
+      $("#textHolder").append(selfName, selfText);
+      new Typed(".scrollableDialogue" + dialoghi.toString(), optionsSelf);
+      dialoghi++;
+      $("#textHolder").animate({
+        scrollTop: $('#textHolder').prop("scrollHeight")
+      }, 1000);
+      await new Promise(r => setTimeout(r, 70 * intermezzo["Intermezzo"][0][i].length));
+    }
     setTimeout(() => {
       $("#endingDiv").remove();
       startvideo();
-      characterChoice();
+      setTimeout(() => {
+        characterChoice();
+      }, 2000);
     }, 2000);
   } else {
     ending();
@@ -934,7 +981,7 @@ window.selection = async function(character, communication, progress, n) {
   }
   //Self Dialogue
   let optionsSelf = {
-    strings: ["It’s strange, but I almost feel like I can see the directions in my head. I feel confused... Maybe i should look at my companion to find the way…"],
+    strings: [`It’s strange, but I almost feel like I can see the directions in my head. I feel confused... Maybe i should look at my companion to find the way… I should scan ${character} to understand the right choice.`],
     typeSpeed: 20,
     showCursor: false
   };
@@ -969,18 +1016,19 @@ window.selection = async function(character, communication, progress, n) {
   let choiceThree = $("<button></button>");
   let choiceOne = $("<button></button>");
   let choiceTwo = $("<button></button>");
-  if(communication == "visual"){
+  if (communication == "visual") {
+    shuffleArray(buttons);
     choiceOne.css("background-image", "url(./Assets/Totems/1/" + (Math.floor(Math.random() * 5) + 1) + ".gif");
     choiceTwo.css("background-image", "url(./Assets/Totems/2/" + (Math.floor(Math.random() * 5) + 1) + ".gif");
     choiceThree.css("background-image", "url(./Assets/Totems/3/" + (Math.floor(Math.random() * 5) + 1) + ".gif");
-  } else if(communication == "text"){
+  } else if (communication == "text") {
     choiceOne.css("background-image", "url(./Assets/Buttons/TextBox.png");
     var choiceOneText = $("<p></p>").text(textButtonText["Square"][rand(5)]);
     choiceTwo.css("background-image", "url(./Assets/Buttons/TextBox.png");
     var choiceTwoText = $("<p></p>").text(textButtonText["Round"][rand(5)]);
     choiceThree.css("background-image", "url(./Assets/Buttons/TextBox.png");
     var choiceThreeText = $("<p></p>").text(textButtonText["Triangle"][rand(5)]);
-  } else if(communication == "audio"){
+  } else if (communication == "audio") {
     choiceOne.css("background-image", "url(./Assets/Buttons/PlayBox.png");
     choiceTwo.css("background-image", "url(./Assets/Buttons/PlayBox.png");
     choiceThree.css("background-image", "url(./Assets/Buttons/PlayBox.png");
@@ -1020,7 +1068,7 @@ window.selection = async function(character, communication, progress, n) {
       "class": communication + " button",
       'onclick': `wrongDialogue("${character}", "${communication}", ${progress}, "${n}")`
     });
-  } else if (character == "Joe"){
+  } else if (character == "Joe") {
     choiceOne.attr({
       "id": buttons[0],
       "class": communication + " button",
@@ -1036,7 +1084,7 @@ window.selection = async function(character, communication, progress, n) {
       "class": communication + " button",
       'onclick': `wrongDialogue("${character}", "${communication}", ${progress}, "${n}")`
     });
-  } else if (character == "Maisie" || character == "Swarm"){
+  } else if (character == "Maisie" || character == "Swarm") {
     choiceOne.attr({
       "id": buttons[0],
       "class": communication + " button",
@@ -1055,7 +1103,7 @@ window.selection = async function(character, communication, progress, n) {
   }
   //Add them to the page
   $("body").append(choiceOne, choiceTwo, choiceThree);
-  if(communication == "text"){
+  if (communication == "text") {
     $("#choiceOne").append(choiceOneText);
     $("#choiceTwo").append(choiceTwoText);
     $("#choiceThree").append(choiceThreeText);
@@ -1187,6 +1235,8 @@ window.showDialogueText = async function(textPart, character, progress) {
   let number;
   if (textPart == "selfDialogue") {
     number = selfDialogue[character][progress - 1].length;
+  } else if (textPart == "intermezzo") {
+    number
   } else {
     console.log(character);
     number = characterDescription[character][progress - 1].length;
@@ -1275,9 +1325,6 @@ document.body.onkeyup = function(e) {
 }
 
 window.openPipBoy = function() {
-  if(clickedtag){
-    updatetag();
-  }
   if (pipboyanimate) {
     pipboyanimate = false;
     setTimeout(function() {
@@ -1379,7 +1426,7 @@ window.changenametag = function(newactive, log) {
     i++
     console.log(i);
     console.log(log);
-    if(i < log + 1){
+    if (i < log + 1) {
       console.log("ciao");
       datalogs = $("<h4>" + element + "</h4>");
       $("#datalogs #pipboy-text").append(datalogs);
@@ -1389,13 +1436,23 @@ window.changenametag = function(newactive, log) {
 }
 
 window.updatetag = function() {
+  var log;
   var i = 0;
   var datalogs = "";
   $("#datalogs #pipboy-text h4, #datalogs #pipboy-text br").remove();
   var classList = $(".cpt-active").attr('class').split(/\s+/);
+  if ((classList[0].slice(0, -3)).toString() == "Eo" || (classList[0].slice(0, -3)).toString() == "Neutrum") {
+    log = log1;
+  } else if ((classList[0].slice(0, -3)).toString() == "Joe" || (classList[0].slice(0, -3)).toString() == "Pa" || (classList[0].slice(0, -3)).toString() == "Tedd") {
+    log = log2;
+  } else {
+    log = log3;
+  }
+  console.log(log);
+  console.log(classList[0].slice(0, -3));
   dataLogsCharacters[classList[0].slice(0, -3)].forEach(function(element) {
     i++
-    if(i < log){
+    if (i < log) {
       datalogs = $("<h4>" + element + "</h4>");
       $("#datalogs #pipboy-text").append(datalogs);
     }
@@ -1407,30 +1464,30 @@ window.changeMail = function(newactive, object, partona) {
   $("." + newactive).addClass("mail-active");
   $("#mail #pipboy-text h1").text(object);
   $("#mail #pipboy-text h4, #mail #pipboy-text a, #mail #pipboy-text div").remove();
-  for(let i = 2; i < mails["Mails"][partona].length; i++){
+  for (let i = 2; i < mails["Mails"][partona].length; i++) {
     let h4text = $("<h4>" + mails["Mails"][partona][i] + "</h4>")
     $("#mail #pipboy-text").append(h4text);
   }
-  if(newactive == "message-5"){
-    let h4text = $("<a href='www.google.com' target='_blank'>Check the documentation</a>");
+  if (newactive == "message-5") {
+    let h4text = $("<a href='https://sdgs.un.org/goals/goal3' target='_blank'>Check the documentation</a>");
     $("#mail #pipboy-text").append(h4text);
-  } else if(newactive == "message-4"){
-    console.log("ciao");
-    let imagesDiv = $("<div style='width: 100%; display: flex; justify-content: space-around;'></div>");
+  } else if (newactive == "message-4") {
+    let imagesDiv = $("<div style='width: 100%; height: 100%;'></div>");
     $("#mail #pipboy-text").append(imagesDiv);
-    for(let i = 0; i < 7; i++){
-      let images = $(`<div style='width: 30%; height: 30%; background-image: url("./Assets/Us/${i}.png"); background-size: cover; background-repeat: no-repeat; background-position: center;'></div>`);
-      imagesDiv.append(images);
+    for (let i = 0; i < 7; i++) {
+      let images = $(`<div style='margin-bottom: 3%; position: relative; width: 50%; height: 30%; background-image: url("./Assets/Us/${i}.png"); background-size: contain; background-repeat: no-repeat; background-position: center;'></div>`);
+      let caption = $(`<p style="margin-bottom: 10%;">${names["Names"][i]}</p>`);
+      imagesDiv.append(images, caption);
     }
   }
 }
 
-window.newMail = function(){
+window.newMail = function() {
   let mailNameDiv = $(`<div class="mail message-${part}" onclick="changeMail('message-${part}', '${mails["Mails"][part][1]}', '${part}')"><h2>${mails["Mails"][part][0]}</h2></div>`);
   $("#mail-names").append(mailNameDiv);
 }
 
-window.createLog = function(character, log){
+window.createLog = function(character, log) {
   let nameLog = $(`<div class="${character}tag characterpipboytag" onclick="changenametag('${character}tag', 0)"><h2>${character}</h2></div>`);
   $("#datalogs-charactertabs").append(nameLog);
 }
@@ -1439,30 +1496,30 @@ window.changeRadio = function(newactive, station) {
   $(".radio-station").removeClass("radio-active");
   $("." + newactive).addClass("radio-active");
   $("#mail #pipboy-text h1").text(newactive.replace('-', ' '));
-  $("#music").attr("src","Assets/Sounds/" + station + ".mp3");
+  $("#music").attr("src", "Assets/Sounds/" + station + ".mp3");
   $("#music").get(0).play();
 }
 
-window.playSound = function(choice, character, communication, progress, n){
+window.playSound = function(choice, character, communication, progress, n) {
   $("#chooseAudioButton").css({
     "opacity": ".8"
   });
-  if(character == "Maisie"){
-    if(choice == "choiceThree" || choice == "choiceTwo"){
+  if (character == "Maisie") {
+    if (choice == "choiceThree" || choice == "choiceTwo") {
       $("#chooseAudioButton").attr({
         "onclick": `wrongDialogue("${character}", "${communication}", ${progress}, "${n}")`
       });
-    } else if(choice == "choiceOne"){
+    } else if (choice == "choiceOne") {
       $("#chooseAudioButton").attr({
         "onclick": `progressDialogue("${character}", "${communication}", ${progress}, "${n}")`
       });
     }
-  } else if(character == "Swarm"){
-    if(choice == "choiceOne" || choice == "choiceThree"){
+  } else if (character == "Swarm") {
+    if (choice == "choiceOne" || choice == "choiceThree") {
       $("#chooseAudioButton").attr({
         "onclick": `wrongDialogue("${character}", "${communication}", ${progress}, "${n}")`
       });
-    } else if(choice == "choiceTwo"){
+    } else if (choice == "choiceTwo") {
       $("#chooseAudioButton").attr({
         "onclick": `progressDialogue("${character}", "${communication}", ${progress}, "${n}")`
       });
@@ -1478,18 +1535,18 @@ window.playSound = function(choice, character, communication, progress, n){
     "onclick": `stopSound("${choice}", "${character}", "${communication}", ${progress}, "${n}")`
   });
   $("#audioButton").remove();
-  if(choice == "choiceOne"){
+  if (choice == "choiceOne") {
     var audio = $("<audio loop id='audioButton' src='Assets/Sounds/AudioButtons/Ambient/" + (Math.floor(Math.random() * 12) + 1) + ".wav' type='audio/wav' style='display: none;'></audio>")
-  } else if(choice == "choiceTwo"){
+  } else if (choice == "choiceTwo") {
     var audio = $("<audio loop id='audioButton' src='Assets/Sounds/AudioButtons/Industrial/" + (Math.floor(Math.random() * 14) + 1) + ".wav' type='audio/wav' style='display: none;'></audio>")
-  } else if(choice == "choiceThree"){
+  } else if (choice == "choiceThree") {
     var audio = $("<audio loop id='audioButton' src='Assets/Sounds/AudioButtons/Samba/" + (Math.floor(Math.random() * 12) + 1) + ".wav' type='audio/wav' style='display: none;'></audio>")
   }
   $("body").append(audio);
   $("#audioButton").get(0).play();
 }
 
-window.stopSound = function(choice, character, communication, progress, n){
+window.stopSound = function(choice, character, communication, progress, n) {
   $("#choiceThree, #choiceOne, #choiceTwo").css({
     "background-image": "url('./Assets/Buttons/PlayBox.png')"
   });
@@ -1510,6 +1567,47 @@ window.prototyping = function(progress) {
   $("body").append(progressText);
 }
 
-window.rand = function(i){
+window.notify = function(type, character) {
+  $("#textHolder").animate({
+    scrollTop: $('#textHolder').prop("scrollHeight")
+  }, 1000);
+  //typed
+  if (type == "log") {
+    var optionsSelf = {
+      strings: [`<i>You have a new log about ${character} in your menu!</i>`],
+      typeSpeed: 40,
+      showCursor: false
+    };
+  } else if (type == "mail") {
+    var optionsSelf = {
+      strings: ["<i>You have recieved a new Mail!</i>"],
+      typeSpeed: 40,
+      showCursor: false
+    };
+  }
+  let selfName = $("<p></p>").html("<span class='bold'>Computer: </span>");
+  selfName.attr({
+    "id": "selfDialogue",
+    "class": "dialogue"
+  });
+  selfName.css({
+    "margin-bottom": "0"
+  });
+  let selfText = $("<p></p>");
+  selfText.attr({
+    "id": "selfDialogue",
+    "class": "dialogue scrollableDialogue"
+  });
+  selfText.css({
+    "margin-top": "0"
+  });
+  $("#textHolder").append(selfName, selfText);
+  new Typed(".scrollableDialogue", optionsSelf);
+  $("#textHolder").animate({
+    scrollTop: $('#textHolder').prop("scrollHeight")
+  }, 1000);
+}
+
+window.rand = function(i) {
   return Math.floor(Math.random() * i);
 }
