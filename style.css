@@ -61,6 +61,8 @@ body {
   background-size: contain;
   transition: .5s;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
 }
 
 #choosecharacter {
