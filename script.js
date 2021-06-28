@@ -683,7 +683,7 @@ window.playFinalVideo = function() {
     finalVideoDiv.css({
       "opacity": "1"
     });
-    $("#finalVideoDiv video").get(0).play();
+    $("#finalVideo video").get(0).play();
     setTimeout(() => {
       $("#endingDiv h1, #endingDiv button").remove();
       finalVideoDiv.css({
