@@ -22,10 +22,34 @@ var log3 = 0;
 var pg1;
 var pg2;
 var pg3;
+var again = true;
+
+$("#devices").css({
+  "opacity": "1"
+});
+setTimeout(() => {
+  $("#devices").css({
+    "opacity": "0"
+  });
+  $("#loading1, #loading2, #pLoading").css({
+    "opacity": "1"
+  });
+  again = false;
+}, 2000);
 
 $(document).ready(function() {
-  loading();
+  startWebsite()
 });
+
+window.startWebsite = function() {
+  if(again){
+    setTimeout(() => {
+      startWebsite();
+    }, 1000);
+  } else{
+    loading();
+  }
+}
 
 //FUNCTIONS ABOUT THE PROGRESSION OF THE STORY
 function loading() {
@@ -272,6 +296,13 @@ window.createCharacter = function(character, n) {
 }
 
 window.startDialogue = async function(character, communication, progress, n) {
+  if("communication" == "visual"){
+    createLog(character, log1);
+  } else if("communication" == "text"){
+    createLog(character, log2);
+  } else{
+    createLog(character, log3);
+  }
   $(".button, #QR").css({
     "opacity": "0"
   });
@@ -444,6 +475,19 @@ window.progressDialogue = async function(character, communication, progress, n) 
     await new Promise(r => setTimeout(r, 35 * characterDialogue[character][progress - 1].length));
   }
   progress++;
+  if("communication" == "visual"){
+    if(progress > log1 + 1){
+      log1++;
+    }
+  } else if("communication" == "text"){
+    if(progress > log2 + 1){
+      log2++;
+    }
+  } else{
+    if(progress > log3 + 1){
+      log3++;
+    }
+  }
   //Continue button
   let continueButton = $("<button></button>").text("Continue");
   continueButton.attr({
@@ -1307,17 +1351,34 @@ window.closePipBoy = function() {
   }
 }
 
-window.changenametag = function(newactive) {
+window.changenametag = function(newactive, log) {
   var datalogs = "";
+  var i = 0;
   $(".characterpipboytag").removeClass("cpt-active");
   $("." + newactive).addClass("cpt-active");
   $("#datalogs #pipboy-text h1").text(newactive.slice(0, -3));
   $("#datalogs #pipboy-text h4, #datalogs #pipboy-text br").remove();
   dataLogsCharacters[newactive.slice(0, -3)].forEach(function(element) {
-    datalogs = $("<h4>" + element + "</h4>");
-    $("#datalogs #pipboy-text").append(datalogs);
+    i++
+    console.log(i);
+    console.log(log);
+    if(i < log + 1){
+      console.log("ciao");
+      datalogs = $("<h4>" + element + "</h4>");
+      $("#datalogs #pipboy-text").append(datalogs);
+    }
   });
   $("#datalogs-character").css("background-image", "url(./Assets/CharactersPipBoy/" + newactive.slice(0, -3) + "_pipboy.png)");
+}
+
+window.updatetag = function() {
+  dataLogsCharacters[newactive.slice(0, -3)].forEach(function(element) {
+    i++
+    if(i < log){
+      datalogs = $("<h4>" + element + "</h4>");
+      $("#datalogs #pipboy-text").append(datalogs);
+    }
+  });
 }
 
 window.changeMail = function(newactive, object, partona) {
@@ -1336,12 +1397,9 @@ window.newMail = function(){
   $("#mail-names").append(mailNameDiv);
 }
 
-window.creteLog = function(character){
-  let mailNameDiv = $(`<div class="${character}tag characterpipboytag" onclick="changenametag('${character}tag')"><h2>${character}</h2></div>`);
-}
-
-window.updateLog = function(character, progress){
-  let mailNameDiv = $(`<div class="mail message-${part}" onclick="changeMail('message-${part}', '${mails["Mails"][part][1]}', '${part}')"><h2>${mails["Mails"][part][0]}</h2></div>`);
+window.createLog = function(character, log){
+  let nameLog = $(`<div class="${character}tag characterpipboytag" onclick="changenametag('${character}tag', ${log})"><h2>${character}</h2></div>`);
+  $("#datalogs-charactertabs").append(nameLog);
 }
 
 window.changeRadio = function(newactive, station) {
