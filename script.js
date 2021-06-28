@@ -126,7 +126,7 @@ window.introduction = function(progress) {
             clearInterval(intervalId);
           }
         }, 100);
-      }, 1000);
+      }, 24000);
     }, 1000);
   }
 }
