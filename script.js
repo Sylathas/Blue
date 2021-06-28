@@ -488,7 +488,6 @@ window.progressDialogue = async function(character, communication, progress, n) 
   if ("communication" == "visual") {
     if (progress > log1 + 1) {
       log1++;
-      notify("log", character);
       $(`.${character}tag`).attr({
         "onclick": `changenametag('${character}tag', ${log1})`
       });
@@ -496,7 +495,6 @@ window.progressDialogue = async function(character, communication, progress, n) 
   } else if ("communication" == "text") {
     if (progress > log2 + 1) {
       log2++;
-      notify("log", character);
       $(`.${character}tag`).attr({
         "onclick": `changenametag('${character}tag', ${log2})`
       });
@@ -504,7 +502,6 @@ window.progressDialogue = async function(character, communication, progress, n) 
   } else {
     if (progress > log3 + 1) {
       log3++;
-      notify("log", character);
       $(`.${character}tag`).attr({
         "onclick": `changenametag('${character}tag', ${log3})`
       });
