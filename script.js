@@ -23,6 +23,7 @@ var pg1;
 var pg2;
 var pg3;
 var again = true;
+var clickedtag = false;
 
 $("#devices").css({
   "opacity": "1"
@@ -35,7 +36,7 @@ setTimeout(() => {
     "opacity": "1"
   });
   again = false;
-}, 2000);
+}, 3000);
 
 $(document).ready(function() {
   startWebsite()
@@ -298,10 +299,13 @@ window.createCharacter = function(character, n) {
 window.startDialogue = async function(character, communication, progress, n) {
   if("communication" == "visual"){
     createLog(character, log1);
+    pg1 = character;
   } else if("communication" == "text"){
     createLog(character, log2);
+    pg2 = character;
   } else{
     createLog(character, log3);
+    pg3 = character;
   }
   $(".button, #QR").css({
     "opacity": "0"
@@ -478,14 +482,23 @@ window.progressDialogue = async function(character, communication, progress, n) 
   if("communication" == "visual"){
     if(progress > log1 + 1){
       log1++;
+      $(`.${character}tag`).attr({
+        "onclick": `changenametag('${character}tag', ${log1})`
+      });
     }
   } else if("communication" == "text"){
     if(progress > log2 + 1){
       log2++;
+      $(`.${character}tag`).attr({
+        "onclick": `changenametag('${character}tag', ${log2})`
+      });
     }
   } else{
     if(progress > log3 + 1){
       log3++;
+      $(`.${character}tag`).attr({
+        "onclick": `changenametag('${character}tag', ${log3})`
+      });
     }
   }
   //Continue button
@@ -720,14 +733,14 @@ window.playFinalVideo = function() {
   });
   setTimeout(() => {
     $("#endingDiv h5, #continueButtonCenter").remove();
-    let finalVideoDiv = $(`<div id="finalVideo" style="opacity: 0; transition: 1s;"></div>`);
-    let finalVideo = $(`<video src="./Assets/finalVideo.mp4" style="position: absolute; left: 0; top: 0; width: 100vw; height: auto; z-index: 20; transition: 1s;"></video>`);
+    let finalVideoDiv = $(`<div id="finalVideo" style="opacity: 0; z-index: 10; transition: 1s; position: absolute; left: 0; top: 0; width: 100vw; height: 100vh;"></div>`);
+    let finalVideo = $(`<video src="./Assets/finalVideo.mp4" style="position: relative; left: 0; top: 0; width: 100%; height: auto; transition: 1s;"></video>`);
     $("body").append(finalVideoDiv);
     finalVideoDiv.append(finalVideo);
     finalVideoDiv.css({
       "opacity": "1"
     });
-    $("#finalVideoDiv video").get(0).play();
+    $("#finalVideo video").get(0).play();
     setTimeout(() => {
       $("#endingDiv h1, #endingDiv button").remove();
       finalVideoDiv.css({
@@ -885,7 +898,7 @@ window.characterFocus = function(character, n) {
       "pointer-events": "auto"
     });
     $("#chooseCharacterButton").attr({
-      'onclick': `pg${part} = "${character}"; startDialogue("${character}", "${style}", 1, "${n}")`
+      'onclick': `startDialogue("${character}", "${style}", 1, "${n}")`
     });
     $("#chooseCharacterButton").css({
       "opacity": "1"
@@ -1262,6 +1275,9 @@ document.body.onkeyup = function(e) {
 }
 
 window.openPipBoy = function() {
+  if(clickedtag){
+    updatetag();
+  }
   if (pipboyanimate) {
     pipboyanimate = false;
     setTimeout(function() {
@@ -1352,6 +1368,7 @@ window.closePipBoy = function() {
 }
 
 window.changenametag = function(newactive, log) {
+  clickedtag = true;
   var datalogs = "";
   var i = 0;
   $(".characterpipboytag").removeClass("cpt-active");
@@ -1372,7 +1389,11 @@ window.changenametag = function(newactive, log) {
 }
 
 window.updatetag = function() {
-  dataLogsCharacters[newactive.slice(0, -3)].forEach(function(element) {
+  var i = 0;
+  var datalogs = "";
+  $("#datalogs #pipboy-text h4, #datalogs #pipboy-text br").remove();
+  var classList = $(".cpt-active").attr('class').split(/\s+/);
+  dataLogsCharacters[classList[0].slice(0, -3)].forEach(function(element) {
     i++
     if(i < log){
       datalogs = $("<h4>" + element + "</h4>");
@@ -1385,10 +1406,22 @@ window.changeMail = function(newactive, object, partona) {
   $(".mail").removeClass("mail-active");
   $("." + newactive).addClass("mail-active");
   $("#mail #pipboy-text h1").text(object);
-  $("#mail #pipboy-text h4").remove();
+  $("#mail #pipboy-text h4, #mail #pipboy-text a, #mail #pipboy-text div").remove();
   for(let i = 2; i < mails["Mails"][partona].length; i++){
     let h4text = $("<h4>" + mails["Mails"][partona][i] + "</h4>")
     $("#mail #pipboy-text").append(h4text);
+  }
+  if(newactive == "message-5"){
+    let h4text = $("<a href='www.google.com' target='_blank'>Check the documentation</a>");
+    $("#mail #pipboy-text").append(h4text);
+  } else if(newactive == "message-4"){
+    console.log("ciao");
+    let imagesDiv = $("<div style='width: 100%; display: flex; justify-content: space-around;'></div>");
+    $("#mail #pipboy-text").append(imagesDiv);
+    for(let i = 0; i < 7; i++){
+      let images = $(`<div style='width: 30%; height: 30%; background-image: url("./Assets/Us/${i}.png"); background-size: cover; background-repeat: no-repeat; background-position: center;'></div>`);
+      imagesDiv.append(images);
+    }
   }
 }
 
@@ -1398,7 +1431,7 @@ window.newMail = function(){
 }
 
 window.createLog = function(character, log){
-  let nameLog = $(`<div class="${character}tag characterpipboytag" onclick="changenametag('${character}tag', ${log})"><h2>${character}</h2></div>`);
+  let nameLog = $(`<div class="${character}tag characterpipboytag" onclick="changenametag('${character}tag', 0)"><h2>${character}</h2></div>`);
   $("#datalogs-charactertabs").append(nameLog);
 }
 
